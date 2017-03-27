@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import by.epam.shop.dao.exception.DAOException;
 
@@ -34,11 +35,11 @@ public class DBConnector {
 		return connection;
 	}
 	
-	public static void closeConnection(PreparedStatement ps, Connection con) throws DAOException {
+	public static void closeConnection(Statement st, Connection con) throws DAOException {
 		if (con != null) {
 			try {
-				if (ps != null) {
-					ps.close();
+				if (st != null) {
+					st.close();
 				}
 				con.close();
 			} catch (SQLException e) {

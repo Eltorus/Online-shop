@@ -1,12 +1,13 @@
 package by.epam.shop.bean;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Cart {
-	private final Set <CartLine> productList = new LinkedHashSet<>();
+	private final List <CartLine> productList = new ArrayList<>();
 	
-	public Set <CartLine> getProductList() {
+	public List <CartLine> getProductList() {
 		return productList;
 	}
 	public void addToProductList(CartLine cartLine) {

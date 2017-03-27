@@ -1,0 +1,25 @@
+<!-- Admin menu -->
+<div class="col-sm-3">
+	<!-- Left column -->
+	<a href="#"><strong><i class="glyphicon glyphicon-wrench"></i>
+			Tools</strong></a>
+
+	<hr>
+
+	<ul class="nav nav-stacked">
+		<li class="nav-header"><a href="#" data-toggle="collapse"
+			data-target="#userMenu">Menu<i
+				class="glyphicon glyphicon-chevron-down"></i></a>
+			<ul class="nav nav-stacked collapse in" id="userMenu">
+				<li class="active"><a href="#"><i
+						class="glyphicon glyphicon-user"></i> Users </a></li>
+				<li><a href="#"><i
+						class="glyphicon glyphicon-exclamation-sign"></i> Products <span
+						class="badge badge-info">4</span></a></li>
+				<li><a href="#"><i class="glyphicon glyphicon-flag"></i>
+						Orders </a></li>
+			</ul></li>
+	</ul>
+
+	<hr>
+</div>

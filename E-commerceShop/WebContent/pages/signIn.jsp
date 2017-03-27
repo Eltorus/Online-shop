@@ -15,6 +15,7 @@
 	<c:redirect url="/"/>
 </c:if>
 <%@ include file="/WEB-INF/elements/header.jspf" %>
+
 	
 	<div class="container">
 	<div class="row">

@@ -26,9 +26,9 @@ public class SignUp implements Command {
 			}
 			User user = fillUpUser(request, response);
 			UserService userService = ServiceFactory.getInstance().getUserService();
-			boolean successfulRegister = userService.signUp(user);
+			boolean successfulRegister = userService.addUser(user);
 			if (successfulRegister == true) {
-				page = PageList.PG_INDEX; // вернуть страницу с сообщением об
+				page = PageList.PG_SIGNIN; // вернуть страницу с сообщением об
 											// успешной регистрацией
 			} else {
 				System.out.println("crap");

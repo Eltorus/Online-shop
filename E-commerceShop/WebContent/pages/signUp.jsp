@@ -16,6 +16,7 @@
 <c:if test="${not empty sessionScope.user}">
 	<c:redirect url="/"/>
 </c:if>
+
 <div class="container">
   <fieldset>
     <div class="container">

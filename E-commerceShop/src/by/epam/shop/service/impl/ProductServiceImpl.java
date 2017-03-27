@@ -8,7 +8,6 @@ import by.epam.shop.dao.exception.DAOException;
 import by.epam.shop.dao.factory.DAOFactory;
 import by.epam.shop.service.ProductService;
 import by.epam.shop.service.exception.ServiceException;
-import by.epam.shop.service.validation.Validation;
 
 public class ProductServiceImpl implements ProductService {
 
@@ -18,6 +17,9 @@ public class ProductServiceImpl implements ProductService {
 		List<Product> products = null;
 		try {
 			products = productDAO.getAllProducts();
+			if(products.isEmpty()) {
+				return null;
+			}
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
@@ -25,16 +27,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getProduct(Product product) throws ServiceException {
-		List<Product> products = null;
-		if (product == null) {
-			throw new ServiceException();
+	public Product getProduct(Product product) throws ServiceException {
+		if(product == null) {
+			throw new ServiceException("Object is null");
 		}
-		if (!Validation.isStringEmpty((product.getTitle()))) {
-			products = getProductWithTitle(product);
-		}
-		/// to be continued...
-		return products;
+		///
+		return null;
 	}
 	
 	@Override
@@ -48,7 +46,8 @@ public class ProductServiceImpl implements ProductService {
 			throw new ServiceException("Id is null");
 		}
 		try {
-			result = productDAO.getProductWithId(product);
+			List<Product> productList = productDAO.getProduct(product);
+			result = productList.get(0);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
@@ -71,6 +70,24 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> getProductWithPrice(Product product) throws ServiceException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void changeProduct(Product product) throws ServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addProduct(Product product) throws ServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteProduct(Product product) throws ServiceException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

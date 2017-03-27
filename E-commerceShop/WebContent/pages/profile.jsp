@@ -14,7 +14,7 @@
 <%@ include file="/WEB-INF/elements/header.jspf" %>
 <%@ include file="/WEB-INF/elements/local.jspf" %>
 <c:if test="${empty sessionScope.user}">
-	<c:redirect url="signin"/>
+	<c:redirect url="/"/>
 </c:if>
 
 <div class="panel-body">

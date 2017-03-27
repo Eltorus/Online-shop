@@ -14,9 +14,10 @@ public class LogOut implements Command{
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		HttpSession session = request.getSession();
-		session.removeAttribute(AttributeList.ATTR_USER);
-		session.removeAttribute(AttributeList.ATTR_CART);
-		return PageList.PG_INDEX;
+		session.invalidate();
+		/*session.removeAttribute(AttributeList.ATTR_USER);
+		session.removeAttribute(AttributeList.ATTR_CART);*/
+		return PageList.PG_PROFILE;
 	}
 
 }

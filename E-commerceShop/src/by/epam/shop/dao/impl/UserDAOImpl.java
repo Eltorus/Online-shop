@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import by.epam.shop.bean.User;
 import by.epam.shop.dao.DBConnector;
@@ -20,22 +22,10 @@ public class UserDAOImpl implements UserDAO {
 		User result = null;
 		try {
 			con = DBConnector.getConnection();
-			ps = con.prepareStatement(QueryList.GetUserQuery);
-			ps.setString(1, user.getEmail());
-			ps.setString(2, user.getPasswordHash());
+			ps = prepareGetUserStatement(ps, con, user);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				result = new User();
-				result.setId(rs.getInt(1));
-				result.setName(rs.getString(2));
-				result.setSurname(rs.getString(3));
-				result.setEmail(rs.getString(4));
-				result.setPhonenumber(rs.getString(5));
-				result.setIs_banned(rs.getBoolean(6));
-				result.setIs_admin(rs.getBoolean(7));
-				result.setDiscountCoefficient(rs.getDouble(8));
-				result.setBalance(rs.getDouble(9));
-				result.setPasswordHash(rs.getString(10));
+				result = fillUpUser(rs);
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
@@ -44,6 +34,20 @@ public class UserDAOImpl implements UserDAO {
 			DBConnector.closeConnection(ps, con);
 		}
 		return result;
+	}
+	
+	private PreparedStatement prepareGetUserStatement(PreparedStatement ps, Connection con, User user) throws SQLException {
+		if(user.getEmail() != null && user.getPasswordHash()!=null) {
+			if(!user.getEmail().isEmpty() && !user.getPasswordHash().isEmpty()) {
+				ps = con.prepareStatement(QueryList.GetUserQuery+QueryList.GetUserQueryLogin);
+				ps.setString(1, user.getEmail());
+				ps.setString(2, user.getPasswordHash());
+			}
+		} else if(user.getId()!=0) {
+			ps = con.prepareStatement(QueryList.GetUserQuery+QueryList.GetUserQueryId);
+			ps.setInt(1, user.getId());
+		}
+		return ps;
 	}
 
 	@Override
@@ -95,6 +99,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			con = DBConnector.getConnection();
 			ps = con.prepareStatement(QueryList.UpdateUserQuery);
+			
 			precompileUpdateStatement(ps, user);
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -108,5 +113,42 @@ public class UserDAOImpl implements UserDAO {
 		ps.setDouble(1, user.getBalance());
 		ps.setString(2, user.getEmail());
 		ps.setString(3, user.getPasswordHash());
+	}
+
+	@Override
+	public List<User> getAllUsers() throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<User> userList = new ArrayList<>();
+		try {
+			con = DBConnector.getConnection();
+			ps = con.prepareStatement(QueryList.GetAllUsersQuery);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				User user = fillUpUser(rs);
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			DBConnector.closeConnection(ps, con);
+		}
+		return userList;
+	}
+	
+	private User fillUpUser(ResultSet rs) throws SQLException {
+		User result = new User();
+		result.setId(rs.getInt(1));
+		result.setName(rs.getString(2));
+		result.setSurname(rs.getString(3));
+		result.setEmail(rs.getString(4));
+		result.setPhonenumber(rs.getString(5));
+		result.setIs_banned(rs.getBoolean(6));
+		result.setIs_admin(rs.getBoolean(7));
+		result.setDiscountCoefficient(rs.getDouble(8));
+		result.setBalance(rs.getDouble(9));
+		result.setPasswordHash(rs.getString(10));
+		return result;
 	}
 }

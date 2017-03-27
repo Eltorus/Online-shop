@@ -36,7 +36,7 @@ public class SingIn implements Command {
 			user = userService.signIn(user);
 			if (user != null) {
 				session.setAttribute(AttributeList.ATTR_USER, user);
-				page = PageList.PG_INDEX;
+				page = PageList.PG_SIGNIN;
 			} else {
 				page = PageList.PG_SIGNIN;
 				session.setAttribute("error", "Wrong login or password");

@@ -15,9 +15,7 @@ import by.epam.shop.service.OrderService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
 import by.epam.shop.service.validation.Validation;
-import by.epam.shop.util.DateFormatter;
 import by.epam.shop.util.RoundDouble;
-import by.epam.shop.util.UtilException;
 
 public class MakingOrder implements Command{
 
@@ -44,6 +42,7 @@ public class MakingOrder implements Command{
 			
 			OrderService orderService = ServiceFactory.getInstance().getOrderService();
 			orderService.addOrder(order);
+			
 			session.removeAttribute(AttributeList.ATTR_ORDER);
 			session.removeAttribute(AttributeList.ATTR_CART);
 			session.setAttribute(AttributeList.ATTR_USER, user);

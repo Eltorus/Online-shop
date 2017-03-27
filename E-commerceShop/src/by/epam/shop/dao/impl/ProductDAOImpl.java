@@ -17,9 +17,19 @@ import by.epam.shop.dao.exception.DAOException;
 public class ProductDAOImpl implements ProductDAO {
 
 	@Override
-	public boolean addProduct(Product product) throws DAOException {
-		// TODO Auto-generated method stub
-		return false;
+	public void addProduct(Product product) throws DAOException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = DBConnector.getConnection();
+			ps = con.prepareStatement(QueryList.AddProductQuery);
+			fillUpProductQuery(product, ps);
+			ps.executeUpdate();
+		} catch(SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			DBConnector.closeConnection(ps, con);
+		}
 	}
 
 	@Override
@@ -47,59 +57,50 @@ public class ProductDAOImpl implements ProductDAO {
 		} catch (SQLException e) {
 			throw new DAOException(e);
 		} finally {
-			if (con != null) {
-				try {
-					st.close();
-					con.close();
-				} catch (SQLException e) {
-					throw new DAOException(e);
-				}
-			}
+			DBConnector.closeConnection(st, con);
 		}
 		return products;
 	}
 
 	@Override
-	public Product getProductWithId(Product product) throws DAOException {
+	public List<Product> getProduct(Product product) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
-		Product result = null;
+		List<Product> result = new ArrayList<>();
 		ResultSet rs = null;
 		try {
-			String query = QueryList.GetProductQuery + QueryList.GetProductWithIdQuery;
 			con = DBConnector.getConnection();
-			ps = con.prepareStatement(query);
-			ps.setInt(1, product.getId());
+
+			ps = precompileGetProductStatement(con,product);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				result = fillUpProduct(rs);
+				Product pr = fillUpProduct(rs);
+				result.add(pr);
 			}
 		} catch (SQLException e) {
 			throw new DAOException(e);
 		} finally {
-			if (con != null) {
-				try {
-					ps.close();
-					con.close();
-				} catch (SQLException e) {
-					throw new DAOException(e);
-				}
-			}
+			DBConnector.closeConnection(ps, con);
 		}
 		return result;
 	}
 
-	@Override
-	public List<Product> getProductWithTitle(Product product) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+	
+	private PreparedStatement precompileGetProductStatement(Connection con , Product product) throws SQLException {
+		System.out.println("product id "+ product.getId());
+		PreparedStatement ps = null;
+		if(product.getId()!=0) {
+			ps = con.prepareStatement(QueryList.GetProductQuery + QueryList.GetProductWithIdQuery);
+			ps.setInt(1, product.getId());
+		}
+		////дописать
+		if(product.getTitle()!=null && !product.getTitle().isEmpty()) {
+			/*ps = con.prepareStatement(QueryList.GetProductQuery + "");
+			ps.setInt(1, product.getId());*/
+		}
+		return ps;
 	}
 
-	@Override
-	public List<Product> getProductWithCategory(Product product) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	private Product fillUpProduct(ResultSet rs) throws SQLException{
 		Product product = new Product();
@@ -110,6 +111,20 @@ public class ProductDAOImpl implements ProductDAO {
 		product.setDescription(rs.getString("p_description"));
 		product.setAmount(rs.getInt("p_amount"));
 		return product;
+	}
+	
+	private void fillUpProductQuery(Product product, PreparedStatement ps) throws SQLException {
+		ps.setString(2, product.getTitle());
+		ps.setInt(3, product.getCategoryID());
+		ps.setDouble(4, product.getPrice());
+		ps.setString(5, product.getDescription());
+		ps.setInt(6, product.getAmount());
+	}
+
+	@Override
+	public void updateOrder(Product product) throws DAOException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

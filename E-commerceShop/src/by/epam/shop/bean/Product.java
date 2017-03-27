@@ -4,6 +4,7 @@ public class Product {
 	private int id;
 	private String title;
 	private String category;
+	private int categoryID;
 	private double price;
 	private String description;
 	private int amount;
@@ -91,5 +92,11 @@ public class Product {
 			return false;
 		}
 		return true;
+	}
+	public int getCategoryID() {
+		return categoryID;
+	}
+	public void setCategoryID(int categoryID) {
+		this.categoryID = categoryID;
 	}
 }

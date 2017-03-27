@@ -9,8 +9,10 @@ public class QueryList {
 	public static final String GetUserQuery = "SELECT `c`.`c_id`, `c_name`, `c_surname`,`c_email`,`c_phonenumber`,`c_isbanned`,`is_admin`,`discount_coefficient`,`c_balance`,`c_password` "
 											+ "FROM `online_shop`.`clients` as `c` "
 											+ "JOIN `online_shop`.`discounts` as `d` "
-											+ "ON  `c`.`c_id` = `d`.`c_id` "
-											+ "WHERE `c_email`=? && `c_password`=?";
+											+ "ON  `c`.`c_id` = `d`.`c_id` ";
+	
+	public static final String GetUserQueryLogin = "WHERE `c_email`=? && `c_password`=?;";
+	public static final String GetUserQueryId = "WHERE `c`.`c_id`=?;";
 	
 	public static final String UpdateUserQuery = "UPDATE `online_shop`.`clients` "
 												+ "SET `c_balance`=? "
@@ -20,11 +22,17 @@ public class QueryList {
 	
 	public static final String WhereCondUserQuery_P = "WHERE `c_email`=? && `c_password`=?";*/
 	
-	public static final String DeleteUserQuery = "DELETE FROM `online_shop`.`clients` "
-											   + "WHERE `c_email`=? && `c_password`=?";
-	public static final String GetAllUsersQuery = "";
+	public static final String DeleteUserQuery = "";
+	public static final String GetAllUsersQuery = "SELECT `c`.`c_id`, `c_name`, `c_surname`,`c_email`,`c_phonenumber`,`c_isbanned`,`is_admin`,`discount_coefficient`,`c_balance`,`c_password` "
+												+ "FROM `online_shop`.`clients` as `c` "
+												+ "JOIN `online_shop`.`discounts` as `d` "
+												+ "ON  `c`.`c_id` = `d`.`c_id`; ";
 	
 	//Products
+	public static final String AddProductQuery = "INSERT  INTO `online_shop`.`products` "
+											   + "(`p_id`,`p_title`,`category_id` ,`p_price`,`p_description`,`p_amount`) "
+											   + "VALUES (DEFAULT, ?, ?, ?, ?, ?); ";
+	
 	public static final String GetProductQuery = "SELECT `p_id`,`p_title`,`category`,`p_price`,`p_description`,`p_amount` "
 												+ "FROM `online_shop`.`products` AS `p` "
 												+ "JOIN `online_shop`.`categories` AS `cat` "
@@ -49,4 +57,21 @@ public class QueryList {
 	
 	public static final String DecreaseProductAmountQuery = "UPDATE `online_shop`.`products` SET p_amount=p_amount-? "
 														  + "WHERE p_id=?; ";
+	
+	public static final String GetAllOrdersQuery = "SELECT `o_id`, `c_id`, `o_order_date`,`o_delivery_date`, `o_address`,`o_bill`,`o_ispaid`,`o_iscompleted` "
+												 + "FROM `online_shop`.`orders`";
+	
+	public static final String GetOrderQuery = "SELECT `o_id`, `c_id`, `o_order_date`,`o_delivery_date`, `o_address`,`o_bill`,`o_ispaid`,`o_iscompleted` "
+											+ "FROM `online_shop`.`orders` AS `ord`"
+											+ "WHERE `o_id`=?;";
+	
+	public static final String GetOrderedProducts = "SELECT `p_id`,`p_title`,`p_price`, `product_quantity` "
+													+ "FROM `online_shop`.`products` AS `p` "
+													+ "JOIN `online_shop`.`ordered_products` AS `ordpr` "
+													+ "ON `p`.`p_id` = `ordpr`.`product_id` "
+													+ "WHERE `ordpr`.`order_id` =?";
+	
+	public static final String UpdateOrderQuery = "UPDATE `online_shop`.`orders` "
+												+ "SET `o_delivery_date`=?, `o_address`=? "
+												+ "WHERE o_id=?; ";
 }

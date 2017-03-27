@@ -3,6 +3,7 @@ package by.epam.shop.command;
 import java.util.HashMap;
 import java.util.Map;
 
+import by.epam.shop.command.admin.AdminOrderPage;
 import by.epam.shop.command.admin.AdminPage;
 import by.epam.shop.command.authorization.LogOut;
 import by.epam.shop.command.authorization.SignUp;
@@ -13,7 +14,9 @@ import by.epam.shop.command.localization.Localization;
 import by.epam.shop.command.order.AddingToCart;
 import by.epam.shop.command.order.DeletingFromCart;
 import by.epam.shop.command.order.MakingOrder;
+import by.epam.shop.command.order.OrderInformation;
 import by.epam.shop.command.order.OrderPage;
+import by.epam.shop.command.order.OrderUpdating;
 import by.epam.shop.command.products.Catalog;
 import by.epam.shop.command.products.ProductPage;
 import by.epam.shop.command.user.RechargingBalance;
@@ -36,6 +39,9 @@ public class CommandProvider {
 		commands.put(ParameterList.CMD_TOPBALANCE, new RechargingBalance());
 		commands.put(ParameterList.CMD_ORDER_PG, new OrderPage());
 		commands.put(ParameterList.CMD_MAKE_ORDER, new MakingOrder());
+		commands.put(ParameterList.CMD_ADMIN_ORDER_PG, new AdminOrderPage());
+		commands.put(ParameterList.CMD_ORDER_INFORM, new OrderInformation());
+		commands.put(ParameterList.CMD_ORDER_CHANGE, new OrderUpdating());
 	}
 	
 	public static CommandProvider getInstance() {

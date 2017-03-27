@@ -38,4 +38,10 @@ public final class ParameterList {
 	public final static String CMD_ORDER_PG = "order_page";
 	public final static String ADDRESS = "address";
 	public final static String DELIVERY_DATE = "delivery_date";
+	
+	public final static String CMD_ADMIN_ORDER_PG = "admin_order_page";
+	
+	public final static String CMD_ORDER_INFORM = "order_details";
+	public final static String CMD_ORDER_CHANGE = "change_order";
+	public final static String CMD_ORDER_ID = "order_id";
 }

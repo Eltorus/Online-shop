@@ -9,10 +9,14 @@ public final class PageList {
 	public static final String PG_CATALOG = "/WEB-INF/jsp/catalog.jsp";
 	public static final String PG_GOOD = "/WEB-INF/jsp/product.jsp";
 	public static final String PG_CART = "/cart";
+	
 	public static final String PG_ORDER = "/order";
 	
 	public static final String PG_SIGNIN = "/signin";
 	public static final String PG_PROFILE = "/profile";
-	public static final String PG_SIGNUP = "/WEB-INF/jsp/signUp.jsp";
-	public static final String PG_ADMIN = "/WEB-INF/jsp/administration.jsp";
+	
+	public static final String PG_ORDER_INFO = "/WEB-INF/jsp/administration/orderInfo.jsp";
+	public static final String PG_ADMIN_ORDER = "/WEB-INF/jsp/administration/adminOrders.jsp";
+	public static final String PG_ADMIN_USER = "/WEB-INF/jsp/administration/adminUsers.jsp";
+	public static final String PG_ADMIN_PRODUCT = "/WEB-INF/jsp/administration/adminProducts.jsp";
 }
