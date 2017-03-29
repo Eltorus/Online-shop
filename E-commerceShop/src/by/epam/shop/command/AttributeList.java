@@ -6,7 +6,7 @@ public final class AttributeList {
 	public static final String ATTR_LOCAL = "local";
 	
 	public static final String ATTR_USER = "user";
-	public static final String ATTR_USERLIST = "user_list";
+	public static final String ATTR_USERLIST = "userList";
 	
 	public static final String ATTR_CART = "cart";
 	public static final String ATTR_ORDER = "order";

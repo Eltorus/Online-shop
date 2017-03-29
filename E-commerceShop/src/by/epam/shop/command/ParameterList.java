@@ -22,11 +22,13 @@ public final class ParameterList {
 	public static final String CMD_TOPBALANCE = "top_balance";
 	public static final String CMD_CREDIT = "credit";
 	public static final String CMD_USER_ADDRESS = "address";
+	public static final String USER_ID="user_id";
 	public static final String USER_NAME ="name";
 	public static final String USER_SURNAME="surname";
 	public static final String USER_PHONE="phone";
 	public static final String USER_PSWRD = "password";
 	public static final String USER_EMAIL = "email";
+	public static final String USER_BANNED = "user_banned";
 	public static final String USER_PSWRD_CONFIRM="password_confirm";
 	
 	public static final String CMD_CATALOG = "catalog";
@@ -60,7 +62,7 @@ public final class ParameterList {
 	public final static String CMD_ORDER_INFORM = "order_details";
 	public final static String CMD_ORDER_CHANGE = "change_order";
 	public final static String CMD_ORDER_ID = "order_id";
-	
+	public final static String CMD_USER_UPDATE = "user_update";
 	public final static String CMD_ORDER_IS_COMPLITED= "isOrderComplited";
 	public final static String CMD_ORDER_COMPLITED= "Complited";
 	

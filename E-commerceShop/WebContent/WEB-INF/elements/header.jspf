@@ -33,7 +33,7 @@
 			              	<li><a href="<c:url value="profile"/>">${profile}</a></li>
 			              </c:when>
 			              <c:otherwise>
-			              	<li><a href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In/Register</a></li>     
+			              	<li><a href="#signup" data-toggle="modal" data-target=".bs-modal-sm">${signin}/${signup}</a></li>     
 			              </c:otherwise>
 			             </c:choose>
                     </ul>

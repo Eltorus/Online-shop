@@ -4,14 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import by.epam.shop.command.admin.AdminOrderPage;
-import by.epam.shop.command.admin.AdminPage;
 import by.epam.shop.command.admin.AdminProductPage;
+import by.epam.shop.command.admin.AdminUserPage;
 import by.epam.shop.command.admin.order.OrderEditPage;
 import by.epam.shop.command.admin.order.OrderUpdating;
 import by.epam.shop.command.admin.product.ProductUpdating;
+import by.epam.shop.command.admin.user.UpdateUser;
 import by.epam.shop.command.authorization.LogOut;
 import by.epam.shop.command.authorization.SignUp;
-import by.epam.shop.command.authorization.SingIn;
+import by.epam.shop.command.authorization.SignIn;
 import by.epam.shop.command.authorization.SingInPage;
 import by.epam.shop.command.exception.CommandException;
 import by.epam.shop.command.localization.Localization;
@@ -28,11 +29,10 @@ public class CommandProvider {
 	private Map<String, Command> commands = new HashMap<String, Command>();
 	
 	private CommandProvider() {
-		commands.put(ParameterList.CMD_SIGNIN, new SingIn());
+		commands.put(ParameterList.CMD_SIGNIN, new SignIn());
 		commands.put(ParameterList.CMD_SIGNIN_PG, new SingInPage());
 		commands.put(ParameterList.CMD_LOCAL, new Localization());
 		commands.put(ParameterList.CMD_LOGOUT, new LogOut());
-		commands.put(ParameterList.ADMIN_PAGE, new AdminPage());
 		commands.put(ParameterList.CMD_CATALOG,  new Catalog());
 		commands.put(ParameterList.CMD_SIGNUP, new SignUp());
 		commands.put(ParameterList.CMD_PRODUCT_PG, new ProductPage());
@@ -47,6 +47,8 @@ public class CommandProvider {
 		commands.put(ParameterList.CMD_ADMIN_PRODUCT_PG, new AdminProductPage());
 		commands.put(ParameterList.CMD_PRODUCT_ADD, new ProductPage());
 		commands.put(ParameterList.CMD_PRODUCT_UPDATE, new ProductUpdating());
+		commands.put(ParameterList.CMD_ADMIN_USER_PG, new AdminUserPage());
+		commands.put(ParameterList.CMD_USER_UPDATE, new UpdateUser());
 	}
 	
 	public static CommandProvider getInstance() {

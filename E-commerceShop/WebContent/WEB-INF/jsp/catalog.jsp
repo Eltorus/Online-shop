@@ -24,7 +24,7 @@
                         	<form action="Controller" method="get">
                         	<input type="hidden" name="command" value="product_page"/>
                         	<input type="hidden" name="product_id" value="${product.id}"/>
-                            <input type="image" src="http://placehold.it/320x150"  alt="${product.id}">                        
+                            <input type="image" src="img/test2.png"  alt="${product.id}">                        
                             <div class="caption">
                                 <h4 class="pull-right">${product.price}</h4>
                                <button type="submit" class="btn-link">${product.title}</button>

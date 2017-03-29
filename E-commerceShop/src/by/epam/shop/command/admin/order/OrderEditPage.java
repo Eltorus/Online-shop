@@ -7,8 +7,8 @@ import by.epam.shop.bean.Order;
 import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
-import by.epam.shop.command.UserValidation;
 import by.epam.shop.command.exception.CommandException;
+import by.epam.shop.command.validation.UserValidation;
 import by.epam.shop.controller.PageList;
 import by.epam.shop.service.OrderService;
 import by.epam.shop.service.exception.ServiceException;
@@ -18,8 +18,8 @@ public class OrderEditPage implements Command{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		if(!UserValidation.isUserLoged(request, response)) {
-			return PageList.PG_INDEX;
+		if(!UserValidation.isUserLoged(request, response) || !UserValidation.isUserAdmin(request, response)) {
+			return PageList.PG_SIGNIN;
 		}
 		
 		try {
@@ -29,9 +29,7 @@ public class OrderEditPage implements Command{
 			OrderService orderService = ServiceFactory.getInstance().getOrderService();
 			Order result = orderService.getOrder(order);
 			request.setAttribute(AttributeList.ATTR_ORDER, result);
-			if(result == null) {
-				//error message
-			}
+
 			return PageList.PG_ORDER_INFO;
 		} catch (ServiceException e) {
 			throw new CommandException(e);

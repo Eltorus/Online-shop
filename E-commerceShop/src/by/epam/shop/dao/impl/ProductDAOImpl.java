@@ -130,12 +130,14 @@ public class ProductDAOImpl implements ProductDAO {
 		try {
 			con = DBConnector.getConnection();
 			ps = con.prepareStatement(QueryList.UpdateProductQuery);
+			
 			ps.setString(1, product.getTitle());
 			ps.setInt(2, product.getCategoryID());
 			ps.setDouble(3, product.getPrice());
 			ps.setString(4, product.getDescription());
 			ps.setInt(5, product.getAmount());
 			ps.setInt(6, product.getId());
+			
 			ps.executeUpdate();
 		} catch(SQLException e) {
 			throw new DAOException(e);

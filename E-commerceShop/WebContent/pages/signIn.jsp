@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/shop.css">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<title>Authorization</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="css/shop.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<title>Authorization</title>
 </head>
 <body>
-<c:if test="${not empty sessionScope.user}">
-	<c:redirect url="/"/>
-</c:if>
-<%@ include file="/WEB-INF/elements/header.jspf" %>
+	<c:if test="${not empty sessionScope.user}">
+		<c:redirect url="/"/>
+	</c:if>
+	<%@ include file="/WEB-INF/elements/header.jspf" %>
 
 	
 	<div class="container">

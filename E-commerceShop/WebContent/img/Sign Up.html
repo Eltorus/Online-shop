@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://localhost:8080/E-commerceShop/signup -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" href="./Sign Up_files/bootstrap.min.css">
+<link rel="stylesheet" href="./Sign Up_files/shop.css">
+<title>Sign Up</title>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id="myTabContent" class="tab-content">
+        <h4>Sign In</h4>
+        <div class="tab-pane fade active in" id="signin">
+            <form class="form-signin" action="http://localhost:8080/E-commerceShop/Controller" method="post">
+            <input type="hidden" name="command" value="sign_in">
+            <fieldset>
+            <!-- Sign In Form -->
+            <!-- Text input-->
+            <div class="control-group">
+              <label class="control-label" for="userid">Email</label>
+              <div class="controls">
+                <input required="" id="userid" name="email" type="email" class="form-control" placeholder="Email">
+              </div>
+            </div>
+
+            <!-- Password input-->
+            <div class="control-group">
+              <label class="control-label" for="passwordinput">Password</label>
+              <div class="controls">
+                <input required="" id="passwordinput" name="password" class="form-control" type="password" placeholder="********">
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="control-group">
+              <label class="control-label" for="signin"></label>
+              <div class="controls">
+                <button id="signin" name="signin" class="btn btn-success">Sign In</button>
+                <a href="http://localhost:8080/E-commerceShop/signup">Sign Up</a>
+              </div>
+            </div>
+            </fieldset>
+            </form>
+        </div>
+    </div>
+      </div>
+      <div class="modal-footer">
+      	
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="http://localhost:8080/E-commerceShop/">Online-shop</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+           <li><form action="http://localhost:8080/E-commerceShop/Controller" method="get"><input type="hidden" name="command" value="catalog">
+                	<button type="submit" class="btn-link">Catalog</button></form></li>
+            
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://localhost:8080/E-commerceShop/cart">Cart</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="http://localhost:8080/E-commerceShop/signup#"><i class="glyphicon glyphicon-user"></i> Profile <span class="caret"></span></a>
+                    <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                    	
+                          
+			              
+			              	<li><a href="http://localhost:8080/E-commerceShop/signup#signup" data-toggle="modal" data-target=".bs-modal-sm">Sign In/Sign Up</a></li>     
+			              
+			             
+                    </ul>
+                </li>
+					
+					<li class="dropdown"><a class="dropdown-toggle" role="button" data-toggle="dropdown" href="http://localhost:8080/E-commerceShop/signup#"> English 
+					<span class="caret"></span></a>
+						<ul id="g-account-menu" class="dropdown-menu" role="menu">
+								<li><form action="http://localhost:8080/E-commerceShop/Controller" method="get"><input type="hidden" name="command" value="local">
+								<input type="hidden" name="local" value="ru">
+									<button type="submit" class="btn-link">Русский</button></form></li>
+								<li><form action="http://localhost:8080/E-commerceShop/Controller" method="get"><input type="hidden" name="command" value="local">
+								<input type="hidden" name="local" value="en">
+									<button type="submit" class="btn-link">English</button></form></li>
+						</ul>
+						</li>
+				</ul>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+  <fieldset>
+    <div class="container">
+    <form class="form-horizontal" action="http://localhost:8080/E-commerceShop/Controller" method="post">
+    <input type="hidden" name="command" value="sign_up">
+            <fieldset>
+            <!-- Sign Up Form -->
+            <div class="control-group">
+              <label class="control-label">First Name:</label>
+              <div class="controls">
+                <input id="name" name="name" class="form-control" type="text" placeholder="Enter first name" required="">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">Last Name:</label>
+              <div class="controls">
+                <input id="surname" name="surname" class="form-control" type="text" placeholder="Enter last name" required="">
+              </div>
+            </div>
+            
+            <div class="control-group">
+              <label class="control-label" for="Email">Email:</label>
+              <div class="controls">
+                <input id="Email" name="email" class="form-control" type="email" placeholder="Enter email" required="">
+              </div>
+            </div>
+            
+            <div class="control-group">
+              <label class="control-label" for="userid">Phone number:</label>
+              <div class="controls">
+                <input id="phone" name="phone" class="form-control" type="tel" placeholder="Enter phonenumber" required="">
+              </div>
+            </div>
+            
+            <div class="control-group">
+              <label class="control-label" for="password">Password:</label>
+              <div class="controls">
+                <input id="password" name="password" class="form-control" type="password" placeholder="********" required="">
+                <em>1-8 Characters</em>
+              </div>
+            </div>
+            
+            <div class="control-group">
+              <label class="control-label" for="reenterpassword">Confirm Password:</label>
+              <div class="controls">
+                <input id="password_confirm" class="form-control" name="password_confirm" type="password" placeholder="********" required="">
+              </div>
+            </div>
+            <br>
+            
+            <div class="control-group">
+              <label class="control-label" for="confirmsignup"></label>
+              <div class="controls">
+                <button id="confirmsignup" name="confirmsignup" type="submit" class="btn btn-success">Sign Up</button>
+              </div>
+            </div>
+            </fieldset>
+            </form>
+    </div>
+  </fieldset>
+</div>
+<script src="./Sign Up_files/jquery-3.1.1.min.js.Без названия"></script>
+<script src="./Sign Up_files/jquery.maskedinput.min.js.Без названия"></script>
+<script src="./Sign Up_files/reg_script.js.Без названия"></script>
+<script src="./Sign Up_files/bootstrap.min.js.Без названия"></script>
+
+</body></html>

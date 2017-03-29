@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import by.epam.shop.command.Command;
 import by.epam.shop.command.CommandProvider;
 import by.epam.shop.command.ParameterList;
@@ -15,6 +17,7 @@ import by.epam.shop.command.exception.CommandException;
 
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final static Logger logger = Logger.getLogger(Controller.class);
 	public Controller() {
 		super();
 	}
@@ -42,10 +45,8 @@ public class Controller extends HttpServlet {
 			page = command.execute(request, response);
 		} catch(CommandException e) {
 			e.printStackTrace();
-			request.getSession().setAttribute("error", e.getMessage());
-			//Logger.getLogger(Controller.class).error(e);
-			//request.getHeader("referer");
-			return PageList.PG_INDEX;
+			logger.error(e);
+			return PageList.PG_ERROR;
 		}
 		return page;
 	}

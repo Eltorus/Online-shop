@@ -1,6 +1,6 @@
 package by.epam.shop.bean;
 
-import java.sql.Timestamp;
+import java.sql.Timestamp; ///заменить 
 
 public class Order {
 	private int id;

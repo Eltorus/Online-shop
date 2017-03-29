@@ -15,6 +15,7 @@
 <fmt:message bundle="${loc}" key="local.email" var="email" />
 <fmt:message bundle="${loc}" key="local.password" var="password" />
 <fmt:message bundle="${loc}" key="local.signin" var="signin" />
+<fmt:message bundle="${loc}" key="local.signup" var="signup" />
 <fmt:message bundle="${loc}" key="local.message" var="message" />
 <fmt:message bundle="${loc}" key="local.order.cartadd" var="cartadd" />
 <fmt:message bundle="${loc}" key="local.order.makeorder" var="makeorder" />

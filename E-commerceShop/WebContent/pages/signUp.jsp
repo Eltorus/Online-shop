@@ -55,7 +55,7 @@
             <div class="control-group">
               <label class="control-label" for="password">Password:</label>
               <div class="controls">
-                <input id="password" name="password" class="form-control" type="password" placeholder="********" class="input-large" required>
+                <input id="password" name="password" class="form-control" min="1" max="5" type="password" placeholder="********" class="input-large" required>
                 <em>1-8 Characters</em>
               </div>
             </div>
@@ -63,7 +63,7 @@
             <div class="control-group">
               <label class="control-label" for="reenterpassword">Confirm Password:</label>
               <div class="controls">
-                <input id="password_confirm" class="form-control" name="password_confirm" type="password" placeholder="********" class="input-large" required>
+                <input id="password_confirm" class="form-control" min="1" max="5" name="password_confirm" type="password" placeholder="********" class="input-large" required>
               </div>
             </div>
             <br>

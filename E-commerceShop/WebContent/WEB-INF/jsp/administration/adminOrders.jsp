@@ -23,16 +23,13 @@
 
 
 <!-- Main -->
-<div class="container-fluid">
-    <div class="row">
-        <%@ include file="/WEB-INF/elements/adminMenu.jspf"%>
-        <!-- /col-3 -->
-        <div class="col-sm-9">
-            <div class="row">
-                <!--/col-->
-                <div class="col-md-15">
-                    <div class="table-responsive">
-							<table class="table table-striped">
+	<div class="container-fluid">
+		<div class="row">
+			<%@ include file="/WEB-INF/elements/adminMenu.jspf"%>
+			<!-- /col-3 -->
+				<div class="row">
+						<div class="table-responsive">
+							<table class="table table-sm table-hover" id="pTable">
 								<thead>
 									<tr>
 										<th>ID</th>
@@ -80,8 +77,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
