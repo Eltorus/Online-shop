@@ -115,7 +115,9 @@ public class OrderDAOImpl implements OrderDAO{
 			
 			ps.setTimestamp(1, order.getDeliveryDate());
 			ps.setString(2, order.getAddress());
-			ps.setInt(3, order.getId());
+			ps.setBoolean(3, order.isOrderCompleted());
+			ps.setInt(4, order.getId());
+			
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DAOException(e);

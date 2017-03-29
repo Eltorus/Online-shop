@@ -5,6 +5,10 @@ import java.util.Map;
 
 import by.epam.shop.command.admin.AdminOrderPage;
 import by.epam.shop.command.admin.AdminPage;
+import by.epam.shop.command.admin.AdminProductPage;
+import by.epam.shop.command.admin.order.OrderEditPage;
+import by.epam.shop.command.admin.order.OrderUpdating;
+import by.epam.shop.command.admin.product.ProductUpdating;
 import by.epam.shop.command.authorization.LogOut;
 import by.epam.shop.command.authorization.SignUp;
 import by.epam.shop.command.authorization.SingIn;
@@ -14,9 +18,7 @@ import by.epam.shop.command.localization.Localization;
 import by.epam.shop.command.order.AddingToCart;
 import by.epam.shop.command.order.DeletingFromCart;
 import by.epam.shop.command.order.MakingOrder;
-import by.epam.shop.command.order.OrderInformation;
 import by.epam.shop.command.order.OrderPage;
-import by.epam.shop.command.order.OrderUpdating;
 import by.epam.shop.command.products.Catalog;
 import by.epam.shop.command.products.ProductPage;
 import by.epam.shop.command.user.RechargingBalance;
@@ -40,8 +42,11 @@ public class CommandProvider {
 		commands.put(ParameterList.CMD_ORDER_PG, new OrderPage());
 		commands.put(ParameterList.CMD_MAKE_ORDER, new MakingOrder());
 		commands.put(ParameterList.CMD_ADMIN_ORDER_PG, new AdminOrderPage());
-		commands.put(ParameterList.CMD_ORDER_INFORM, new OrderInformation());
+		commands.put(ParameterList.CMD_ORDER_INFORM, new OrderEditPage());
 		commands.put(ParameterList.CMD_ORDER_CHANGE, new OrderUpdating());
+		commands.put(ParameterList.CMD_ADMIN_PRODUCT_PG, new AdminProductPage());
+		commands.put(ParameterList.CMD_PRODUCT_ADD, new ProductPage());
+		commands.put(ParameterList.CMD_PRODUCT_UPDATE, new ProductUpdating());
 	}
 	
 	public static CommandProvider getInstance() {

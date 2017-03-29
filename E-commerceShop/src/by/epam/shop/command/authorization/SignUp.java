@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.epam.shop.bean.User;
 import by.epam.shop.command.Command;
+import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
 import by.epam.shop.controller.PageList;
 import by.epam.shop.service.UserService;
@@ -19,19 +20,21 @@ public class SignUp implements Command {
 		String page = null;
 		// сделать это через js
 		try {
-			String passwordConfirm = request.getParameter("password_confirm");
-			String password = request.getParameter("password");
+			String passwordConfirm = request.getParameter(ParameterList.USER_PSWRD_CONFIRM);
+			String password = request.getParameter(ParameterList.USER_PSWRD);
 			if (!passwordConfirm.equals(password)) {
 				throw new CommandException("Password don't match");
 			}
+			
 			User user = fillUpUser(request, response);
 			UserService userService = ServiceFactory.getInstance().getUserService();
 			boolean successfulRegister = userService.addUser(user);
+			
+			
 			if (successfulRegister == true) {
 				page = PageList.PG_SIGNIN; // вернуть страницу с сообщением об
 											// успешной регистрацией
 			} else {
-				System.out.println("crap");
 				// предложить пользователю войти заново или восстановить пароль
 				page = PageList.PG_SIGNIN;
 			}
@@ -43,11 +46,11 @@ public class SignUp implements Command {
 	
 	private User fillUpUser(HttpServletRequest request, HttpServletResponse response) throws UtilException {
 		User user = new User();
-		user.setName(request.getParameter("name"));
-		user.setSurname(request.getParameter("surname"));
-		user.setPhonenumber(request.getParameter("phone"));
-		user.setEmail(request.getParameter("email"));
-		user.setPasswordHash(HashTool.hashLine(request.getParameter("password")));
+		user.setName(request.getParameter(ParameterList.USER_NAME));
+		user.setSurname(request.getParameter(ParameterList.USER_SURNAME));
+		user.setPhonenumber(request.getParameter(ParameterList.USER_PHONE));
+		user.setEmail(request.getParameter(ParameterList.USER_EMAIL));
+		user.setPasswordHash(HashTool.hashLine(request.getParameter(ParameterList.USER_PSWRD)));
 		return user;
 	}
 

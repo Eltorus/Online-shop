@@ -87,7 +87,6 @@ public class ProductDAOImpl implements ProductDAO {
 
 	
 	private PreparedStatement precompileGetProductStatement(Connection con , Product product) throws SQLException {
-		System.out.println("product id "+ product.getId());
 		PreparedStatement ps = null;
 		if(product.getId()!=0) {
 			ps = con.prepareStatement(QueryList.GetProductQuery + QueryList.GetProductWithIdQuery);
@@ -104,27 +103,45 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	private Product fillUpProduct(ResultSet rs) throws SQLException{
 		Product product = new Product();
-		product.setId(rs.getInt("p_id"));
-		product.setTitle(rs.getString("p_title"));
-		product.setCategory(rs.getString("category"));
-		product.setPrice(rs.getDouble("p_price"));
-		product.setDescription(rs.getString("p_description"));
-		product.setAmount(rs.getInt("p_amount"));
+		
+		product.setId(rs.getInt(1));
+		product.setTitle(rs.getString(2));
+		product.setCategory(rs.getString(3));
+		product.setPrice(rs.getDouble(4));
+		product.setDescription(rs.getString(5));
+		product.setAmount(rs.getInt(6));
+		product.setCategoryID(rs.getInt(7));
+		
 		return product;
 	}
 	
 	private void fillUpProductQuery(Product product, PreparedStatement ps) throws SQLException {
-		ps.setString(2, product.getTitle());
-		ps.setInt(3, product.getCategoryID());
-		ps.setDouble(4, product.getPrice());
-		ps.setString(5, product.getDescription());
-		ps.setInt(6, product.getAmount());
+		ps.setString(1, product.getTitle());
+		ps.setInt(2, product.getCategoryID());
+		ps.setDouble(3, product.getPrice());
+		ps.setString(4, product.getDescription());
+		ps.setInt(5, product.getAmount());
 	}
 
 	@Override
-	public void updateOrder(Product product) throws DAOException {
-		// TODO Auto-generated method stub
-		
+	public void updateProduct(Product product) throws DAOException {
+	    Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = DBConnector.getConnection();
+			ps = con.prepareStatement(QueryList.UpdateProductQuery);
+			ps.setString(1, product.getTitle());
+			ps.setInt(2, product.getCategoryID());
+			ps.setDouble(3, product.getPrice());
+			ps.setString(4, product.getDescription());
+			ps.setInt(5, product.getAmount());
+			ps.setInt(6, product.getId());
+			ps.executeUpdate();
+		} catch(SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			DBConnector.closeConnection(ps, con);
+		}
 	}
 
 }

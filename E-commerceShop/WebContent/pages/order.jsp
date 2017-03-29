@@ -46,16 +46,8 @@
 	<form action="Controller" method="post">
 	<input type="hidden" name="command" value="make_order" />
 		<label class="control-label">${address}</label> 
-		<div class="col-sm-10">
-		<div class="form-group has-feedback has-error" id="addressinput">
-		<div class="col-sm-5">
-			<input type="text" id="address" class="form-control input-sm chat-input" pattern="^([А-Яа-я\s.])+\,([А-Яа-я\s.])+\,([\s\d])+\,([А-Яа-я\d\s.])$"
-				title="Формат: г.Минск, ул. Сурганова, 7, к.5" name="address" required/>
-				</div>
-		</div>
-		
+			<input type="text" id="address" pattern="^([А-Яа-я\s.])+\,([А-Яа-я\s.])+\,([\s\d])+\,([А-Яа-я\d\s.])$" class="form-control input-sm chat-input" title="Формат: г.Минск, ул. Сурганова, 7, к.5" name="address" required/>
 			<input type="submit" id="purchase" class="btn btn-default btn-md" disabled value="${purchase}" />
-		</div>
 	</form>
 
 	<script src="js/jquery-3.1.1.min.js"></script>

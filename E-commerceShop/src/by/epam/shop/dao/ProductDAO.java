@@ -10,5 +10,5 @@ public interface ProductDAO {
 	public boolean deleteProduct(Product product) throws DAOException;
 	public List<Product> getAllProducts() throws DAOException;
 	public List<Product> getProduct(Product product) throws DAOException;
-	public void updateOrder(Product product) throws DAOException;
+	public void updateProduct(Product product) throws DAOException;
 }

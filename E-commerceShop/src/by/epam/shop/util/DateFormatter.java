@@ -9,7 +9,7 @@ public final class DateFormatter {
 	private DateFormatter() {}
 
 	public static Timestamp getTimeStamp(String s) throws UtilException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Timestamp ts = null;
 		
 		try {

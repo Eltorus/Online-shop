@@ -42,7 +42,7 @@
 										<th>Address</th>
 										<th>Bill</th>
 										<th>Paid?</th>
-										<th>Complited?</th>
+										<th>Status</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -56,7 +56,15 @@
 											<td>${order.address}</td>
 											<td>${order.bill}</td>
 											<td>${order.orderPaid}</td>
-											<td>${order.orderCompleted}</td>
+											<td><c:choose>
+													<c:when test="${order.orderCompleted == true}">
+														Complited
+													</c:when>
+													<c:otherwise>
+														Proccessing
+													</c:otherwise>
+												</c:choose>
+											</td>
 											<td>
 												<form action="Controller" method="get">
 													<input type="hidden" name="command" value="order_details" /> 

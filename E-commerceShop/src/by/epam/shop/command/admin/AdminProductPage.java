@@ -19,12 +19,10 @@ public class AdminProductPage implements Command{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		if(!UserValidation.isUserLoged(request, response)) {
+		if(!UserValidation.isUserLoged(request, response) || !UserValidation.isUserAdmin(request, response)) {
 			return PageList.PG_SIGNIN;
 		}
-		if(!UserValidation.isUserAdmin(request, response)) {
-			////
-		}
+		
 		try {
 			ProductService productService = ServiceFactory.getInstance().getProductService();
 			List<Product> productList = productService.getAllProducts();

@@ -18,5 +18,9 @@ public final class PageList {
 	public static final String PG_ORDER_INFO = "/WEB-INF/jsp/administration/orderInfo.jsp";
 	public static final String PG_ADMIN_ORDER = "/WEB-INF/jsp/administration/adminOrders.jsp";
 	public static final String PG_ADMIN_USER = "/WEB-INF/jsp/administration/adminUsers.jsp";
+	
 	public static final String PG_ADMIN_PRODUCT = "/WEB-INF/jsp/administration/adminProducts.jsp";
+	public static final String PG_ADMIN_PRODUCT_R = "/Controller?command=admin_product_page";
+	
+	public static final String PG_ADMIN_PRODUCT_EDIT = "/WEB-INF/jsp/administration/productEdit.jsp";
 }

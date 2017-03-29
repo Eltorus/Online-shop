@@ -1,5 +1,5 @@
 $("#phone").mask("+375 (99) 999-99-99");
-$('#datepicker').mask("99.99.9999");
+$('#datepicker').mask("9999.99.99");
 
 $('#address').on('keyup', function() {
 	var address = $('#address').val();
@@ -12,8 +12,8 @@ $('#address').on('keyup', function() {
 	}
 });
 
-function isValidDate(s) {
+/*function isValidDate(s) {
 	var bits = s.split('.');
 	var d = new Date(bits[2], bits[1] - 1, bits[0]);
 	return d && (d.getMonth() + 1) == bits[1];
-}
+}*/

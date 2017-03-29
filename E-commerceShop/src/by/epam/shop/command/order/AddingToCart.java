@@ -22,7 +22,7 @@ public class AddingToCart implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		Product requestProduct = new Product();
-		requestProduct.setId(Integer.parseInt(request.getParameter(ParameterList.CMD_PRODUCT_ID)));
+		requestProduct.setId(Integer.parseInt(request.getParameter(ParameterList.PRODUCT_ID)));
 
 		Cart cart = (Cart) request.getSession().getAttribute(AttributeList.ATTR_CART);
 		try {
@@ -34,7 +34,6 @@ public class AddingToCart implements Command {
 
 			if (cartLine != null) {
 				cart.removeFromProductList(cartLine);
-				System.out.println("Cart size: " + cart.getProductList().size());
 				int quantity = cartLine.getQuantity() + 1;
 				cartLine.setQuantity(quantity);
 

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.CommandProvider;
 import by.epam.shop.command.ParameterList;

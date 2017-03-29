@@ -27,79 +27,103 @@
 		<div class="row">
 			<%@ include file="/WEB-INF/elements/adminMenu.jspf"%>
 			<!-- /col-3 -->
-			<div class="col-sm-9">
+			<div class="col-sm-20">
 				<div class="row">
-					<!-- center left-->
-					<!--  <div class="col-md-6">
-                    tabs
-                    <div class="panel">
-                        <ul class="nav nav-tabs" id="myTab">
-                            <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
-                            <li><a href="#messages" data-toggle="tab">Messages</a></li>
-                            <li><a href="#settings" data-toggle="tab">Settings</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active well" id="profile">
-                                <h4><i class="glyphicon glyphicon-user"></i></h4> Lorem profile dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-                                <p>Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis dolor, in sagittis nisi.</p>
-                            </div>
-                            <div class="tab-pane well" id="messages">
-                                <h4><i class="glyphicon glyphicon-comment"></i></h4> Message ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-                                <p>Quisque mauris augu.</p>
-                            </div>
-                            <div class="tab-pane well" id="settings">
-                                <h4><i class="glyphicon glyphicon-cog"></i></h4> Lorem settings dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
-                                <p>Quisque mauris augue, molestie.</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div> -->
-					<!--/col-->
 					<div class="col-md-6">
 						<div class="table-responsive">
-							<table class="table table-sm table-hover">
+							<table class="table table-sm table-hover" id="pTable">
 								<thead>
 									<tr>
 										<th>ID</th>
 										<th>Title</th>
 										<th>Category</th>
 										<th>Price</th>
+										<th>Description</th>
 										<th>Amount</th>
 										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${requestScope.products}"
-										var="product" varStatus="i">
+									<c:forEach items="${requestScope.products}" var="product" varStatus="i">
 										<tr>
 											<td>${product.id}</td>
 											<td>${product.title}</td>
 											<td>${product.category}</td>
 											<td>${product.price}</td>
+											<td>${product.description}</td>
 											<td>${product.amount}</td>
-											<td><form action="Controller" method="post">
-													<input type="hidden" name="command"
-														value="change_product" /> <input type="hidden"
-														name="product_id" value="${product.id}" />
-													<button type="submit" class="btn btn-default btn-md">Change</button>
-												</form></td>
+											<td><button type="button" id="updateProduct" data-cat="${product.categoryID}" class="btn btn-default btn-md" data-toggle="modal" data-target="#productInfo">Change</button>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
 						</div>
 					</div>
+					<div class="controls">
+							<button id="addProduct" type="button" class="btn btn-primary" data-toggle="modal" data-target="#productInfo">Add product</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
+<div class="modal fade" id="productInfo" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+		<form class="form-signin" action="Controller" method="post">
+			<input type="hidden" name="command" value="update_product" /> 
+			<input type="hidden" id="product_id" name="product_id" value="" />
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">Title: </label> <input required name="product_title"
+						value="" id="title" type="text"
+						class="form-control" class="input-medium" required>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">Category :</label> 
+					<select class="form-control" id="category" name="category">
+						<option value="1">Home Stuff</option>
+						<option value="2">Electronics</option>
+						<option value="3">Clothes</option>
+						<option value="4">Shoes</option>
+					</select>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">Price: </label> 
+					<input required name="price" value="" id="price" type="text" class="form-control" class="input-medium" required>
+				</div>
+
+
+				<div class="control-group">
+					<label class="control-label">Description: </label>
+					<textarea class="form-control" rows="5" id="description"
+						name="description" required></textarea>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label">Amount: </label> 
+					<input name="amount" value="" id="amount" type="number" class="form-control input-medium" required>
+				</div>
+
+			</fieldset>
+			<div class="modal-footer">
+		      	<button type="submit" class="btn btn-success">Submit</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		    </div>
+		</form>
+		</div>
+		</div>
+		</div>
+		</div>
+
 	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="js/modalProduct.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/scripts.js"></script>
 
-</body>
 </body>
 </html>

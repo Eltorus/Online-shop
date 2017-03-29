@@ -45,6 +45,12 @@ public class Product {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	public int getCategoryID() {
+		return categoryID;
+	}
+	public void setCategoryID(int categoryID) {
+		this.categoryID = categoryID;
+	}
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -92,11 +98,5 @@ public class Product {
 			return false;
 		}
 		return true;
-	}
-	public int getCategoryID() {
-		return categoryID;
-	}
-	public void setCategoryID(int categoryID) {
-		this.categoryID = categoryID;
 	}
 }

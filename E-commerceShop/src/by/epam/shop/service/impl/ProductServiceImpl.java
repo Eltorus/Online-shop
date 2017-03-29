@@ -11,83 +11,117 @@ import by.epam.shop.service.exception.ServiceException;
 
 public class ProductServiceImpl implements ProductService {
 
-	@Override
-	public List<Product> getAllProducts() throws ServiceException {
-		ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
-		List<Product> products = null;
-		try {
-			products = productDAO.getAllProducts();
-			if(products.isEmpty()) {
-				return null;
-			}
-		} catch (DAOException e) {
-			throw new ServiceException(e);
-		}
-		return products;
-	}
-
-	@Override
-	public Product getProduct(Product product) throws ServiceException {
-		if(product == null) {
-			throw new ServiceException("Object is null");
-		}
-		///
+    @Override
+    public List<Product> getAllProducts() throws ServiceException {
+	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+	List<Product> products = null;
+	try {
+	    products = productDAO.getAllProducts();
+	    if (products.isEmpty()) {
 		return null;
+	    }
+	} catch (DAOException e) {
+	    throw new ServiceException(e);
 	}
-	
-	@Override
-	public Product getProductWithId(Product product) throws ServiceException {
-		ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
-		Product result = null;
-		if(product == null) {
-			throw new ServiceException("Product is null");
-		}
-		if (product.getId() == 0) {
-			throw new ServiceException("Id is null");
-		}
-		try {
-			List<Product> productList = productDAO.getProduct(product);
-			result = productList.get(0);
-		} catch (DAOException e) {
-			throw new ServiceException(e);
-		}
-		return result;
+	return products;
+    }
+
+    @Override
+    public Product getProduct(Product product) throws ServiceException {
+	if (product == null) {
+	    throw new ServiceException("Object is null");
+	}
+	///
+	return null;
+    }
+
+    @Override
+    public Product getProductWithId(Product product) throws ServiceException {
+	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+	Product result = null;
+	if (product == null) {
+	    throw new ServiceException("Product is null");
+	}
+	if (product.getId() == 0) {
+	    throw new ServiceException("Id is null");
+	}
+	try {
+	    List<Product> productList = productDAO.getProduct(product);
+	    result = productList.get(0);
+	} catch (DAOException e) {
+	    throw new ServiceException(e);
+	}
+	return result;
+    }
+
+    @Override
+    public List<Product> getProductWithTitle(Product product) throws ServiceException {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    public List<Product> getProductWithCategory(Product product) throws ServiceException {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    public List<Product> getProductWithPrice(Product product) throws ServiceException {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
+    @Override
+    public void changeProduct(Product product) throws ServiceException {
+	if (!isProductValid(product)) {
+	    throw new ServiceException("Object is not valid");
 	}
 
-	@Override
-	public List<Product> getProductWithTitle(Product product) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+	try {
+	    productDAO.updateProduct(product);
+	} catch (DAOException e) {
+	    throw new ServiceException(e);
 	}
 
-	@Override
-	public List<Product> getProductWithCategory(Product product) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+    }
+
+    @Override
+    public void addProduct(Product product) throws ServiceException {
+	if (!isProductValid(product)) {
+	    throw new ServiceException("Object is not valid");
 	}
 
-	@Override
-	public List<Product> getProductWithPrice(Product product) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+	try {
+	    productDAO.addProduct(product);
+	} catch (DAOException e) {
+	    throw new ServiceException(e);
+	}
+    }
+
+    @Override
+    public void deleteProduct(Product product) throws ServiceException {
+	// TODO Auto-generated method stub
+
+    }
+
+    private boolean isProductValid(Product product) {
+	if (product == null) {
+	    return false;
+	}
+	if (product.getTitle() == null || product.getTitle().isEmpty()) {
+	    return false;
+	}
+	if (product.getPrice() == 0) {
+	    return false;
+	}
+	if (product.getCategoryID() == 0) {
+	    return false;
 	}
 
-	@Override
-	public void changeProduct(Product product) throws ServiceException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addProduct(Product product) throws ServiceException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteProduct(Product product) throws ServiceException {
-		// TODO Auto-generated method stub
-		
-	}
+	return true;
+    }
 
 }

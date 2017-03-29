@@ -20,7 +20,6 @@ public class DeletingFromCart implements Command{
 		
 		if(cart.getProductList().size()>0) {
 			int index = (Integer.parseInt(request.getParameter(ParameterList.CMD_PRODUCT_INDX)));
-			System.out.println(index);
 			cart.removeFromListWithIndx(index);
 			
 			session.setAttribute(AttributeList.ATTR_CART, cart);

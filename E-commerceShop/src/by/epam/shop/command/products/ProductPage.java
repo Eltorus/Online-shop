@@ -17,16 +17,19 @@ public class ProductPage implements Command{
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		ProductService productService = ServiceFactory.getInstance().getProductService();
-		Product result = null;
 		try {
 			Product product = new Product();
-			product.setId(Integer.parseInt(request.getParameter(ParameterList.CMD_PRODUCT_ID)));
-			result = productService.getProductWithId(product);
+			product.setId(Integer.parseInt(request.getParameter(ParameterList.PRODUCT_ID)));
+			
+			ProductService productService = ServiceFactory.getInstance().getProductService();
+			Product result = productService.getProductWithId(product);
+			
 			request.setAttribute(AttributeList.ATTR_PRODUCT, result);
 		} catch (ServiceException e) {
 			throw new CommandException(e);
 		}
+		
+		
 		return PageList.PG_GOOD;
 	}
 
