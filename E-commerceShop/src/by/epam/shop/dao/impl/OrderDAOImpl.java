@@ -26,12 +26,12 @@ public class OrderDAOImpl implements OrderDAO {
     public void addOrder(Order order) throws DAOException {
 	Connection con = null;
 	Savepoint svpt = null;
-
+	PreparedStatement ps = null;
 	try {
 	    con = DBConnector.getConnection();
 	    con.setAutoCommit(false);
 	    svpt = con.setSavepoint("Add Order");
-	    compileAddOrderQuery(con, order);
+	    compileAddOrderQuery(con, ps, order);
 	    con.commit();
 
 	} catch (SQLException e) {
@@ -40,11 +40,13 @@ public class OrderDAOImpl implements OrderDAO {
 	    } catch (SQLException e1) {
 		throw new DAOException(e);
 	    }
+	} finally {
+	    DBConnector.closeConnection(ps, con);
 	}
     }
 
-    private void compileAddOrderQuery(Connection con, Order order) throws SQLException {
-	PreparedStatement ps = con.prepareStatement(QueryList.AddOrderQuery);
+    private void compileAddOrderQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
+	ps = con.prepareStatement(QueryList.AddOrderQuery);
 
 	ps.setInt(1, order.getUser().getId());
 	ps.setTimestamp(2, order.getDeliveryDate());
@@ -128,31 +130,34 @@ public class OrderDAOImpl implements OrderDAO {
 
 	try {
 	    con = DBConnector.getConnection();
-	    ps = con.prepareStatement(QueryList.GetOrderQuery);
 	    result = compileGetOrderQuery(con, ps, order);
 	} catch (SQLException e) {
 	    throw new DAOException(e);
 	} finally {
 	    DBConnector.closeConnection(ps, con);
 	}
+
 	return result;
     }
 
     private Order compileGetOrderQuery(Connection con, PreparedStatement ps, Order order)
 	    throws DAOException, SQLException {
 	Order result = null;
+
+	ps = con.prepareStatement(QueryList.GetOrderQuery_P + QueryList.WhereConditionOrderId_P);
 	ps.setInt(1, order.getId());
 	ResultSet rs = ps.executeQuery();
+
 	while (rs.next()) {
 	    result = fillUpOrder(rs);
 	}
 
-	result.setCart(getProductsToOrder(con, order));
+	result.setCart(getProductsToOrder(con, ps, order));
 	return result;
     }
 
-    private Cart getProductsToOrder(Connection con, Order order) throws SQLException {
-	PreparedStatement ps = con.prepareStatement(QueryList.GetOrderedProducts);
+    private Cart getProductsToOrder(Connection con, PreparedStatement ps, Order order) throws SQLException {
+	ps = con.prepareStatement(QueryList.GetOrderedProducts);
 	ps.setInt(1, order.getId());
 
 	Cart cart = new Cart();
@@ -166,6 +171,7 @@ public class OrderDAOImpl implements OrderDAO {
 	    product.setPrice(rs.getDouble(3));
 	    cl.setProduct(product);
 	    cl.setQuantity(rs.getInt(4));
+	    System.out.println("Get some product");
 	    cart.addToProductList(cl);
 	}
 	return cart;
@@ -198,8 +204,58 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public void deleteOrder(Order order) throws DAOException {
-	// TODO Auto-generated method stub
+	Connection con = null;
+	PreparedStatement ps = null;
+	Savepoint svpt = null; 
+	try {
+	    con = DBConnector.getConnection();
+	    con.setAutoCommit(false);
+	    svpt = con.setSavepoint("Delete Order");
+	    deleteOrderExecuteQuery(con, ps, order);
+	    
+	    con.commit();
+	} catch (SQLException e) {
+	    try {
+		con.rollback(svpt);
+	    } catch (SQLException e1) {
+		throw new DAOException(e);
+	    }
+	} finally {
+	    DBConnector.closeConnection(ps, con);
+	}
 
+    }
+
+    private void deleteOrderExecuteQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
+	ps = con.prepareStatement(QueryList.DeleteUserQuery);
+
+	ps.setInt(1, order.getId());
+	ps.executeUpdate();
+	
+	recoverUserBalanceQuery(con, ps, order);
+	productAmountRecoveryQuery(con, ps, order);
+    }
+    
+    private void recoverUserBalanceQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
+	ps = con.prepareStatement(QueryList.UserBalanceRecoveryQuery);
+	
+	ps.setDouble(1, order.getBill());
+	ps.setInt(2, order.getUser().getId());
+	
+	ps.executeUpdate();
+    }
+    
+    private void productAmountRecoveryQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
+	ps = con.prepareStatement(QueryList.ProductAmountRecoveryQuery);
+
+	Iterator<CartLine> itr = order.getCart().getProductList().iterator();
+	while (itr.hasNext()) {
+	    CartLine cartLine = itr.next();
+	    ps.setInt(1, cartLine.getQuantity());
+	    ps.setInt(2, cartLine.getProduct().getId());
+
+	    ps.executeUpdate();
+	}
     }
 
     private Order fillUpOrder(ResultSet rs) throws SQLException {
@@ -215,6 +271,41 @@ public class OrderDAOImpl implements OrderDAO {
 	order.setBill(rs.getDouble(6));
 	order.setOrderPaid(rs.getBoolean(7));
 	order.setOrderCompleted(rs.getBoolean(8));
+
 	return order;
+    }
+
+    @Override
+    public List<Order> getOrders(Order order) throws DAOException {
+	Connection con = null;
+	PreparedStatement ps = null;
+	List<Order> orderList = null;
+
+	try {
+	    con = DBConnector.getConnection();
+	    orderList = excuteGetOrdersQuery(con, ps, order);
+	} catch (SQLException e) {
+	    throw new DAOException(e);
+	} finally {
+	    DBConnector.closeConnection(ps, con);
+	}
+
+	return orderList;
+    }
+
+    private List<Order> excuteGetOrdersQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
+	List<Order> orderList = new ArrayList<>();
+
+	ps = con.prepareStatement(QueryList.GetOrderQuery_P + QueryList.GetOrderWhereConditionUserId_P);
+	ps.setInt(1, order.getUser().getId());
+
+	ResultSet rs = ps.executeQuery();
+	while (rs.next()) {
+	    Order result = fillUpOrder(rs);
+	    result.setCart(getProductsToOrder(con, ps, result));
+	    orderList.add(result);
+	}
+
+	return orderList;
     }
 }

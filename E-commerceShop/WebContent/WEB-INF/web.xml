@@ -46,7 +46,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>profile-page</servlet-name>
-		<jsp-file>/pages/profile.jsp</jsp-file>
+		<jsp-file>/pages/user/profile.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>profile-page</servlet-name>
@@ -88,24 +88,4 @@
 		<filter-name>CartFilter</filter-name>
 		<url-pattern>/Controller</url-pattern>
 	</filter-mapping>
-	<error-page>
-		<error-code>401</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>403</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>503</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
 </web-app>

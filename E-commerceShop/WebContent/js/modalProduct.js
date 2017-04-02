@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#pTable").on('click', '#updateProduct', function() {
+    $("#pTable").on('click', '#cancelProduct', function() {
 	var currentRow=$(this).closest("tr");
 	var pid = currentRow.find('td:eq(0)').text();
 	var pTitle = currentRow.find('td:eq(1)').text();

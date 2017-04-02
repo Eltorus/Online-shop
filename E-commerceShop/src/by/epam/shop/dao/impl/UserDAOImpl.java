@@ -163,12 +163,12 @@ public class UserDAOImpl implements UserDAO {
 	result.setName(rs.getString(2));
 	result.setSurname(rs.getString(3));
 	result.setEmail(rs.getString(4));
-	result.setPhonenumber(rs.getString(5));
-	result.setIs_banned(rs.getBoolean(6));
-	result.setIs_admin(rs.getBoolean(7));
-	result.setDiscountCoefficient(rs.getDouble(8));
-	result.setBalance(rs.getDouble(9));
-	result.setPasswordHash(rs.getString(10));
+	result.setPasswordHash(rs.getString(5));
+	result.setPhonenumber(rs.getString(6));
+	result.setIs_banned(rs.getBoolean(7));
+	result.setIs_admin(rs.getBoolean(8));
+	result.setDiscountCoefficient(rs.getDouble(9));
+	result.setBalance(rs.getDouble(10));
 
 	return result;
     }

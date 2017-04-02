@@ -63,7 +63,11 @@ public final class ParameterList {
 	public final static String CMD_ORDER_CHANGE = "change_order";
 	public final static String CMD_ORDER_ID = "order_id";
 	public final static String CMD_USER_UPDATE = "user_update";
+	public final static String CMD_USER_ORDERS = "user_orders";
+	public final static String CMD_USER_ORDER_CANCEL = "order_cancel";
+	
 	public final static String CMD_ORDER_IS_COMPLITED= "isOrderComplited";
 	public final static String CMD_ORDER_COMPLITED= "Complited";
+	
 	
 }

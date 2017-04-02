@@ -52,74 +52,61 @@
 											<td>${product.price}</td>
 											<td>${product.description}</td>
 											<td>${product.amount}</td>
-											<td><button type="button" id="updateProduct" data-cat="${product.categoryID}" class="btn btn-default btn-md" data-toggle="modal" data-target="#productInfo">Change</button>
+											<td>
+												<button type="button" id="updateProduct" data-cat="${product.categoryID}" class="btn btn-default btn-md" data-toggle="modal" data-target="#productInfo">Change</button>
 											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
 						</div>
-					</div>
-					<div class="controls">
-							<button id="addProduct" type="button" class="btn btn-primary" data-toggle="modal" data-target="#productInfo">Add product</button>
+						<button type="button" id="addProduct" class="btn btn-primary btn-md" data-toggle="modal" data-target="#productInfo">Add product</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-<div class="modal fade" id="productInfo" tabindex="-1" role="dialog" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-		<form class="form-signin" action="Controller" method="post">
-			<input type="hidden" name="command" value="update_product" /> 
-			<input type="hidden" id="product_id" name="product_id" value="" />
-			<fieldset>
-				<div class="control-group">
-					<label class="control-label">Title: </label> <input required name="product_title"
-						value="" id="title" type="text"
-						class="form-control" class="input-medium" required>
+	<div class="modal fade" id="productInfo" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<form class="form-signin" action="Controller" method="post">
+						<input type="hidden" name="command" value="update_product" /> <input type="hidden" id="product_id" name="product_id" value="" />
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">Title: </label> <input required name="product_title" value="" id="title" type="text" class="form-control"
+									class="input-medium" required>
+							</div>
+							<div class="control-group">
+								<label class="control-label">Category :</label> <select class="form-control" id="category" name="category">
+									<option value="1">Home Stuff</option>
+									<option value="2">Electronics</option>
+									<option value="3">Clothes</option>
+									<option value="4">Shoes</option>
+								</select>
+							</div>
+							<div class="control-group">
+								<label class="control-label">Price: </label> <input required name="price" value="" id="price" type="text" class="form-control"
+									class="input-medium" required>
+							</div>
+							<div class="control-group">
+								<label class="control-label">Description: </label>
+								<textarea class="form-control" rows="5" id="description" name="description" required></textarea>
+							</div>
+							<div class="control-group">
+								<label class="control-label">Amount: </label> <input name="amount" value="" id="amount" type="number" class="form-control input-medium"
+									required>
+							</div>
+						</fieldset>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success">Submit</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</form>
 				</div>
-
-				<div class="control-group">
-					<label class="control-label">Category :</label> 
-					<select class="form-control" id="category" name="category">
-						<option value="1">Home Stuff</option>
-						<option value="2">Electronics</option>
-						<option value="3">Clothes</option>
-						<option value="4">Shoes</option>
-					</select>
-				</div>
-
-				<div class="control-group">
-					<label class="control-label">Price: </label> 
-					<input required name="price" value="" id="price" type="text" class="form-control" class="input-medium" required>
-				</div>
-
-
-				<div class="control-group">
-					<label class="control-label">Description: </label>
-					<textarea class="form-control" rows="5" id="description"
-						name="description" required></textarea>
-				</div>
-
-				<div class="control-group">
-					<label class="control-label">Amount: </label> 
-					<input name="amount" value="" id="amount" type="number" class="form-control input-medium" required>
-				</div>
-
-			</fieldset>
-			<div class="modal-footer">
-		      	<button type="submit" class="btn btn-success">Submit</button>
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		    </div>
-		</form>
+			</div>
 		</div>
-		</div>
-		</div>
-		</div>
-
+	</div>
 	<script src="js/jquery-3.1.1.min.js"></script>
 	<script src="js/modalProduct.js"></script>
     <script src="js/bootstrap.min.js"></script>

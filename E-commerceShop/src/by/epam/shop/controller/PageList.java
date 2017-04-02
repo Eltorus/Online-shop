@@ -11,6 +11,9 @@ public final class PageList {
 	public static final String PG_CART = "/cart";
 	
 	public static final String PG_ORDER = "/order";
+	public static final String PG_USER_ORDERS = "/WEB-INF/jsp/userOrders.jsp";
+	
+	public static final String PG_USER_ORDERS_R = "/Controller?command=user_orders";
 	
 	public static final String PG_SIGNIN = "/signin";
 	public static final String PG_PROFILE = "/profile";

@@ -9,6 +9,7 @@ public interface OrderDAO {
 	public void addOrder(Order order) throws DAOException;
 	public void updateOrder(Order order) throws DAOException;
 	public Order getOrder(Order order) throws DAOException;
+	public List<Order> getOrders(Order order) throws DAOException;
 	public List<Order> getAllOrders() throws DAOException;
 	public void deleteOrder(Order order) throws DAOException;
 }

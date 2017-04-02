@@ -20,13 +20,9 @@
  </c:if>
 <%@ include file="/WEB-INF/elements/local.jspf"%>
 <%@ include file="/WEB-INF/elements/header.jspf"%>
-
-
-<!-- Main -->
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/elements/adminMenu.jspf"%>
-			<!-- /col-3 -->
 				<div class="row">
 						<div class="table-responsive">
 							<table class="table table-sm table-hover" id="pTable">
