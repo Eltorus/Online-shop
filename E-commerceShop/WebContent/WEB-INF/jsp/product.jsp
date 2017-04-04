@@ -21,7 +21,9 @@
 	<div class="row">
 	<div class="col-sm-4 col-lg-4 col-md-4">
 		<div class="thumbnail">
-			<img src="http://placehold.it/320x150" alt="Product id${requestScope.product.id}">
+			<div class="product-pict">
+				<img src="${requestScope.product.imgPath}" alt="${requestScope.product.imgPath}">
+			</div>
 			<div class="caption">
 				<h4 class="pull-right">${requestScope.product.price}</h4>
 				<h4>

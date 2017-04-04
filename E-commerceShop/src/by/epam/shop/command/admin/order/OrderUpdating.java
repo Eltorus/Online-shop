@@ -41,7 +41,7 @@ public class OrderUpdating implements Command {
 	    order.setId(orderID);
 	    order.setAddress(address);
 	    order.setDeliveryDate(deliveryDate);
-	    if (complited.equals(ParameterList.CMD_ORDER_COMPLITED)) {
+	    if (complited != null && complited.equals(ParameterList.CMD_ORDER_COMPLITED)) {
 		order.setOrderCompleted(true);
 	    }
 

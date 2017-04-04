@@ -3,8 +3,6 @@ package by.epam.shop.service.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import by.epam.shop.bean.Cart;
 import by.epam.shop.bean.CartLine;
 import by.epam.shop.bean.Order;
@@ -54,18 +52,24 @@ public class OrderServiceImpl implements OrderService {
 	}
 	OrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
 	try {
-	    System.out.println("orderservice: before");
 	    orderDAO.addOrder(order);
-	    System.out.println("orderservice: after");
 	} catch (DAOException e) {
 	    throw new ServiceException(e);
 	}
     }
 
     @Override
-    public boolean deleteOrder(Order order) throws ServiceException {
-	// TODO Auto-generated method stub
-	return false;
+    public void deleteOrder(Order order) throws ServiceException {
+	if (order == null) {
+	    throw new ServiceException("Object is null");
+	}
+
+	try {
+	    OrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
+	    orderDAO.deleteOrder(order);
+	} catch (DAOException e) {
+	   throw new ServiceException(e);
+	}
     }
 
     @Override
@@ -116,6 +120,26 @@ public class OrderServiceImpl implements OrderService {
 
 	    if (orderList.isEmpty()) {
 		orderList = null;
+	    }
+	} catch (DAOException e) {
+	    throw new ServiceException(e);
+	}
+	return orderList;
+    }
+
+    @Override
+    public List<Order> getUserOrders(User user) throws ServiceException {
+	List<Order> orderList = null;
+
+	try {
+	    Order order = new Order();
+	    order.setUser(user);
+
+	    OrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
+	    orderList = orderDAO.getOrders(order);
+
+	    if (orderList.isEmpty()) {
+		return null;
 	    }
 	} catch (DAOException e) {
 	    throw new ServiceException(e);

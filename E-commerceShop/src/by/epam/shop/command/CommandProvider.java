@@ -19,10 +19,13 @@ import by.epam.shop.command.localization.Localization;
 import by.epam.shop.command.order.AddingToCart;
 import by.epam.shop.command.order.DeletingFromCart;
 import by.epam.shop.command.order.MakingOrder;
+import by.epam.shop.command.order.OrderCanceling;
 import by.epam.shop.command.order.OrderPage;
 import by.epam.shop.command.products.Catalog;
 import by.epam.shop.command.products.ProductPage;
 import by.epam.shop.command.user.RechargingBalance;
+import by.epam.shop.command.user.UploadUserAvatar;
+import by.epam.shop.command.user.UserOrderList;
 
 public class CommandProvider {
 	private static CommandProvider instance;
@@ -49,6 +52,9 @@ public class CommandProvider {
 		commands.put(ParameterList.CMD_PRODUCT_UPDATE, new ProductUpdating());
 		commands.put(ParameterList.CMD_ADMIN_USER_PG, new AdminUserPage());
 		commands.put(ParameterList.CMD_USER_UPDATE, new UpdateUser());
+		commands.put(ParameterList.CMD_USER_ORDERS, new UserOrderList());
+		commands.put(ParameterList.CMD_USER_ORDER_CANCEL, new OrderCanceling());
+		commands.put(ParameterList.CMD_USER_AVATAR_UPLOAD, new UploadUserAvatar());
 	}
 	
 	public static CommandProvider getInstance() {

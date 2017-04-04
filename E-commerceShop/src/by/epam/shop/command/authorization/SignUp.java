@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import by.epam.shop.bean.User;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
-import by.epam.shop.command.admin.AdminOrderPage;
 import by.epam.shop.command.exception.CommandException;
 import by.epam.shop.command.validation.UserValidation;
 import by.epam.shop.controller.PageList;

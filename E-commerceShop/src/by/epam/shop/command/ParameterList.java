@@ -41,6 +41,7 @@ public final class ParameterList {
 	public static final String PRODUCT_PRICE = "price";
 	public static final String PRODUCT_DESCRIPTION = "description";
 	public static final String PRODUCT_AMOUNT = "amount";
+	public static final String PRODUCT_IMG_UPLOAD = "upload_product_img";
 	
 	public static final String CMD_PRODUCT_INDX = "product_index";
 	public final static String CMD_PRODUCT_ADD = "add_product";
@@ -63,7 +64,12 @@ public final class ParameterList {
 	public final static String CMD_ORDER_CHANGE = "change_order";
 	public final static String CMD_ORDER_ID = "order_id";
 	public final static String CMD_USER_UPDATE = "user_update";
+	public final static String CMD_USER_ORDERS = "user_orders";
+	public final static String CMD_USER_ORDER_CANCEL = "order_cancel";
+	public final static String CMD_USER_AVATAR_UPLOAD= "upload_avatar";
+
 	public final static String CMD_ORDER_IS_COMPLITED= "isOrderComplited";
 	public final static String CMD_ORDER_COMPLITED= "Complited";
+	
 	
 }

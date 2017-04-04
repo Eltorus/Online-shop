@@ -11,6 +11,7 @@ public class User {
     private boolean is_banned;
     private boolean is_admin;
     private double discountCoefficient;
+    private String imgPath;
 
     public String getName() {
 	return name;
@@ -91,10 +92,88 @@ public class User {
     public void setPasswordHash(String passwordHash) {
 	this.passwordHash = passwordHash;
     }
+    
+    public String getImgPath() {
+	return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+	this.imgPath = imgPath;
+    }
 
     @Override
     public String toString() {
 	return this.id + this.email + this.name + this.surname + this.phonenumber;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+	if (obj == null) {
+	    return false;
+	}
+	if (this == obj) {
+	    return true;
+	}
+	if (getClass() != obj.getClass()) {
+	    return false;
+	}
+	User other = (User) obj;
+	if (id != other.id) {
+	    return false;
+	}
+	if (name == null) {
+	    if (other.name != null) {
+		return false;
+	    }
+	}
+	if (!name.equals(other.name)) {
+	    return false;
+	}
+	if (surname == null) {
+	    if (other.surname != null) {
+		return false;
+	    }
+	}
+	if (!surname.equals(other.surname)) {
+	    return false;
+	}
+	if (email == null) {
+	    if (other.email != null) {
+		return false;
+	    }
+	}
+	if (!email.equals(other.email)) {
+	    return false;
+	}
+	if (passwordHash == null) {
+	    if (other.passwordHash != null) {
+		return false;
+	    }
+	}
+	if (!passwordHash.equals(other.passwordHash)) {
+	    return false;
+	}
+	if (phonenumber == null) {
+	    if (other.phonenumber != null) {
+		return false;
+	    }
+	}
+	if (!phonenumber.equals(other.phonenumber)) {
+	    return false;
+	}
+	if (balance != other.balance) {
+	    return false;
+	}
+	if (discountCoefficient != other.discountCoefficient) {
+	    return false;
+	}
+	if (is_banned != other.is_banned) {
+	    return false;
+	}
+	if (is_admin != other.is_admin) {
+	    return false;
+	}
+	return true;
     }
 
 }

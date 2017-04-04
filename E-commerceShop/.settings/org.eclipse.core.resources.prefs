@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/elements/adminMenu.jspf=UTF-8
 encoding//WebContent/WEB-INF/jsp/catalog.jsp=UTF-8
 encoding//WebContent/pages/signIn.jsp=UTF-8
 encoding//src/by/epam/shop/command/localization/Localization.java=UTF-8

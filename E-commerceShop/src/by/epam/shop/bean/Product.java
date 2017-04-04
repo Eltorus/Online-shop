@@ -8,6 +8,7 @@ public class Product {
     private double price;
     private String description;
     private int amount;
+    private String imgPath;
 
     public int getId() {
 	return id;
@@ -63,6 +64,14 @@ public class Product {
 
     public void setCategoryID(int categoryID) {
 	this.categoryID = categoryID;
+    }
+    
+    public String getImgPath() {
+	return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+	this.imgPath = imgPath;
     }
 
     @Override

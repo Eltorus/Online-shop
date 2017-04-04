@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	id="WebApp_ID" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
 	<display-name>E-commerceShop</display-name>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -15,6 +12,11 @@
 	<servlet>
 		<servlet-name>Controller</servlet-name>
 		<servlet-class>by.epam.shop.controller.Controller</servlet-class>
+		<multipart-config>
+			<max-file-size>20848820</max-file-size>
+			<max-request-size>418018841</max-request-size>
+			<file-size-threshold>1048576</file-size-threshold>
+		</multipart-config>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Controller</servlet-name>
@@ -46,7 +48,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>profile-page</servlet-name>
-		<jsp-file>/pages/profile.jsp</jsp-file>
+		<jsp-file>/pages/user/profile.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>profile-page</servlet-name>
@@ -88,24 +90,7 @@
 		<filter-name>CartFilter</filter-name>
 		<url-pattern>/Controller</url-pattern>
 	</filter-mapping>
-	<error-page>
-		<error-code>401</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>403</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>503</error-code>
-		<location>/WEB-INF/jsp/error.jsp</location>
-	</error-page>
+	<listener>
+		<listener-class>by.epam.shop.listeners.InitServletListener</listener-class>
+	</listener>
 </web-app>

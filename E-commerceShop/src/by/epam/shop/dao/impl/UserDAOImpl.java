@@ -8,30 +8,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.epam.shop.bean.User;
-import by.epam.shop.dao.DBConnector;
 import by.epam.shop.dao.QueryList;
 import by.epam.shop.dao.UserDAO;
+import by.epam.shop.dao.connectionpool.ConnectionPool;
+import by.epam.shop.dao.connectionpool.ConnectionPoolException;
 import by.epam.shop.dao.exception.DAOException;
 
 public class UserDAOImpl implements UserDAO {
     @Override
     public User getUser(User user) throws DAOException {
+	ConnectionPool pool = null;
 	Connection con = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 	User result = null;
 	try {
-	    con = DBConnector.getConnection();
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
 	    ps = prepareGetUserStatement(ps, con, user);
 	    rs = ps.executeQuery();
 	    while (rs.next()) {
 		result = fillUpUser(rs);
 	    }
-	} catch (SQLException e) {
-	    System.out.println(e);
+	} catch (SQLException | ConnectionPoolException e) {
 	    throw new DAOException(e);
 	} finally {
-	    DBConnector.closeConnection(ps, con);
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException(e);
+	    }
 	}
 	return result;
     }
@@ -57,10 +63,12 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addUser(User user) throws DAOException {
+	ConnectionPool pool = null;
 	Connection con = null;
 	PreparedStatement ps = null;
 	try {
-	    con = DBConnector.getConnection();
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
 	    ps = con.prepareStatement(QueryList.AddUserQuery);
 
 	    ps.setString(1, user.getName());
@@ -70,61 +78,78 @@ public class UserDAOImpl implements UserDAO {
 	    ps.setString(5, user.getPhonenumber());
 
 	    ps.executeUpdate();
-	} catch (SQLException e) {
-	    System.out.println(e);
+	} catch (SQLException | ConnectionPoolException e) {
 	    throw new DAOException(e);
 	} finally {
-	    DBConnector.closeConnection(ps, con);
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException(e);
+	    }
 	}
     }
 
     @Override
     public void deleteUser(User user) throws DAOException {
 	// Мы не удаляем данные а присваиваем им поле deleted = true
+	ConnectionPool pool = null;
 	Connection con = null;
 	PreparedStatement ps = null;
 	try {
-	    con = DBConnector.getConnection();
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
 	    ps = con.prepareStatement(QueryList.DeleteUserQuery);
 
 	    ps.setString(1, user.getEmail());
 	    ps.setString(2, user.getPasswordHash());
 	    ps.executeUpdate();
-	} catch (SQLException e) {
+	} catch (SQLException | ConnectionPoolException e) {
 	    throw new DAOException(e);
 	} finally {
-	    DBConnector.closeConnection(ps, con);
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException(e);
+	    }
 	}
     }
 
     @Override
     public void updateUser(User user) throws DAOException {
+	ConnectionPool pool = null;
 	Connection con = null;
 	PreparedStatement ps = null;
 	try {
-	    con = DBConnector.getConnection();
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
 
 	    ps = precompileUpdateStatement(con, user);
 	    ps.executeUpdate();
 
-	} catch (SQLException e) {
+	} catch (SQLException | ConnectionPoolException e) {
 	    throw new DAOException(e);
 	} finally {
-	    DBConnector.closeConnection(ps, con);
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException(e);
+	    }
 	}
     }
 
     private PreparedStatement precompileUpdateStatement(Connection con, User user) throws SQLException {
 	PreparedStatement ps = null;
 
-	if (user.getPasswordHash() != null && !user.getPasswordHash().isEmpty() && user.getEmail() != null && !user.getEmail().isEmpty()) {
+	if (user.getPasswordHash() != null && !user.getPasswordHash().isEmpty() && user.getEmail() != null
+		&& !user.getEmail().isEmpty()) {
 	    ps = con.prepareStatement(
-		    QueryList.UpdateUserQuery_P + QueryList.SetBalanceQuery_P + QueryList.GetUserQueryLogin_P);
+		    QueryList.UpdateUserQuery_P + QueryList.SetBalanceAndImageQuery_P + QueryList.GetUserQueryLogin_P);
 	    ps.setDouble(1, user.getBalance());
-	    ps.setString(2, user.getEmail());
-	    ps.setString(3, user.getPasswordHash()); 
+	    ps.setString(2, user.getImgPath());
+	    ps.setString(3, user.getEmail());
+	    ps.setString(4, user.getPasswordHash());
 
-	} else if(user.getId() != 0){
+	} else if (user.getId() != 0) {
 	    ps = con.prepareStatement(
 		    QueryList.UpdateUserQuery_P + QueryList.SetBannedQuery_P + QueryList.GetUserQueryId_P);
 	    ps.setBoolean(1, user.isIs_banned());
@@ -136,22 +161,29 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getAllUsers() throws DAOException {
+	ConnectionPool pool = null;
 	Connection con = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 	List<User> userList = new ArrayList<>();
 	try {
-	    con = DBConnector.getConnection();
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+
 	    ps = con.prepareStatement(QueryList.GetAllUsersQuery);
 	    rs = ps.executeQuery();
 	    while (rs.next()) {
 		User user = fillUpUser(rs);
 		userList.add(user);
 	    }
-	} catch (SQLException e) {
+	} catch (SQLException | ConnectionPoolException e) {
 	    throw new DAOException(e);
 	} finally {
-	    DBConnector.closeConnection(ps, con);
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException(e);
+	    }
 	}
 	return userList;
     }
@@ -163,12 +195,13 @@ public class UserDAOImpl implements UserDAO {
 	result.setName(rs.getString(2));
 	result.setSurname(rs.getString(3));
 	result.setEmail(rs.getString(4));
-	result.setPhonenumber(rs.getString(5));
-	result.setIs_banned(rs.getBoolean(6));
-	result.setIs_admin(rs.getBoolean(7));
-	result.setDiscountCoefficient(rs.getDouble(8));
-	result.setBalance(rs.getDouble(9));
-	result.setPasswordHash(rs.getString(10));
+	result.setPasswordHash(rs.getString(5));
+	result.setPhonenumber(rs.getString(6));
+	result.setIs_banned(rs.getBoolean(7));
+	result.setIs_admin(rs.getBoolean(8));
+	result.setDiscountCoefficient(rs.getDouble(9));
+	result.setBalance(rs.getDouble(10));
+	result.setImgPath(rs.getString(11));
 
 	return result;
     }

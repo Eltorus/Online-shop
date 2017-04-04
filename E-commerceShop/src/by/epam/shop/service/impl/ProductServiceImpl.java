@@ -120,6 +120,12 @@ public class ProductServiceImpl implements ProductService {
 	if (product.getCategoryID() == 0) {
 	    return false;
 	}
+	if(product.getAmount() == 0 ) {
+	    return false;
+	}
+	if(product.getImgPath() == null || product.getImgPath().isEmpty()) {
+	    return false;
+	}
 
 	return true;
     }
