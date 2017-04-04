@@ -190,7 +190,6 @@ public class OrderDAOImpl implements OrderDAO {
 	    
 	    cl.setProduct(product);
 	    cl.setQuantity(rs.getInt(4));
-	    
 	    cart.addToProductList(cl);
 	}
 	return cart;
@@ -251,7 +250,6 @@ public class OrderDAOImpl implements OrderDAO {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
 		throw new DAOException(e);
-	    }
 	}
 
     }

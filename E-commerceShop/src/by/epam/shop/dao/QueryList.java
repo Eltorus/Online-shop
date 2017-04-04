@@ -41,15 +41,24 @@ public class QueryList {
                                                     	  + "SET p_amount=p_amount+? "
                                                 	  + "WHERE p_id=?; ";
     
+<<<<<<< HEAD
     public static final String GetAllUsersQuery = "SELECT `c`.`c_id`, `c_name`, `c_surname`,`c_email`,`c_password`,`c_phonenumber`,`c_isbanned`,`is_admin`,`discount_coefficient`,`c_balance`, `c_imgurl` "
+=======
+    public static final String GetAllUsersQuery = "SELECT `c`.`c_id`, `c_name`, `c_surname`,`c_email`,`c_password`,`c_phonenumber`,`c_isbanned`,`is_admin`,`discount_coefficient`,`c_balance` "
+>>>>>>> 5b40ca0df939b188283d86b48f985bc60801bd39
                                         	+ "FROM `online_shop`.`clients` as `c` "
                                         	+ "LEFT JOIN `online_shop`.`discounts` as `d` "
                                         	+ "ON  `c`.`c_id` = `d`.`c_id`; ";
 
     // Products
     public static final String AddProductQuery = "INSERT  INTO `online_shop`.`products` "
+<<<<<<< HEAD
                                                + "(`p_id`,`p_title`,`category_id` ,`p_price`,`p_description`,`p_amount`,`p_imgurl`) "
                                                + "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?); ";
+=======
+                                               + "(`p_id`,`p_title`,`category_id` ,`p_price`,`p_description`,`p_amount`) "
+                                               + "VALUES (DEFAULT, ?, ?, ?, ?, ?); ";
+>>>>>>> 5b40ca0df939b188283d86b48f985bc60801bd39
     
     public static final String UpdateProductQuery = "UPDATE `online_shop`.`products` "
     						  + "SET `p_title`=?, `category_id`=?, `p_price`=?,`p_description`=?,`p_amount`=?, `p_imgurl`=? "
@@ -62,7 +71,11 @@ public class QueryList {
 
     public static final String GetProductWithIdQuery = "WHERE `p`.`p_id` =?";
 
+<<<<<<< HEAD
     public static final String GetAllProductsQuery = "SELECT `p_id`,`p_title`,`category`,`p_price`,`p_description`,`p_amount`, `p`.`category_id`,`p`.`p_imgurl` "
+=======
+    public static final String GetAllProductsQuery = "SELECT `p_id`,`p_title`,`category`,`p_price`,`p_description`,`p_amount`, `p`.`category_id` "
+>>>>>>> 5b40ca0df939b188283d86b48f985bc60801bd39
                                         	   + "FROM `online_shop`.`products` AS `p` " 
                                         	   + "LEFT JOIN `online_shop`.`categories` AS `cat` "
                                         	   + "ON `p`.`category_id` = `cat`.`c_id`;";

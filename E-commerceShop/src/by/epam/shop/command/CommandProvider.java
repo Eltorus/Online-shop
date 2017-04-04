@@ -24,7 +24,10 @@ import by.epam.shop.command.order.OrderPage;
 import by.epam.shop.command.products.Catalog;
 import by.epam.shop.command.products.ProductPage;
 import by.epam.shop.command.user.RechargingBalance;
+<<<<<<< HEAD
 import by.epam.shop.command.user.UploadUserAvatar;
+=======
+>>>>>>> 5b40ca0df939b188283d86b48f985bc60801bd39
 import by.epam.shop.command.user.UserOrderList;
 
 public class CommandProvider {
@@ -54,7 +57,10 @@ public class CommandProvider {
 		commands.put(ParameterList.CMD_USER_UPDATE, new UpdateUser());
 		commands.put(ParameterList.CMD_USER_ORDERS, new UserOrderList());
 		commands.put(ParameterList.CMD_USER_ORDER_CANCEL, new OrderCanceling());
+<<<<<<< HEAD
 		commands.put(ParameterList.CMD_USER_AVATAR_UPLOAD, new UploadUserAvatar());
+=======
+>>>>>>> 5b40ca0df939b188283d86b48f985bc60801bd39
 	}
 	
 	public static CommandProvider getInstance() {

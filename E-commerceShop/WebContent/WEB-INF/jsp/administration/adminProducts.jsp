@@ -108,6 +108,7 @@
 								</label> 
 								<span class='label label-info' id="upload-file-info"></span>
 							</div>
+
 						</fieldset>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-success">Submit</button>
