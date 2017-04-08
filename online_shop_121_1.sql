@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `online_shop`.`products` (
   `p_description` MEDIUMTEXT NOT NULL,
   `p_amount` INT(11) NOT NULL,
   `p_deleted` TINYINT(1) NOT NULL DEFAULT 0,
-  `p_imgurl` VARCHAR(80) NULL,
+  `p_imgurl` VARCHAR(100) NULL,
   PRIMARY KEY (`p_id`),
   INDEX `fk_category_idx` (`category_id` ASC),
   CONSTRAINT `fk_category`
@@ -162,7 +162,7 @@ INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price
 INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'Dr. Martens x', 4, 65.45, 'Leather boots', 20);
 INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'SoftSkin', 1, 7.20, 'Towel', 60);
 INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'MyWatch', 2, 35.20, 'Electronic watch', 45);
-INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'Converse t-Edition', 4, 82.20, 'Men shoes', 74);
+INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'Converse t-Edition', 4, 82.20, 'Men shoes', 0);
 
 COMMIT;
 

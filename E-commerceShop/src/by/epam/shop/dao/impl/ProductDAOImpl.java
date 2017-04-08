@@ -231,7 +231,7 @@ public class ProductDAOImpl implements ProductDAO {
 	    pool = ConnectionPool.getInstance();
 	    con = pool.takeConnection();
 	    
-	    ps = con.prepareStatement(QueryList.GetAllOrdersQuery+QueryList.GetLimitProductsQuery_P);
+	    ps = con.prepareStatement(QueryList.GetAllProductsQuery+QueryList.GetLimitProductsQuery_P);
 	    ps.setInt(1, offset);
 	    ps.setInt(2, limit);
 	    ResultSet rs = ps.executeQuery();
@@ -240,6 +240,7 @@ public class ProductDAOImpl implements ProductDAO {
 		Product product = fillUpProduct(rs);
 		productList.add(product);
 	    }
+	    
 	} catch (ConnectionPoolException | SQLException e) {
 	    throw new DAOException(e);
 	} finally {

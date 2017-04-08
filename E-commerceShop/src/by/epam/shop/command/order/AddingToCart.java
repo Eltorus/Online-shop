@@ -32,7 +32,10 @@ public class AddingToCart implements Command {
 	    ProductService productService = ServiceFactory.getInstance().getProductService();
 
 	    Product product = productService.getProductWithId(requestProduct);
-
+	    if(product.getAmount() == 0) {
+		return PageList.PG_CART;
+	    }
+	    
 	    CartLine cartLine = getCartLineFromCart(product, cart);
 
 	    if (cartLine != null) {

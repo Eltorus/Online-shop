@@ -26,19 +26,25 @@
 				</c:if>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="<c:url value="cart"/>">${cart}</a></li>
-				<li class="dropdown"><a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"></i>
-						${profile} <span class="caret"></span></a>
-					<ul id="g-account-menu" class="dropdown-menu" role="menu">
-						<c:choose>
-							<c:when test="${not empty sessionScope.user}">
+				<c:choose>
+					<c:when test="${not empty sessionScope.user}">
+						<li class="dropdown"><a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"> <i class="glyphicon glyphicon-user"></i>${profile}
+								<span class="caret"></span></a>
+							<ul id="g-account-menu" class="dropdown-menu" role="menu">
 								<li><a href="<c:url value="profile"/>">${profile}</a></li>
-								<li><a href="Controller?command=user_orders"/>${orders}</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><a href="#signup" data-toggle="modal" data-target=".bs-modal-sm">${signin}/${signup}</a></li>
-							</c:otherwise>
-						</c:choose>
+								<li><a href="Controller?command=user_orders">${orders}</a></li>
+							</ul></li>
+					</c:when>
+					<c:otherwise>
+						<li><button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">${signin}</button></li>
+					</c:otherwise>
+				</c:choose>
+				<li><a href="<c:url value="cart"/>">${cart}</a></li>
+				<li class="dropdown">
+				<a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"> ${lang} <span class="caret"></span></a>
+					<ul id="g-account-menu" class="dropdown-menu" role="menu">
+						<li><a href="Controller?command=local&local=ru">${ru}</a></li>
+						<li><a href="Controller?command=local&local=en">${en}</a></li>
 					</ul></li>
 				<c:if test="${not empty sessionScope.user}">
 					<li>
@@ -49,12 +55,6 @@
 						</form>
 					</li>
 				</c:if>
-				<li class="dropdown"><a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"> ${lang} <span class="caret"></span></a>
-					<ul id="g-account-menu" class="dropdown-menu" role="menu">
-						<li><a href="Controller?command=local&local=ru">${ru}</a></li>
-						<li><a href="Controller?command=local&local=en">${en}</a></li>
-					</ul>
-				</li>
 			</ul>
 		</div>
 	</div>

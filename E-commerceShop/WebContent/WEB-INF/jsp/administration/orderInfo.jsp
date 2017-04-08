@@ -81,9 +81,9 @@
 				
 				</fieldset>
 				<div class="control-group">
-					<label class="control-label">Bill: ${requestScope.order.bill}</label>
+					<label class="control-label">Bill: <fmt:formatNumber pattern="#0.00" value="${requestScope.order.bill}"/></label>
 					<label class="control-label">Discount: ${requestScope.order.discount*100} %</label>
-					<label class="control-label">Total: ${requestScope.order.total}</label>
+					<label class="control-label">Total: <fmt:formatNumber pattern="#0.00" value="${requestScope.order.total}"/></label>
 				</div>
 				<div class="control-group">
 					<c:choose>

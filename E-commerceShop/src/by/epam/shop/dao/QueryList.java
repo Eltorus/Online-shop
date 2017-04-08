@@ -75,7 +75,7 @@ public class QueryList {
                                         	   + "FROM `online_shop`.`products` AS `p` " 
                                         	   + "LEFT JOIN `online_shop`.`categories` AS `cat` "
                                         	   + "ON `p`.`category_id` = `cat`.`c_id` "
-                                        	   + "WHERE `p_deleted`=false";
+                                        	   + "WHERE `p_deleted`=false ";
     
     public static final String DeleteProductQuery = "UPDATE `online_shop`.`products` "
     						  + "SET `p_deleted`=true "
@@ -92,7 +92,7 @@ public class QueryList {
 
     public static final String GetAllOrdersQuery = "SELECT `o_id`, `c_id`, `o_order_date`,`o_delivery_date`, `o_address`,`o_bill`,`o_discount`,`o_total`,`o_ispaid`,`o_iscompleted` "
 	    					 + "FROM `online_shop`.`orders` "
-	    					 + "WHERE `o_deleted`=false; ";
+	    					 + "WHERE `o_deleted`=false ";
 
     public static final String GetOrderQuery_P = "SELECT `o_id`, `c_id`, `o_order_date`,`o_delivery_date`, `o_address`,`o_bill`,`o_discount`,`o_total`,`o_ispaid`,`o_iscompleted` "
 	    				       + "FROM `online_shop`.`orders` ";

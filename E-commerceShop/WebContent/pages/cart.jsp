@@ -34,7 +34,7 @@
 						<td><c:out value="${i.index+1}" /></td>
 						<td>${cartLine.product.title}</td>
 						<td>${cartLine.product.category}</td>
-						<td>${cartLine.product.price}</td>
+						<td><fmt:formatNumber pattern="#0.00" value="${cartLine.product.price}"/></td>
 						<td>${cartLine.quantity}</td>
 						<td><form action="Controller" method="post">
 								<input type="hidden" name="command" value="delete_from_cart" />

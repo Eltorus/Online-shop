@@ -152,7 +152,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProducts(int offset, int limit) throws ServiceException {
-	if(offset == 0 || limit == 0) {
+	if(limit == 0) {
 	    throw new ServiceException("Values are null");
 	}
 	

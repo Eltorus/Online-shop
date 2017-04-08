@@ -22,12 +22,15 @@
 							<a href="Controller?command=product_page&product_id=${product.id}"> <img src="${product.imgPath}" class="product" alt="${product.imgPath}"></a>
 					</div>
 						<div class="caption">
-							<h4 class="pull-right">${product.price}</h4>
+							<h4 class="pull-right"><fmt:formatNumber pattern="#0.00" value="${product.price}"/></h4>
 							<h4>
 								<a href="Controller?command=product_page&product_id=${product.id}">${product.title}</a>
 							</h4>
 							<p>
 								<a href="#">${product.category}</a>
+								<c:if test="${product.amount==0}">
+									<span class="label label-default pr-badge">Not Available</span>
+								</c:if>
 							</p>
 						</div>
 					</div>
@@ -40,15 +43,15 @@
 		<c:forEach var="i" begin="1" end="${requestScope.pageAmount}">
 			<c:choose>
 				<c:when test="${requestScope.requestPage == i}">
-					<li class="active"><a href="#">i</a></li>
+					<li class="active"><a href="Controller?command=catalog&requestPage=${i}">${i}</a></li>
 				</c:when>
 				<c:otherwise>
-					<li><a href="#">i</a></li>
+					<li><a href="Controller?command=catalog&requestPage=${i}">${i}</a></li>
 				</c:otherwise>
 			</c:choose>
-		</c:forEach>
-		
+		</c:forEach>	
 	</ul>
+	
 	<div class="container">
 		<hr>
 		<footer>

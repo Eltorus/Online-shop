@@ -24,7 +24,8 @@ import by.epam.shop.util.UtilException;
 
 public class ProductUpdating implements Command {
     private final static Logger logger = Logger.getLogger(ProductUpdating.class);
-    private final static String savePath="img/products/";
+    private final static String savePath="c:/Users/User/EEWorkspace/E-commerceShop/WebContent/img/products/";
+    private final static String relPath="img/products/";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 	if (!UserValidation.isUserLoged(request, response) || !UserValidation.isUserAdmin(request, response)) {
@@ -72,7 +73,7 @@ public class ProductUpdating implements Command {
 	    
 	    ImageUpload.uploadFile(part, savePath, fileName);
 	    
-	    product.setImgPath(savePath + fileName);
+	    product.setImgPath(relPath + fileName);
 	} else {
 	    String imgPath = request.getParameter(ParameterList.PRODUCT_IMG_PATH);
 	    product.setImgPath(imgPath);

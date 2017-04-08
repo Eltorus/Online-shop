@@ -18,7 +18,7 @@ import by.epam.shop.service.factory.ServiceFactory;
 
 public class Catalog implements Command {
     private final static Logger logger = Logger.getLogger(Catalog.class);
-    private static final int limit = 20;
+    private static final int limit = 4;
     
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -26,7 +26,7 @@ public class Catalog implements Command {
 	List<Product> products = null;
 	
 	try {
-	   /* int requestPage;
+	    int requestPage;
 	    String temp = request.getParameter(AttributeList.ATTR_PAGE_REQUEST);
 	    
 	    if(temp == null || temp.isEmpty()) {
@@ -35,17 +35,21 @@ public class Catalog implements Command {
 		requestPage = Integer.parseInt(temp);
 	    }
 	    
-	    int productTotal = productService.getTotalProductAmount();
+	    double productTotal = productService.getTotalProductAmount();
 	    int pageAmount = (int) Math.ceil(productTotal/limit);
 	    
-	    products = productService.getProducts(requestPage-1, limit);
+	    if(requestPage > pageAmount || requestPage < 1) {
+		requestPage = 1;
+	    }
 	    
+	    products = productService.getProducts(limit*(requestPage-1), limit);
+	
 	    request.setAttribute(AttributeList.ATTR_PRODUCTS, products);
 	    request.setAttribute(AttributeList.ATTR_PAGE_AMOUNT, pageAmount);
-	    request.setAttribute(AttributeList.ATTR_PAGE_REQUEST, requestPage);*/
+	    request.setAttribute(AttributeList.ATTR_PAGE_REQUEST, requestPage);
 		    
-	    products = productService.getAllProducts();
-	    request.setAttribute(AttributeList.ATTR_PRODUCTS, products);
+	    /*products = productService.getAllProducts();
+	    request.setAttribute(AttributeList.ATTR_PRODUCTS, products);*/
 	} catch (ServiceException e) {
 	    logger.error(e);
 	    throw new CommandException(e);
