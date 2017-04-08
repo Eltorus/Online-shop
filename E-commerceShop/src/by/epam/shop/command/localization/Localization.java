@@ -11,11 +11,11 @@ import by.epam.shop.controller.PageList;
 
 public class Localization implements Command {
 
-	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		String language = request.getParameter(ParameterList.CMD_LOCAL);
-		request.getSession(true).setAttribute(AttributeList.ATTR_LOCAL, language);
-		return PageList.PG_INDEX;	
-	}
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+	String language = request.getParameter(ParameterList.CMD_LOCAL);
+	request.getSession(true).setAttribute(AttributeList.ATTR_LOCAL, language);
+	return PageList.PG_INDEX;
+    }
 
 }

@@ -3,6 +3,9 @@ package by.epam.shop.command;
 public final class AttributeList {
 	
 	private AttributeList(){}
+	public static final String ATTR_PAGE_AMOUNT = "pageAmount";
+	public static final String ATTR_PAGE_REQUEST = "requestPage";
+	
 	public static final String ATTR_LOCAL = "local";
 	
 	public static final String ATTR_USER = "user";

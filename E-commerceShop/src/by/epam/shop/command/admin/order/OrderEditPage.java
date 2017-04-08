@@ -3,6 +3,8 @@ package by.epam.shop.command.admin.order;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import by.epam.shop.bean.Order;
 import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.Command;
@@ -15,7 +17,7 @@ import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
 
 public class OrderEditPage implements Command{
-
+    	private final static Logger logger = Logger.getLogger(OrderEditPage.class);
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		if(!UserValidation.isUserLoged(request, response) || !UserValidation.isUserAdmin(request, response)) {
@@ -32,6 +34,7 @@ public class OrderEditPage implements Command{
 
 			return PageList.PG_ORDER_INFO;
 		} catch (ServiceException e) {
+		    	logger.error(e);
 			throw new CommandException(e);
 		}
 	}

@@ -19,7 +19,7 @@
 
 	<div class="container">
 	<div class="row">
-	<div class="col-sm-4 col-lg-4 col-md-4">
+	<div class="col-sm-3 col-lg-3 col-md-5">
 		<div class="thumbnail">
 			<div class="product-pict">
 				<img src="${requestScope.product.imgPath}" alt="${requestScope.product.imgPath}">

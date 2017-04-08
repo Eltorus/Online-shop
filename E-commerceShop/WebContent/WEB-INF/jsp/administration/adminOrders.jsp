@@ -34,6 +34,8 @@
 										<th>Delivery Date</th>
 										<th>Address</th>
 										<th>Bill</th>
+										<th>Discount</th>
+										<th>Total</th>
 										<th>Paid?</th>
 										<th>Status</th>
 										<th></th>
@@ -48,6 +50,8 @@
 											<td>${order.deliveryDate}</td>
 											<td>${order.address}</td>
 											<td>${order.bill}</td>
+											<td>${order.discount*100} %</td>
+											<td>${order.total}</td>
 											<td>${order.orderPaid}</td>
 											<td><c:choose>
 													<c:when test="${order.orderCompleted == true}">

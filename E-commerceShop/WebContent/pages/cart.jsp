@@ -20,10 +20,10 @@
 			<thead>
 				<tr>
 					<th>№</th>
-					<th>Title</th>
-					<th>Category</th>
-					<th>Price</th>
-					<th>Quantity</th>
+					<th>${title}</th>
+					<th>${category}</th>
+					<th>${price}</th>
+					<th>${quantity}</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -39,7 +39,7 @@
 						<td><form action="Controller" method="post">
 								<input type="hidden" name="command" value="delete_from_cart" />
 								<input type="hidden" name="product_index" value="${i.index}" />
-								<button type="submit" class="btn btn-default btn-md">Delete</button>
+								<button type="submit" class="btn btn-default btn-md">${delete}</button>
 							</form></td>
 					</tr>
 				</c:forEach>

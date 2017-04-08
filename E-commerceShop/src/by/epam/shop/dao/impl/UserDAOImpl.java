@@ -91,10 +91,9 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteUser(User user) throws DAOException {
-	// Мы не удаляем данные а присваиваем им поле deleted = true
-	ConnectionPool pool = null;
 	Connection con = null;
 	PreparedStatement ps = null;
+	ConnectionPool pool = null;
 	try {
 	    pool = ConnectionPool.getInstance();
 	    con = pool.takeConnection();

@@ -35,6 +35,20 @@
 			</c:forEach>
 		</div>
 	</div>
+	
+	<ul class="pagination">
+		<c:forEach var="i" begin="1" end="${requestScope.pageAmount}">
+			<c:choose>
+				<c:when test="${requestScope.requestPage == i}">
+					<li class="active"><a href="#">i</a></li>
+				</c:when>
+				<c:otherwise>
+					<li><a href="#">i</a></li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		
+	</ul>
 	<div class="container">
 		<hr>
 		<footer>

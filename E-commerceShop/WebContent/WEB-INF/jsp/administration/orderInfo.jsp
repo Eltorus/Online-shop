@@ -38,10 +38,6 @@
 					<label class="control-label">Email: ${requestScope.order.user.email} <br/>Phonenumber: ${requestScope.order.user.phonenumber}</label>
 				</div>
 				<div class="control-group">
-					<label class="control-label">Discount: ${requestScope.order.user.discountCoefficient*100} %</label>
-				</div>
-
-				<div class="control-group">
 					<label class="control-label">Delivery address: </label>
 					<div class="controls">
 						<input required id="address" value="${requestScope.order.address}" name="address" type="text" class="form-control" class="input-medium" required>
@@ -86,6 +82,8 @@
 				</fieldset>
 				<div class="control-group">
 					<label class="control-label">Bill: ${requestScope.order.bill}</label>
+					<label class="control-label">Discount: ${requestScope.order.discount*100} %</label>
+					<label class="control-label">Total: ${requestScope.order.total}</label>
 				</div>
 				<div class="control-group">
 					<c:choose>

@@ -4,7 +4,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
+<fmt:message bundle="${loc}" key="local.enter" var="enter"/>
+<fmt:message bundle="${loc}" key="local.delete" var="delete"/>
 <fmt:message bundle="${loc}" key="local.profile" var="profile"/>
+<fmt:message bundle="${loc}" key="local.submit" var="submit"/>
+<fmt:message bundle="${loc}" key="local.upload" var="upload"/>
+<fmt:message bundle="${loc}" key="local.rusure" var="rusure"/>
+<fmt:message bundle="${loc}" key="local.suredelprof" var="suredelprof"/>
+<fmt:message bundle="${loc}" key="local.delprofile" var="delprofile"/>
+<fmt:message bundle="${loc}" key="local.uploadimg" var ="uploadimg"/>
+<fmt:message bundle="${loc}" key="local.choose" var="choose"/>
+
 <fmt:message bundle="${loc}" key="local.catalog" var="catalog"/>
 <fmt:message bundle="${loc}" key="local.administration" var="administration"/>
 <fmt:message bundle="${loc}" key="local.locbutton.lang" var="lang" />
@@ -12,11 +22,21 @@
 <fmt:message bundle="${loc}" key="local.locbutton.name.ru" var="ru" />
 <fmt:message bundle="${loc}" key="local.locbutton.logout" var="logout" />
 <fmt:message bundle="${loc}" key="local.cancel" var="cancel" />
-<fmt:message bundle="${loc}" key="local.email" var="email" />
-<fmt:message bundle="${loc}" key="local.password" var="password" />
+
+<fmt:message bundle="${loc}" key="local.user.email" var="email" />
+<fmt:message bundle="${loc}" key="local.user.password" var="password" />
+<fmt:message bundle="${loc}" key="local.user.phonenumber" var="phonenumber" />
+<fmt:message bundle="${loc}" key="local.user.name" var="name" />
+<fmt:message bundle="${loc}" key="local.user.sname" var="surname" />
+<fmt:message bundle="${loc}" key="local.user.confpassword" var="confpassword" />
+<fmt:message bundle="${loc}" key="local.user.discount" var="discount" />
+<fmt:message bundle="${loc}" key="local.user.balance" var="balance" />
+<fmt:message bundle="${loc}" key="local.user.rebalance" var="rebalance" />
+
 <fmt:message bundle="${loc}" key="local.signin" var="signin" />
 <fmt:message bundle="${loc}" key="local.signup" var="signup" />
 <fmt:message bundle="${loc}" key="local.message" var="message" />
+
 <fmt:message bundle="${loc}" key="local.order.orders" var="orders"/>
 <fmt:message bundle="${loc}" key="local.order.cartadd" var="cartadd" />
 <fmt:message bundle="${loc}" key="local.order.makeorder" var="makeorder" />
@@ -26,3 +46,9 @@
 <fmt:message bundle="${loc}" key="local.order.cart" var="cart" />
 <fmt:message bundle="${loc}" key="local.order.cartMessage" var="cart_message" />
 <fmt:message bundle="${loc}" key="local.order.purchase" var="purchase" />
+<fmt:message bundle="${loc}" key="local.order.delete" var="delete" />
+
+<fmt:message bundle="${loc}" key="local.product.title" var="title" />
+<fmt:message bundle="${loc}" key="local.product.category" var="category" />
+<fmt:message bundle="${loc}" key="local.product.price" var="price" />
+<fmt:message bundle="${loc}" key="local.product.quantity" var="quantity" />

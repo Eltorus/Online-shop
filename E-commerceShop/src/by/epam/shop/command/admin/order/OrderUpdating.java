@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import by.epam.shop.bean.Order;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
@@ -18,7 +20,7 @@ import by.epam.shop.util.DateFormatter;
 import by.epam.shop.util.UtilException;
 
 public class OrderUpdating implements Command {
-
+    private final static Logger logger = Logger.getLogger(OrderUpdating.class);
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 	if (!UserValidation.isUserLoged(request, response)) {
@@ -49,6 +51,7 @@ public class OrderUpdating implements Command {
 	    orderService.updateOrder(order);
 
 	} catch (UtilException | ServiceException e) {
+	    logger.error(e);
 	    throw new CommandException(e);
 	}
 	return PageList.PG_ADMIN_ORDER_R;

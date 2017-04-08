@@ -98,6 +98,8 @@ CREATE TABLE IF NOT EXISTS `online_shop`.`orders` (
   `o_delivery_date` TIMESTAMP NULL,
   `o_address` VARCHAR(100) NOT NULL,
   `o_bill` DOUBLE NOT NULL,
+  `o_discount` DOUBLE NOT NULL,
+  `o_total` DOUBLE NOT NULL,
   `o_ispaid` TINYINT(1) NOT NULL DEFAULT 0,
   `o_iscompleted` TINYINT(1) NOT NULL DEFAULT 0,
   `o_deleted` TINYINT(1) NOT NULL DEFAULT 0,
@@ -169,8 +171,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `online_shop`;
-INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Jim', 'Moore', 'jmoor@gmail.com', 'f6e0a1e2ac41945a9aa7ff8a8aaa0cebc12a3bcc981a929ad5cf810a090e11ae', '23457', 0, 0);
-INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Mike', 'Door', 'miked@gmail.com', '9b871512327c09ce91dd649b3f96a63b7408ef267c8cc5710114e629730cb61f', '25254', 0, 1);
+INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_balance`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Jim', 'Moore', 'jmoor@gmail.com', 'f6e0a1e2ac41945a9aa7ff8a8aaa0cebc12a3bcc981a929ad5cf810a090e11ae', '23457', 200, 0, 0);
+INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_balance`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Mike', 'Door', 'miked@gmail.com', '9b871512327c09ce91dd649b3f96a63b7408ef267c8cc5710114e629730cb61f', '25254', 200, 0, 1);
 INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Dave', 'Wright', 'dwr@tut.by', '556d7dc3a115356350f1f9910b1af1ab0e312d4b3e4fc788d2da63668f36d017', '58754', 1, 0);
 INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Joe', 'Bing', 'fr@ya.ru', '3538a1ef2e113da64249eea7bd068b585ec7ce5df73b2d1e319d8c9bf47eb314', '24587', 0, 0);
 INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Bill', 'Flint', 'bf@gmail.com', '2926a2731f4b312c08982cacf8061eb14bf65c1a87cc5d70e864e079c6220731', '97644', 0, 0);

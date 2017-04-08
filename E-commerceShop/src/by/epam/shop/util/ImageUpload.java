@@ -2,23 +2,31 @@ package by.epam.shop.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
 
-public class ImageUpload {
-    public static void uploadFile(Collection<Part> parts, String savePath, String fileName) throws UtilException {
-	File fileSaveDir  = new File(savePath);
-	if(!fileSaveDir.exists()) {
-	    fileSaveDir.mkdir();
-	}
-	
-	for(Part part : parts) {
-	    fileName = new File(fileName).getName();
+public final class ImageUpload {
+    public static void uploadFile(Part part, String savePath, String fileName) throws UtilException {
+	InputStream is = null;
+	try{
+	    is = part.getInputStream();
+	    if(ImageIO.read(is) == null) {
+		throw new UtilException("File is not img");
+	    }
+	    
+	    is = part.getInputStream();
+	    Files.copy(is, new File(savePath + fileName).toPath(), StandardCopyOption.REPLACE_EXISTING);
+	} catch (IOException e) {
+	    throw new UtilException("Error during upload");
+	} finally {
 	    try {
-		part.write(savePath + File.separator + fileName);
+		is.close();
 	    } catch (IOException e) {
-		throw new UtilException(e);
+		throw new UtilException("Error during upload");
 	    }
 	}
     }

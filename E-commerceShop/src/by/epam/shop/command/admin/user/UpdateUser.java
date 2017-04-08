@@ -25,6 +25,9 @@ public class UpdateUser implements Command{
 	}
 	
 	int id = Integer.valueOf(request.getParameter(ParameterList.USER_ID));
+	if(id == 0) {
+	    return PageList.PG_ADMIN_USER_R;
+	}
 	boolean userBanned = Boolean.valueOf(request.getParameter(ParameterList.USER_BANNED));
 	
 	User user = new User();

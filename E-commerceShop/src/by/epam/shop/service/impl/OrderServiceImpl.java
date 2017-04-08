@@ -22,13 +22,13 @@ public class OrderServiceImpl implements OrderService {
 
 	Order order = new Order();
 	order.setUser(user);
-	order.setBill(countOrderBill(cart, user));
 	order.setCart(cart);
-
+	countOrderBill(cart, user, order);
+	
 	return order;
     }
 
-    private double countOrderBill(Cart cart, User user) {
+    private void countOrderBill(Cart cart, User user, Order order) {
 	double bill = 0;
 
 	Iterator<CartLine> itr = cart.getProductList().iterator();
@@ -36,13 +36,18 @@ public class OrderServiceImpl implements OrderService {
 	    CartLine cartLine = (CartLine) itr.next();
 	    bill += cartLine.getProduct().getPrice() * cartLine.getQuantity();
 	}
-
+	order.setBill(bill);
+	
 	double discount = user.getDiscountCoefficient();
+	order.setDiscount(discount);
+	
+	double total = bill;
 	if (discount >= 0) {
-	    bill = bill - (bill * discount);
+	    total = bill - (bill * discount);
+	    
 	}
-
-	return RoundDouble.getRoundedDouble(bill);
+	order.setTotal(RoundDouble.getRoundedDouble(total));
+	
     }
 
     @Override

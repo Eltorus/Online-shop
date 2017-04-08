@@ -14,8 +14,6 @@ public final class ParameterList {
 	
 	public static final String CMD_LOCAL = "local";
 	
-	
-	
 	public static final String ADMIN_PAGE = "admin_page";
 	
 	public static final String USER_PAGE = "user_page";
@@ -42,10 +40,13 @@ public final class ParameterList {
 	public static final String PRODUCT_DESCRIPTION = "description";
 	public static final String PRODUCT_AMOUNT = "amount";
 	public static final String PRODUCT_IMG_UPLOAD = "upload_product_img";
-	
+	public static final String PRODUCT_IMG = "pr-img";
+	public static final String PRODUCT_IMG_PATH = "product_img_path";
+
 	public static final String CMD_PRODUCT_INDX = "product_index";
 	public final static String CMD_PRODUCT_ADD = "add_product";
 	public final static String CMD_PRODUCT_UPDATE="update_product";
+	public static final String CMD_PRODUCT_DELETE="delete_product";
 	
 	public final static String CMD_CART_ADD = "add_to_cart";
 	public final static String CMD_CART_DELETE = "delete_from_cart";
@@ -66,14 +67,9 @@ public final class ParameterList {
 	public final static String CMD_USER_UPDATE = "user_update";
 	public final static String CMD_USER_ORDERS = "user_orders";
 	public final static String CMD_USER_ORDER_CANCEL = "order_cancel";
-<<<<<<< HEAD
 	public final static String CMD_USER_AVATAR_UPLOAD= "upload_avatar";
+	public final static String CMD_USER_DELETE_PROFILE="delete_user";
 
-=======
-	
->>>>>>> 5b40ca0df939b188283d86b48f985bc60801bd39
 	public final static String CMD_ORDER_IS_COMPLITED= "isOrderComplited";
 	public final static String CMD_ORDER_COMPLITED= "Complited";
-	
-	
 }

@@ -5,7 +5,10 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.log4j.Logger;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import by.epam.shop.bean.Product;
 import by.epam.shop.command.Command;
@@ -20,8 +23,8 @@ import by.epam.shop.util.ImageUpload;
 import by.epam.shop.util.UtilException;
 
 public class ProductUpdating implements Command {
-    private static final String relPath = "img/products/";
-
+    private final static Logger logger = Logger.getLogger(ProductUpdating.class);
+    private final static String savePath="img/products/";
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 	if (!UserValidation.isUserLoged(request, response) || !UserValidation.isUserAdmin(request, response)) {
@@ -29,7 +32,6 @@ public class ProductUpdating implements Command {
 	}
 
 	try {
-
 	    Product product = fillUpProduct(request, response);
 	    ProductService productService = ServiceFactory.getInstance().getProductService();
 
@@ -40,18 +42,18 @@ public class ProductUpdating implements Command {
 	    }
 
 	} catch (ServiceException | UtilException | IOException | ServletException e) {
+	    logger.error(e);
 	    throw new CommandException(e);
 	}
 
 	return PageList.PG_ADMIN_PRODUCT_R;
     }
 
-    private Product fillUpProduct(HttpServletRequest request, HttpServletResponse response)
-	    throws UtilException, IOException, ServletException {
+    private Product fillUpProduct(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, UtilException{
 	Product product = new Product();
 
 	String id = request.getParameter(ParameterList.PRODUCT_ID);
-	if (id.equals("")) {
+	if (id.isEmpty()) {
 	    product.setId(0);
 	} else {
 	    product.setId(Integer.parseInt(id));
@@ -63,13 +65,18 @@ public class ProductUpdating implements Command {
 	product.setDescription(request.getParameter(ParameterList.PRODUCT_DESCRIPTION));
 	product.setAmount(Integer.parseInt(request.getParameter(ParameterList.PRODUCT_AMOUNT)));
 
-	String fileName = product.getTitle() + "-" + product.getCategory() + "-" + product.getTitle().hashCode()
-		+ ".jpg";
-	String savePath = request.getServletContext().getRealPath(relPath);
-
-	ImageUpload.uploadFile(request.getParts(), savePath, fileName);
-
-	product.setImgPath(relPath + fileName);
+	Part part = request.getPart(ParameterList.PRODUCT_IMG);
+	 if(part.getSize() != 0)  {
+	    String fileName = product.getTitle() + "-" + product.getCategoryID() + "-" + product.getTitle().hashCode()
+		    + ".jpg";
+	    
+	    ImageUpload.uploadFile(part, savePath, fileName);
+	    
+	    product.setImgPath(savePath + fileName);
+	} else {
+	    String imgPath = request.getParameter(ParameterList.PRODUCT_IMG_PATH);
+	    product.setImgPath(imgPath);
+	}
 
 	return product;
     }

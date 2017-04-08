@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import by.epam.shop.bean.User;
 import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.Command;
@@ -16,7 +18,7 @@ import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
 
 public class RechargingBalance implements Command{
-	//// ПЕРЕПИСАААТЬ
+    	private final static Logger logger = Logger.getLogger(RechargingBalance.class);
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		if(!UserValidation.isUserLoged(request, response)) {
@@ -39,6 +41,7 @@ public class RechargingBalance implements Command{
 			User result = userService.changeUser(user);
 			session.setAttribute(AttributeList.ATTR_USER, result);
 		} catch (ServiceException e) {
+		    	logger.error(e);
 			throw new CommandException(e);
 		}
 		return PageList.PG_PROFILE;

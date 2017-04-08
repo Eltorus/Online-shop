@@ -39,7 +39,7 @@
 			</tbody>
 		</table>
 	</div>
-	<h4>${order_value}:${sessionScope.order.bill}</h4>
+	<h4>${order_value}:<br/>Bill: ${sessionScope.order.bill}<br/>Discount:${sessionScope.order.discount*100} %<br/>Total:${sessionScope.order.total}</h4>
 	<form action="Controller" method="post">
 		<input type="hidden" name="command" value="make_order" /> <label class="control-label">${address}</label> 
 		<input type="text" id="address" pattern="^([А-Яа-я\s.])+\,([А-Яа-я\s.])+\,([\s\d])+\,([А-Яа-я\d\s.])$" class="form-control input-sm chat-input"

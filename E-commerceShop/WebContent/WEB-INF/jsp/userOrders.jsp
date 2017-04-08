@@ -39,7 +39,7 @@
 									</c:forEach></td>
 								<td>${order.orderDate}</td>
 								<td>${order.address}</td>
-								<td>${order.bill}</td>
+								<td>${order.total}</td>
 								<td><c:choose>
 										<c:when test="${order.orderCompleted == true}">
 										Complited

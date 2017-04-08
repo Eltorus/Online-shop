@@ -103,8 +103,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Product product) throws ServiceException {
-	// TODO Auto-generated method stub
-
+	if(product == null || product.getId() == 0) {
+	    throw new ServiceException("Parameters are null");
+	}
+	
+	try {
+	    ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+	    productDAO.deleteProduct(product);
+	} catch (DAOException e) {
+	    throw new ServiceException(e);
+	}
     }
 
     private boolean isProductValid(Product product) {
@@ -128,6 +136,40 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	return true;
+    }
+
+    @Override
+    public int getTotalProductAmount() throws ServiceException {
+	int amount = 0;
+	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+	try {
+	     amount = productDAO.getTotalProductAmount();
+	} catch (DAOException e) {
+	    throw new ServiceException(e);
+	}
+	return amount;
+    }
+
+    @Override
+    public List<Product> getProducts(int offset, int limit) throws ServiceException {
+	if(offset == 0 || limit == 0) {
+	    throw new ServiceException("Values are null");
+	}
+	
+	List<Product> productList = null;
+	try {
+	    ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+	    productList = productDAO.getProducts(offset, limit);
+	    
+	    if(productList.isEmpty()) {
+		return null;
+	    }
+	    
+	} catch (DAOException e) {
+	    throw new ServiceException(e);
+	}
+	
+	return productList;
     }
 
 }

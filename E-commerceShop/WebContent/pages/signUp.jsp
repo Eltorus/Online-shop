@@ -25,43 +25,42 @@
             <fieldset>
             <!-- Sign Up Form -->
             <div class="control-group">
-              <label class="control-label" >First Name:</label>
+              <label class="control-label" >${name}</label>
               <div class="controls">
-                <input id="name" name="name" class="form-control" type="text" placeholder="Enter first name" class="input-large" required>
+                <input id="name" name="name" class="form-control" type="text" placeholder="${name}" class="input-large" required>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="control-label" >Last Name:</label>
+              <label class="control-label" >${surname}</label>
               <div class="controls">
-                <input id="surname" name="surname" class="form-control" type="text" placeholder="Enter last name" class="input-large" required>
+                <input id="surname" name="surname" class="form-control" type="text" placeholder="${surname}" class="input-large" required>
               </div>
             </div>
             
             <div class="control-group">
-              <label class="control-label" for="Email">Email:</label>
+              <label class="control-label" for="Email">${email}</label>
               <div class="controls">
-                <input id="Email" name="email" class="form-control" type="email" pattern="^(.[^@\s]+)@(.[^@\s]+)\.([a-z]+)$" placeholder="Enter email" class="input-large" required>
+                <input id="Email" name="email" class="form-control" type="email" pattern="^(.[^@\s]+)@(.[^@\s]+)\.([a-z]+)$" placeholder="${email}" class="input-large" required>
               </div>
             </div>
             
             <div class="control-group">
-              <label class="control-label" for="userid">Phone number:</label>
+              <label class="control-label" for="userid">${phonenumber}</label>
               <div class="controls">
-                <input id="phone" name="phone" class="form-control" type="tel" placeholder="Enter phonenumber" class="input-large" required>
+                <input id="phone" name="phone" class="form-control" type="tel" placeholder="${phonenumber}" class="input-large" required>
               </div>
             </div>
             
             <div class="control-group">
-              <label class="control-label" for="password">Password:</label>
+              <label class="control-label" for="password">${password}</label>
               <div class="controls">
                 <input id="password" name="password" class="form-control" min="1" max="5" type="password" placeholder="********" class="input-large" required>
-                <em>1-8 Characters</em>
               </div>
             </div>
             
             <div class="control-group">
-              <label class="control-label" for="reenterpassword">Confirm Password:</label>
+              <label class="control-label" for="reenterpassword">${confpassword}</label>
               <div class="controls">
                 <input id="password_confirm" class="form-control" min="1" max="5" name="password_confirm" type="password" placeholder="********" class="input-large" required>
               </div>
@@ -71,7 +70,7 @@
             <div class="control-group">
               <label class="control-label" for="confirmsignup"></label>
               <div class="controls">
-                <button id="confirmsignup" name="confirmsignup" type="submit" class="btn btn-success">Sign Up</button>
+                <button id="confirmsignup" name="confirmsignup" type="submit" class="btn btn-success">${signup}</button>
               </div>
             </div>
             </fieldset>

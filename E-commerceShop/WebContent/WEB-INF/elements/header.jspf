@@ -51,14 +51,8 @@
 				</c:if>
 				<li class="dropdown"><a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"> ${lang} <span class="caret"></span></a>
 					<ul id="g-account-menu" class="dropdown-menu" role="menu">
-						<li><form action="Controller" method="get">
-								<input type="hidden" name="command" value="local" /> <input type="hidden" name="local" value="ru" />
-								<button type="submit" class="btn-link">${ru}</button>
-							</form></li>
-						<li><form action="Controller" method="get">
-								<input type="hidden" name="command" value="local" /> <input type="hidden" name="local" value="en" />
-								<button type="submit" class="btn-link">${en}</button>
-							</form></li>
+						<li><a href="Controller?command=local&local=ru">${ru}</a></li>
+						<li><a href="Controller?command=local&local=en">${en}</a></li>
 					</ul>
 				</li>
 			</ul>

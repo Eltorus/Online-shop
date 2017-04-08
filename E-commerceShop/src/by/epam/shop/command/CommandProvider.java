@@ -8,6 +8,7 @@ import by.epam.shop.command.admin.AdminProductPage;
 import by.epam.shop.command.admin.AdminUserPage;
 import by.epam.shop.command.admin.order.OrderEditPage;
 import by.epam.shop.command.admin.order.OrderUpdating;
+import by.epam.shop.command.admin.product.DeletingProduct;
 import by.epam.shop.command.admin.product.ProductUpdating;
 import by.epam.shop.command.admin.user.UpdateUser;
 import by.epam.shop.command.authorization.LogOut;
@@ -23,11 +24,9 @@ import by.epam.shop.command.order.OrderCanceling;
 import by.epam.shop.command.order.OrderPage;
 import by.epam.shop.command.products.Catalog;
 import by.epam.shop.command.products.ProductPage;
+import by.epam.shop.command.user.DeletingUser;
 import by.epam.shop.command.user.RechargingBalance;
-<<<<<<< HEAD
 import by.epam.shop.command.user.UploadUserAvatar;
-=======
->>>>>>> 5b40ca0df939b188283d86b48f985bc60801bd39
 import by.epam.shop.command.user.UserOrderList;
 
 public class CommandProvider {
@@ -57,10 +56,9 @@ public class CommandProvider {
 		commands.put(ParameterList.CMD_USER_UPDATE, new UpdateUser());
 		commands.put(ParameterList.CMD_USER_ORDERS, new UserOrderList());
 		commands.put(ParameterList.CMD_USER_ORDER_CANCEL, new OrderCanceling());
-<<<<<<< HEAD
 		commands.put(ParameterList.CMD_USER_AVATAR_UPLOAD, new UploadUserAvatar());
-=======
->>>>>>> 5b40ca0df939b188283d86b48f985bc60801bd39
+		commands.put(ParameterList.CMD_PRODUCT_DELETE, new DeletingProduct());
+		commands.put(ParameterList.CMD_USER_DELETE_PROFILE, new DeletingUser());
 	}
 	
 	public static CommandProvider getInstance() {

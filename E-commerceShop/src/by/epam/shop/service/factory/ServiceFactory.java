@@ -8,31 +8,38 @@ import by.epam.shop.service.impl.ProductServiceImpl;
 import by.epam.shop.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
-	private static ServiceFactory instance;
-	
-	private ServiceFactory() {}
-	
-	private final UserService userService = new UserServiceImpl();
-	private final ProductService productService = new ProductServiceImpl();
-	private final OrderService orderService = new OrderServiceImpl();
-	
-	public static ServiceFactory getInstance() {
-		if(instance == null) {
-			instance = new ServiceFactory();
+    private static ServiceFactory instance;
+
+    private ServiceFactory() {
+    }
+
+    private final UserService userService = new UserServiceImpl();
+    private final ProductService productService = new ProductServiceImpl();
+    private final OrderService orderService = new OrderServiceImpl();
+
+    public static ServiceFactory getInstance() {
+	ServiceFactory localInstance = instance;
+	if (localInstance == null) {
+	    synchronized (ServiceFactory.class) {
+		localInstance = instance;
+		if (localInstance == null) {
+		    instance = localInstance = new ServiceFactory();
 		}
-		return instance;
+	    }
 	}
+	return localInstance;
+    }
 
-	public UserService getUserService() {
-		return userService;
-	}
+    public UserService getUserService() {
+	return userService;
+    }
 
-	public ProductService getProductService() {
-		return productService;
-	}
+    public ProductService getProductService() {
+	return productService;
+    }
 
-	public OrderService getOrderService() {
-		return orderService;
-	}
+    public OrderService getOrderService() {
+	return orderService;
+    }
 
 }

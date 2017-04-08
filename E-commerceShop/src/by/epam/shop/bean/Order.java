@@ -10,9 +10,23 @@ public class Order {
 	private Timestamp deliveryDate;
 	private String address;
 	private double bill;
+	private double discount;
+	private double total;
 	private boolean orderPaid;
 	private boolean orderCompleted;
 	
+	public double getDiscount() {
+	    return discount;
+	}
+	public void setDiscount(double discount) {
+	    this.discount = discount;
+	}
+	public double getTotal() {
+	    return total;
+	}
+	public void setTotal(double total) {
+	    this.total = total;
+	}
 	public int getId() {
 		return id;
 	}

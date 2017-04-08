@@ -65,8 +65,7 @@ public final class ConnectionPool {
 	    synchronized (ConnectionPool.class) {
 		localInstance = instance;
 		if (localInstance == null) {
-		    instance = new ConnectionPool();
-		    localInstance = instance;
+		    instance = localInstance = new ConnectionPool();
 		}
 	    }
 	}

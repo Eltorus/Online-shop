@@ -40,9 +40,28 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public boolean deleteProduct(Product product) throws DAOException {
-	// TODO Auto-generated method stub
-	return false;
+    public void deleteProduct(Product product) throws DAOException {
+	Connection con = null;
+	PreparedStatement ps = null;
+	ConnectionPool pool = null;
+
+	try {
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+	    ps = con.prepareStatement(QueryList.DeleteProductQuery);
+
+	    ps.setInt(1, product.getId());
+	    ps.executeUpdate();
+
+	} catch (ConnectionPoolException | SQLException e) {
+	    throw new DAOException(e);
+	} finally {
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException(e);
+	    }
+	}
     }
 
     @Override
@@ -172,6 +191,66 @@ public class ProductDAOImpl implements ProductDAO {
 		throw new DAOException(e);
 	    }
 	}
+    }
+
+    @Override
+    public int getTotalProductAmount() throws DAOException {
+	Connection con = null;
+	Statement st = null;
+	ConnectionPool pool = null;
+	int amount = 0;
+	try {
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+	    
+	    st = con.createStatement();
+	    ResultSet rs = st.executeQuery(QueryList.GetTotalProductAmount);
+	    
+	    while(rs.next()) {
+		amount = rs.getInt(1);
+	    }
+	} catch (ConnectionPoolException | SQLException e) {
+	    throw new DAOException(e);
+	} finally {
+	    try {
+		pool.getBackConnection(st, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException(e);
+	    }
+	}
+	return amount;
+    }
+
+    @Override
+    public List<Product> getProducts(int offset, int limit) throws DAOException {
+	Connection con = null;
+	PreparedStatement ps = null;
+	ConnectionPool pool = null;
+	List<Product> productList = new ArrayList<Product>();
+	try {
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+	    
+	    ps = con.prepareStatement(QueryList.GetAllOrdersQuery+QueryList.GetLimitProductsQuery_P);
+	    ps.setInt(1, offset);
+	    ps.setInt(2, limit);
+	    ResultSet rs = ps.executeQuery();
+	    
+	    while(rs.next()) {
+		Product product = fillUpProduct(rs);
+		productList.add(product);
+	    }
+	} catch (ConnectionPoolException | SQLException e) {
+	    throw new DAOException(e);
+	} finally {
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException(e);
+	    }
+	}
+	
+	return productList;
     }
 
 }

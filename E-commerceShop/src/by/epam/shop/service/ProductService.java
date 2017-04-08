@@ -7,6 +7,8 @@ import by.epam.shop.service.exception.ServiceException;
 
 public interface ProductService {
 	public List<Product> getAllProducts() throws ServiceException;
+	public int getTotalProductAmount() throws ServiceException;
+	public List<Product> getProducts(int offset, int limit) throws ServiceException;
 	public Product getProduct(Product product) throws ServiceException;
 	public List<Product> getProductWithTitle(Product product) throws ServiceException;
 	public List<Product> getProductWithCategory(Product product) throws ServiceException;
