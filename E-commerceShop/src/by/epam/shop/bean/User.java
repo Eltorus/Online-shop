@@ -1,6 +1,8 @@
 package by.epam.shop.bean;
 
-public class User {
+public class User implements java.io.Serializable {
+    private static final long serialVersionUID = 3985751944667531750L;
+    
     private int id;
     private String name;
     private String surname;
@@ -8,8 +10,8 @@ public class User {
     private String passwordHash;
     private String phonenumber;
     private double balance;
-    private boolean is_banned;
-    private boolean is_admin;
+    private boolean banned;
+    private boolean admin;
     private double discountCoefficient;
     private String imgPath;
 
@@ -43,22 +45,6 @@ public class User {
 
     public void setPhonenumber(String phonenumber) {
 	this.phonenumber = phonenumber;
-    }
-
-    public boolean isIs_banned() {
-	return is_banned;
-    }
-
-    public void setIs_banned(boolean is_banned) {
-	this.is_banned = is_banned;
-    }
-
-    public boolean isIs_admin() {
-	return is_admin;
-    }
-
-    public void setIs_admin(boolean is_admin) {
-	this.is_admin = is_admin;
     }
 
     public int getId() {
@@ -100,10 +86,20 @@ public class User {
     public void setImgPath(String imgPath) {
 	this.imgPath = imgPath;
     }
+    public boolean isBanned() {
+	return banned;
+    }
 
-    @Override
-    public String toString() {
-	return this.id + this.email + this.name + this.surname + this.phonenumber;
+    public void setBanned(boolean banned) {
+	this.banned = banned;
+    }
+
+    public boolean isAdmin() {
+	return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+	this.admin = admin;
     }
     
     @Override
@@ -167,13 +163,31 @@ public class User {
 	if (discountCoefficient != other.discountCoefficient) {
 	    return false;
 	}
-	if (is_banned != other.is_banned) {
+	if (banned != other.banned) {
 	    return false;
 	}
-	if (is_admin != other.is_admin) {
+	if (admin != other.admin) {
 	    return false;
 	}
 	return true;
+    }
+
+    @Override
+    public int hashCode() {
+	int result = id * 31 + (name != null ? name.hashCode() : 0) + (surname != null ? surname.hashCode() : 0) + 
+		(email != null ? email.hashCode() : 0) + (passwordHash != null ? passwordHash.hashCode() : 0) +
+		(phonenumber != null ? phonenumber.hashCode() : 0) + Double.valueOf(balance).hashCode() + 
+		(banned ? 1: 0) + (admin ? 1 : 0) + Double.valueOf(discountCoefficient).hashCode() + (imgPath != null ? imgPath.hashCode() : 0);
+	return result;
+    }
+    
+    @Override
+    public String toString() {
+	return getClass().getName() + "@" + "id: " + id + ", name: " + name + ", surname: " + surname + ", email: "+
+			email + ", passwordHash: " + passwordHash + ", phonenumber: " + phonenumber + ", balance: " + 
+			balance + ", banned: " + banned + ", admin: " + admin + ", discountCoefficient: "
+			+ discountCoefficient + ", imgPath:" + imgPath;
+    
     }
 
 }

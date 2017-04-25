@@ -1,19 +1,16 @@
 $("#phone").mask("+375 (99) 999-99-99");
-$('#datepicker').mask("9999.99.99");
 
-$('#address').on('keyup', function() {
-	var address = $('#address').val();
-	if(address.length != 0) {
-		$('#addressinput').attr('class', 'form-group has-feedback');
-		$('#purchase').prop('disabled', false);
-	} else {
-		$('#addressinput').attr('class', 'form-group has-feedback has-error');
-		$('#purchase').prop('disabled', true);
+$('#password, #confirm_password').on('keyup', function () {
+	if($('#password').val()==null || $('#password').val()==''){
+		$('#message').html('').css('color', 'red');
+        $('#signup_button').attr("disabled", true);
 	}
+     else if ($('#password').val() == $('#confirm_password').val()) {
+        $('#message').html('Passwords match').css('color', 'green');
+        $('#signup_button').attr("disabled", false);
+        
+    } else {
+        $('#message').html('Passwords don\'t match').css('color', 'red');
+        $('#signup_button').attr("disabled", true);
+        }
 });
-
-/*function isValidDate(s) {
-	var bits = s.split('.');
-	var d = new Date(bits[2], bits[1] - 1, bits[0]);
-	return d && (d.getMonth() + 1) == bits[1];
-}*/

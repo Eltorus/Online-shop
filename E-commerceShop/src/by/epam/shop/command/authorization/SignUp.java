@@ -1,5 +1,8 @@
 package by.epam.shop.command.authorization;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,57 +12,110 @@ import by.epam.shop.bean.User;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
-import by.epam.shop.command.validation.UserValidation;
-import by.epam.shop.controller.PageList;
 import by.epam.shop.service.UserService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
 import by.epam.shop.util.HashTool;
+import by.epam.shop.util.MessageGenerator;
+import by.epam.shop.util.PageList;
+import by.epam.shop.util.StringOperationTool;
 import by.epam.shop.util.UtilException;
 
 public class SignUp implements Command {
     private final static Logger logger = Logger.getLogger(SignUp.class);
-    
+
+    /*
+     * Get user params from request, creates new User object and pass to service
+     * layer for adding
+     * 
+     * @param javax.servlet.http.HttpServletRequest
+     * 
+     * @param javax.servlet.http.HttpServletResponse
+     * 
+     * @throws by.epam.shop.command.exception.CommandException
+     * 
+     * @return String page, which will be passed to client
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-	if (UserValidation.isUserLoged(request, response)) {
-	    return PageList.PG_INDEX;
-	}
-	
-	String page = null;
-	// сделать это через js
 	try {
-	    String passwordConfirm = request.getParameter(ParameterList.USER_PSWRD_CONFIRM);
-	    String password = request.getParameter(ParameterList.USER_PSWRD);
-	    if (!passwordConfirm.equals(password)) {
-		throw new CommandException("Password don't match");
-	    }
-
 	    User user = fillUpUser(request, response);
 	    UserService userService = ServiceFactory.getInstance().getUserService();
 	    boolean successfulRegister = userService.addUser(user);
 
-	    if (successfulRegister == true) {
-		page = PageList.PG_SIGNIN; // вернуть страницу с сообщением об
-					   // успешной регистрацией
+	    if (successfulRegister) {
+		return PageList.PG_SIGNIN + MessageGenerator.generateSuccess(1201);
 	    } else {
-		// предложить пользователю войти заново или восстановить пароль
-		page = PageList.PG_SIGNIN;
+		return PageList.PG_SIGNIN + MessageGenerator.generateError(1402);
 	    }
 	} catch (ServiceException | UtilException e) {
 	    logger.error(e);
-	    throw new CommandException(e);
+	    throw new CommandException("Exception during SignUp command", e);
 	}
-	return page;
     }
 
-    private User fillUpUser(HttpServletRequest request, HttpServletResponse response) throws UtilException {
+    private User fillUpUser(HttpServletRequest request, HttpServletResponse response)
+	    throws UtilException, CommandException {
+
+	String passwordConfirm = request.getParameter(ParameterList.USER_PSWRD_CONFIRM);
+	String password = request.getParameter(ParameterList.USER_PSWRD);
+	if (!passwordConfirm.equals(password)) {
+	    throw new CommandException("Passwords don't match");
+	}
+
+	String name = request.getParameter(ParameterList.USER_NAME);
+	if (name == null || name.trim().isEmpty() || name.length() > 50) {
+	    throw new CommandException("Inapropriate name format");
+	}
+	Pattern namePattern = Pattern.compile("^\\w+$");
+	Matcher nameMatcher = namePattern.matcher(name.trim());
+	if (!nameMatcher.find()) {
+	    throw new CommandException("Inapropriate name format");
+	}
+	
+	String surname = request.getParameter(ParameterList.USER_SURNAME);
+	if (surname == null || surname.trim().isEmpty() || surname.length() > 50) {
+	    throw new CommandException("Inapropriate surname format");
+	}
+	nameMatcher = namePattern.matcher(surname.trim());
+	if (!nameMatcher.find()) {
+	    throw new CommandException("Inapropriate surname format");
+	}
+	
+	String email = request.getParameter(ParameterList.USER_EMAIL);
+	if (!StringOperationTool.isStringValid(email) || email.trim().length() > 45 || email.trim().length() < 8) {
+	    throw new CommandException("Inapropriate email format");
+	}
+	Pattern emailPattern = Pattern.compile("^(.[^@\\s]+)@(.[^@\\s]+)\\.([a-z]+)$");
+	Matcher emailMatcher = emailPattern.matcher(email.trim());
+	if (!emailMatcher.find()) {
+	    throw new CommandException("Inapropriate email format");
+	}
+
+	String phonenumber = request.getParameter(ParameterList.USER_PHONE);
+	if (phonenumber == null || phonenumber.trim().isEmpty() || phonenumber.length() > 20
+		|| phonenumber.length() < 13) {
+	    throw new CommandException("Inapropriate phonenumber format");
+	}
+	Pattern phonePattern = Pattern.compile("^\\+375\\s?(\\(?\\d{2}\\)?\\s?\\d{3}-?\\d{2}-?\\d{2})$");
+	Matcher phonematcher = phonePattern.matcher(phonenumber.trim());
+	if (!phonematcher.find()) {
+	    throw new CommandException("Inapropriate phonenumber format");
+	}
+	
+
+	if (password == null || password.isEmpty() || password.length() < 5) {
+	    throw new CommandException("Inapropriate password format");
+	}
+
 	User user = new User();
-	user.setName(request.getParameter(ParameterList.USER_NAME));
-	user.setSurname(request.getParameter(ParameterList.USER_SURNAME));
-	user.setPhonenumber(request.getParameter(ParameterList.USER_PHONE));
-	user.setEmail(request.getParameter(ParameterList.USER_EMAIL));
-	user.setPasswordHash(HashTool.hashLine(request.getParameter(ParameterList.USER_PSWRD)));
+
+	user.setName(name.trim());
+	user.setSurname(surname.trim());
+	user.setPhonenumber(phonenumber.trim());
+	user.setEmail(email.trim());
+	user.setPasswordHash(HashTool.hashLine(password));
+
 	return user;
     }
 

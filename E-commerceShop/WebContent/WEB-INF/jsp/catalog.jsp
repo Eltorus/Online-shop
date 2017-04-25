@@ -4,15 +4,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/shop.css">
-<title>Catalog</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/shop.css">
+	<%@ include file="../elements/local.jspf"%>
+	<title>${catalog}</title>
 </head>
 <body>
-	<jsp:useBean id="product" class="by.epam.shop.bean.Product" type="java.lang.Object" scope="request" />
 	<%@ include file="../elements/header.jspf"%>
-	<%@ include file="../elements/local.jspf"%>
 	<div class="container">
 		<div class="row">
 			<c:forEach items="${requestScope.products}" var="product">
@@ -22,24 +21,33 @@
 							<a href="Controller?command=product_page&product_id=${product.id}"> <img src="${product.imgPath}" class="product" alt="${product.imgPath}"></a>
 					</div>
 						<div class="caption">
-							<h4 class="pull-right"><fmt:formatNumber pattern="#0.00" value="${product.price}"/></h4>
+							<h4 class="pull-right"><fmt:formatNumber pattern="#0.00" value="${product.price}"/> ${rubles}</h4>
 							<h4>
 								<a href="Controller?command=product_page&product_id=${product.id}">${product.title}</a>
 							</h4>
 							<p>
-								<a href="#">${product.category}</a>
-								<c:if test="${product.amount==0}">
-									<span class="label label-default pr-badge">Not Available</span>
-								</c:if>
+								${product.category}
 							</p>
+								<c:choose>
+								<c:when test="${product.amount==0}">
+									<button type="button" class="btn btn-xs pull-right">${n_available}</button>
+								</c:when>
+								<c:otherwise>
+								<form action="Controller" method="post">
+									<input type="hidden" name="command" value="add_to_cart" /> 
+									<input type="hidden" name="product_id" value="${product.id}" />
+									<button type="submit" class="btn btn-default btn-xs pull-right">
+							          <span class="glyphicon glyphicon-shopping-cart"></span> ${cartadd}
+							        </button>
+							    </form>
+								</c:otherwise>
+								</c:choose>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
-	</div>
-	
-	<ul class="pagination">
+		<ul class="pagination">
 		<c:forEach var="i" begin="1" end="${requestScope.pageAmount}">
 			<c:choose>
 				<c:when test="${requestScope.requestPage == i}">
@@ -51,7 +59,7 @@
 			</c:choose>
 		</c:forEach>	
 	</ul>
-	
+	</div>
 	<div class="container">
 		<hr>
 		<footer>

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -22,9 +21,20 @@ import by.epam.shop.dao.QueryList;
 import by.epam.shop.dao.connectionpool.ConnectionPool;
 import by.epam.shop.dao.connectionpool.ConnectionPoolException;
 import by.epam.shop.dao.exception.DAOException;
+import by.epam.shop.util.DateFormatter;
+import by.epam.shop.util.UtilException;
 
+/*implements by.epam.shop.dao.OrderDAO*/
 public class OrderDAOImpl implements OrderDAO {
     private static final Logger logger = Logger.getLogger(OrderDAOImpl.class);
+
+    /*
+     * Add order to database
+     * 
+     * @param by.epam.shop.bean.Order
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     */
     @Override
     public void addOrder(Order order) throws DAOException {
 	Connection con = null;
@@ -34,7 +44,7 @@ public class OrderDAOImpl implements OrderDAO {
 	try {
 	    pool = ConnectionPool.getInstance();
 	    con = pool.takeConnection();
-	    
+
 	    con.setAutoCommit(false);
 	    svpt = con.setSavepoint("Add Order");
 	    compileAddOrderQuery(con, ps, order);
@@ -45,13 +55,13 @@ public class OrderDAOImpl implements OrderDAO {
 		logger.error(e);
 		con.rollback(svpt);
 	    } catch (SQLException e1) {
-		throw new DAOException(e);
+		throw new DAOException("Exception during addOrder procedure",e);
 	    }
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in addOrder procedure during getting back connection",e);
 	    }
 	}
     }
@@ -60,7 +70,7 @@ public class OrderDAOImpl implements OrderDAO {
 	ps = con.prepareStatement(QueryList.AddOrderQuery);
 
 	ps.setInt(1, order.getUser().getId());
-	ps.setTimestamp(2, order.getDeliveryDate());
+	ps.setString(2, DateFormatter.convertDateToString(order.getOrderDate()));
 	ps.setString(3, order.getAddress());
 	ps.setDouble(4, order.getBill());
 	ps.setDouble(5, order.getDiscount());
@@ -68,19 +78,19 @@ public class OrderDAOImpl implements OrderDAO {
 	ps.setBoolean(7, order.isOrderPaid());
 
 	ps.executeUpdate();
+
 	addOrderedProducts(con, ps, order);
-	decreaseUserBalance(con, ps,order);
+	decreaseUserBalance(con, ps, order);
 	decreaseProductAmount(con, ps, order);
     }
 
     private void addOrderedProducts(Connection con, PreparedStatement ps, Order order) throws SQLException {
 	ps = con.prepareStatement(QueryList.AddOrderedProductsQuery);
 
-	Iterator<CartLine> itr = order.getCart().getProductList().iterator();
-	while (itr.hasNext()) {
-	    CartLine cartLine = itr.next();
+	for (CartLine cartLine : order.getCart().getProductList()) {
 	    Product product = cartLine.getProduct();
 	    int quantity = cartLine.getQuantity();
+
 	    ps.setInt(1, product.getId());
 	    ps.setInt(2, quantity);
 
@@ -89,11 +99,11 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     private void decreaseUserBalance(Connection con, PreparedStatement ps, Order order) throws SQLException {
-	ps = con.prepareStatement(QueryList.UpdateUserQuery_P + QueryList.SetBalanceQuery_P + QueryList.GetUserQueryLogin_P);
+	ps = con.prepareStatement(QueryList.DecreaseUserBalanceQuery_P + QueryList.UserLoginInfQuery_P);
 
 	ps.setDouble(1, order.getTotal());
 	ps.setString(2, order.getUser().getEmail());
-	ps.setString(3,  order.getUser().getPasswordHash());
+	ps.setString(3, order.getUser().getPasswordHash());
 
 	ps.executeUpdate();
     }
@@ -101,9 +111,7 @@ public class OrderDAOImpl implements OrderDAO {
     private void decreaseProductAmount(Connection con, PreparedStatement ps, Order order) throws SQLException {
 	ps = con.prepareStatement(QueryList.DecreaseProductAmountQuery);
 
-	Iterator<CartLine> itr = order.getCart().getProductList().iterator();
-	while (itr.hasNext()) {
-	    CartLine cartLine = itr.next();
+	for (CartLine cartLine : order.getCart().getProductList()) {
 	    ps.setInt(1, cartLine.getQuantity());
 	    ps.setInt(2, cartLine.getProduct().getId());
 
@@ -112,6 +120,13 @@ public class OrderDAOImpl implements OrderDAO {
 
     }
 
+    /*
+     * Update order in database
+     * 
+     * @param by.epam.shop.bean.Order
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     */
     @Override
     public void updateOrder(Order order) throws DAOException {
 	Connection con = null;
@@ -122,24 +137,33 @@ public class OrderDAOImpl implements OrderDAO {
 	    con = pool.takeConnection();
 	    ps = con.prepareStatement(QueryList.UpdateOrderQuery);
 
-	    ps.setTimestamp(1, order.getDeliveryDate());
+	    ps.setString(1, DateFormatter.convertDateToString(order.getDeliveryDate()));
 	    ps.setString(2, order.getAddress());
 	    ps.setBoolean(3, order.isOrderCompleted());
 	    ps.setInt(4, order.getId());
 
 	    ps.executeUpdate();
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException(e);
+	    throw new DAOException("Exception during updateOrder procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in addOrder procedure during getting back connection",e);
 	    }
 	}
 
     }
 
+    /*
+     * Get order from database with id
+     * 
+     * @param by.epam.shop.bean.Order
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     * 
+     * @return by.epam.shop.bean.Order
+     */
     @Override
     public Order getOrder(Order order) throws DAOException {
 	Connection con = null;
@@ -150,13 +174,13 @@ public class OrderDAOImpl implements OrderDAO {
 	    pool = ConnectionPool.getInstance();
 	    con = pool.takeConnection();
 	    result = compileGetOrderQuery(con, ps, order);
-	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException(e);
+	} catch (SQLException | ConnectionPoolException | UtilException e) {
+	    throw new DAOException("Exception during getOrder procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in getOrder procedure during getting back connection",e);
 	    }
 	}
 
@@ -164,7 +188,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     private Order compileGetOrderQuery(Connection con, PreparedStatement ps, Order order)
-	    throws DAOException, SQLException {
+	    throws DAOException, SQLException, UtilException {
 	Order result = null;
 
 	ps = con.prepareStatement(QueryList.GetOrderQuery_P + QueryList.WhereConditionOrderId_P);
@@ -201,6 +225,13 @@ public class OrderDAOImpl implements OrderDAO {
 	return cart;
     }
 
+    /*
+     * Get all orders from database
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     * 
+     * @return List<by.epam.shop.bean.Order>
+     */
     @Override
     public List<Order> getAllOrders() throws DAOException {
 	Connection con = null;
@@ -218,19 +249,25 @@ public class OrderDAOImpl implements OrderDAO {
 		Order order = fillUpOrder(rs);
 		orderList.add(order);
 	    }
-
-	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException(e);
+	} catch (SQLException | ConnectionPoolException | UtilException e) {
+	    throw new DAOException("Exception during getAllOrders procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(st, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in getAllOrders procedure during getting back connection",e);
 	    }
 	}
 	return orderList;
     }
 
+    /*
+     * Set "delete field" of order as "deleted"
+     * 
+     * @param by.epam.shop.bean.Order
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     */
     @Override
     public void deleteOrder(Order order) throws DAOException {
 	Connection con = null;
@@ -247,15 +284,16 @@ public class OrderDAOImpl implements OrderDAO {
 	    con.commit();
 	} catch (SQLException | ConnectionPoolException e) {
 	    try {
+		logger.error(e);
 		con.rollback(svpt);
 	    } catch (SQLException e1) {
-		throw new DAOException(e);
+		throw new DAOException("Exception during deleteOrder procedure",e);
 	    }
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in deleteOrder procedure during getting back connection",e);
 	    }
 	}
 
@@ -272,7 +310,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     private void recoverUserBalanceQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
-	ps = con.prepareStatement(QueryList.UserBalanceRecoveryQuery);
+	ps = con.prepareStatement(QueryList.UserBalanceRecoveryQuery_P + QueryList.UserIdQuery_P);
 
 	ps.setDouble(1, order.getTotal());
 	ps.setInt(2, order.getUser().getId());
@@ -283,9 +321,7 @@ public class OrderDAOImpl implements OrderDAO {
     private void productAmountRecoveryQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
 	ps = con.prepareStatement(QueryList.ProductAmountRecoveryQuery);
 
-	Iterator<CartLine> itr = order.getCart().getProductList().iterator();
-	while (itr.hasNext()) {
-	    CartLine cartLine = itr.next();
+	for (CartLine cartLine : order.getCart().getProductList()) {
 	    ps.setInt(1, cartLine.getQuantity());
 	    ps.setInt(2, cartLine.getProduct().getId());
 
@@ -293,15 +329,17 @@ public class OrderDAOImpl implements OrderDAO {
 	}
     }
 
-    private Order fillUpOrder(ResultSet rs) throws SQLException {
+    private Order fillUpOrder(ResultSet rs) throws SQLException, UtilException {
 	Order order = new Order();
+
 	order.setId(rs.getInt(1));
 
 	User user = new User();
 	user.setId(rs.getInt(2));
+
 	order.setUser(user);
-	order.setOrderDate(rs.getTimestamp(3));
-	order.setDeliveryDate(rs.getTimestamp(4));
+	order.setOrderDate(DateFormatter.convertStringToDate(rs.getString(3)));
+	order.setDeliveryDate(DateFormatter.convertStringToDate(rs.getString(4)));
 	order.setAddress(rs.getString(5));
 	order.setBill(rs.getDouble(6));
 	order.setDiscount(rs.getDouble(7));
@@ -312,6 +350,15 @@ public class OrderDAOImpl implements OrderDAO {
 	return order;
     }
 
+    /*
+     * Get orders which were made by user from database
+     * 
+     * @param by.epam.shop.bean.Order
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     * 
+     * @return List<by.epam.shop.bean.Order>
+     */
     @Override
     public List<Order> getOrders(Order order) throws DAOException {
 	Connection con = null;
@@ -323,20 +370,21 @@ public class OrderDAOImpl implements OrderDAO {
 	    con = pool.takeConnection();
 
 	    orderList = excuteGetOrdersQuery(con, ps, order);
-	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException(e);
+	} catch (SQLException | ConnectionPoolException | UtilException e) {
+	    throw new DAOException("Exception during getOrders procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in getOrders procedure during getting back connection",e);
 	    }
 	}
 
 	return orderList;
     }
 
-    private List<Order> excuteGetOrdersQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
+    private List<Order> excuteGetOrdersQuery(Connection con, PreparedStatement ps, Order order)
+	    throws SQLException, UtilException {
 	List<Order> orderList = new ArrayList<>();
 
 	ps = con.prepareStatement(QueryList.GetOrderQuery_P + QueryList.GetOrderWhereConditionUserId_P);
@@ -351,4 +399,5 @@ public class OrderDAOImpl implements OrderDAO {
 
 	return orderList;
     }
+
 }

@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import by.epam.shop.command.Command;
+import by.epam.shop.command.CommandList;
 import by.epam.shop.command.CommandProvider;
-import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
+import by.epam.shop.util.PageList;
 
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -38,16 +39,17 @@ public class Controller extends HttpServlet {
 	    throws ServletException, IOException {
 	request.setCharacterEncoding("utf-8");
 	response.setContentType("text/html");
+	
 	CommandProvider provider = CommandProvider.getInstance();
 	Command command = null;
-	String cmdName = request.getParameter(ParameterList.CMD);
+	String cmdName = request.getParameter(CommandList.CMD);
 	String page = null;
 	try {
 	    command = provider.getCommand(cmdName);
 	    page = command.execute(request, response);
 	} catch (CommandException e) {
 	    logger.error(e);
-	    throw new ServletException(e);
+	    return PageList.PG_ERROR;
 	}
 	return page;
     }

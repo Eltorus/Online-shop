@@ -6,7 +6,9 @@ import by.epam.shop.bean.User;
 import by.epam.shop.dao.exception.DAOException;
 
 public interface UserDAO {
-	public User getUser(User user) throws DAOException;
+	public User getUserWithId(User user) throws DAOException;
+	public User getUserWithEmail(User user) throws DAOException;
+	public User getUserWithLoginInf(User user) throws DAOException;
 	public List<User> getAllUsers() throws DAOException;
 	public void addUser(User user) throws DAOException;
 	public void deleteUser(User user) throws DAOException;

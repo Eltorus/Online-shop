@@ -9,8 +9,13 @@ import by.epam.shop.dao.factory.DAOFactory;
 import by.epam.shop.service.ProductService;
 import by.epam.shop.service.exception.ServiceException;
 
+/* ProductServiceImpl implements by.epam.shop.service.ProductService */
 public class ProductServiceImpl implements ProductService {
-
+    
+    /* Get Product objects {@link by.epam.shop.bean.Product} from DAO layer
+     * @throws by.epam.shop.service.exception.ServiceException
+     * @return List<by.epam.shop.bean.Product>
+     */
     @Override
     public List<Product> getAllProducts() throws ServiceException {
 	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
@@ -21,57 +26,35 @@ public class ProductServiceImpl implements ProductService {
 		return null;
 	    }
 	} catch (DAOException e) {
-	    throw new ServiceException(e);
+	    throw new ServiceException("Exception during getAllProducts prodecure",e);
 	}
 	return products;
     }
 
-    @Override
-    public Product getProduct(Product product) throws ServiceException {
-	if (product == null) {
-	    throw new ServiceException("Object is null");
-	}
-	///
-	return null;
-    }
-
+    /* Get Product object {@link by.epam.shop.bean.Product} from DAO layer
+     * @param by.epam.shop.bean.Product
+     * @throws by.epam.shop.service.exception.ServiceException
+     * @return by.epam.shop.bean.Product
+     */
     @Override
     public Product getProductWithId(Product product) throws ServiceException {
-	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
-	Product result = null;
-	if (product == null) {
+	if (product == null || product.getId() == 0) {
 	    throw new ServiceException("Product is null");
 	}
-	if (product.getId() == 0) {
-	    throw new ServiceException("Id is null");
-	}
+	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+	Product result = null;
 	try {
-	    List<Product> productList = productDAO.getProduct(product);
-	    result = productList.get(0);
+	    result= productDAO.getProduct(product);
 	} catch (DAOException e) {
-	    throw new ServiceException(e);
+	    throw new ServiceException("Exception during getProductWithId prodecure",e);
 	}
 	return result;
     }
 
-    @Override
-    public List<Product> getProductWithTitle(Product product) throws ServiceException {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public List<Product> getProductWithCategory(Product product) throws ServiceException {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
-    public List<Product> getProductWithPrice(Product product) throws ServiceException {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
+    /* Passes Product object {@link by.epam.shop.bean.Product} from DAO layer for updating
+     * @param by.epam.shop.bean.Product
+     * @throws by.epam.shop.service.exception.ServiceException if Product fields don't correctly filled
+     */
     @Override
     public void changeProduct(Product product) throws ServiceException {
 	if (!isProductValid(product)) {
@@ -82,11 +65,15 @@ public class ProductServiceImpl implements ProductService {
 	try {
 	    productDAO.updateProduct(product);
 	} catch (DAOException e) {
-	    throw new ServiceException(e);
+	    throw new ServiceException("Exception during changeProduct prodecure",e);
 	}
 
     }
 
+    /* Passes Product object {@link by.epam.shop.bean.Product} from DAO layer for adding
+     * @param by.epam.shop.bean.Product
+     * @throws by.epam.shop.service.exception.ServiceException if Product fields don't correctly filled
+     */
     @Override
     public void addProduct(Product product) throws ServiceException {
 	if (!isProductValid(product)) {
@@ -97,10 +84,14 @@ public class ProductServiceImpl implements ProductService {
 	try {
 	    productDAO.addProduct(product);
 	} catch (DAOException e) {
-	    throw new ServiceException(e);
+	    throw new ServiceException("Exception during addProduct prodecure",e);
 	}
     }
 
+    /* Passes Product object {@link by.epam.shop.bean.Product} from DAO layer for deleting
+     * @param by.epam.shop.bean.Product, should contain id of Product 
+     * @throws by.epam.shop.service.exception.ServiceException
+     */
     @Override
     public void deleteProduct(Product product) throws ServiceException {
 	if(product == null || product.getId() == 0) {
@@ -111,7 +102,7 @@ public class ProductServiceImpl implements ProductService {
 	    ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
 	    productDAO.deleteProduct(product);
 	} catch (DAOException e) {
-	    throw new ServiceException(e);
+	    throw new ServiceException("Exception during deleteProduct prodecure",e);
 	}
     }
 
@@ -128,9 +119,6 @@ public class ProductServiceImpl implements ProductService {
 	if (product.getCategoryID() == 0) {
 	    return false;
 	}
-	if(product.getAmount() == 0 ) {
-	    return false;
-	}
 	if(product.getImgPath() == null || product.getImgPath().isEmpty()) {
 	    return false;
 	}
@@ -138,18 +126,29 @@ public class ProductServiceImpl implements ProductService {
 	return true;
     }
 
+    /* Get total amount of Products from DAO layer
+     * @throws by.epam.shop.service.exception.ServiceException
+     * @return int amount of products
+     */
     @Override
     public int getTotalProductAmount() throws ServiceException {
 	int amount = 0;
 	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
+	
 	try {
 	     amount = productDAO.getTotalProductAmount();
 	} catch (DAOException e) {
-	    throw new ServiceException(e);
+	    throw new ServiceException("Exception during getTotalProductAmount prodecure",e);
 	}
 	return amount;
     }
 
+    /* Get part of total amount of products from DAO layer
+     * @param int offset - index of first product
+     * @param int limit - number of products to get
+     * @throws by.epam.shop.service.exception.ServiceException
+     * @return List<by.epam.shop.bean.Product>
+     */
     @Override
     public List<Product> getProducts(int offset, int limit) throws ServiceException {
 	if(limit == 0) {
@@ -166,7 +165,7 @@ public class ProductServiceImpl implements ProductService {
 	    }
 	    
 	} catch (DAOException e) {
-	    throw new ServiceException(e);
+	    throw new ServiceException("Exception during getProducts prodecure",e);
 	}
 	
 	return productList;

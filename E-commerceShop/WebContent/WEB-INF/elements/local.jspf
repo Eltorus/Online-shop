@@ -5,15 +5,22 @@
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
 <fmt:message bundle="${loc}" key="local.enter" var="enter"/>
+<fmt:message bundle="${loc}" key="local.details" var="details"/>
+<fmt:message bundle="${loc}" key="local.yes" var="yes"/>
+<fmt:message bundle="${loc}" key="local.no" var="no"/>
+<fmt:message bundle="${loc}" key="local.authorization" var="authorization" />
 <fmt:message bundle="${loc}" key="local.delete" var="delete"/>
 <fmt:message bundle="${loc}" key="local.profile" var="profile"/>
 <fmt:message bundle="${loc}" key="local.submit" var="submit"/>
 <fmt:message bundle="${loc}" key="local.upload" var="upload"/>
-<fmt:message bundle="${loc}" key="local.rusure" var="rusure"/>
-<fmt:message bundle="${loc}" key="local.suredelprof" var="suredelprof"/>
+<fmt:message bundle="${loc}" key="local.rusure" var="r_u_sure"/>
+<fmt:message bundle="${loc}" key="local.suredelprof" var="del_prof"/>
 <fmt:message bundle="${loc}" key="local.delprofile" var="delprofile"/>
-<fmt:message bundle="${loc}" key="local.uploadimg" var ="uploadimg"/>
+<fmt:message bundle="${loc}" key="local.upload_img" var ="upload_img"/>
 <fmt:message bundle="${loc}" key="local.choose" var="choose"/>
+<fmt:message bundle="${loc}" key="local.close" var="close"/>
+<fmt:message bundle="${loc}" key="local.actions" var="actions"/>
+<fmt:message bundle="${loc}" key="local.change" var="change"/>
 
 <fmt:message bundle="${loc}" key="local.catalog" var="catalog"/>
 <fmt:message bundle="${loc}" key="local.administration" var="administration"/>
@@ -23,6 +30,9 @@
 <fmt:message bundle="${loc}" key="local.locbutton.logout" var="logout" />
 <fmt:message bundle="${loc}" key="local.cancel" var="cancel" />
 
+<fmt:message bundle="${loc}" key="local.user.users" var="users_loc" />
+<fmt:message bundle="${loc}" key="local.user_loc" var="user_loc" />
+<fmt:message bundle="${loc}" key="local.user.id" var="user_ID" />
 <fmt:message bundle="${loc}" key="local.user.email" var="email" />
 <fmt:message bundle="${loc}" key="local.user.password" var="password" />
 <fmt:message bundle="${loc}" key="local.user.phonenumber" var="phonenumber" />
@@ -32,23 +42,48 @@
 <fmt:message bundle="${loc}" key="local.user.discount" var="discount" />
 <fmt:message bundle="${loc}" key="local.user.balance" var="balance" />
 <fmt:message bundle="${loc}" key="local.user.rebalance" var="rebalance" />
+<fmt:message bundle="${loc}" key="local.user.level" var="access_level" />
+<fmt:message bundle="${loc}" key="local.user.admin" var="admin_loc" />
+<fmt:message bundle="${loc}" key="local.user.ban_status" var="ban_status" />
+<fmt:message bundle="${loc}" key="local.user.set_discount" var="set_discount" />
+<fmt:message bundle="${loc}" key="local.user.banned" var="banned" />
+<fmt:message bundle="${loc}" key="local.user.notbanned" var="n_banned" />
 
 <fmt:message bundle="${loc}" key="local.signin" var="signin" />
 <fmt:message bundle="${loc}" key="local.signup" var="signup" />
 <fmt:message bundle="${loc}" key="local.message" var="message" />
 
-<fmt:message bundle="${loc}" key="local.order.orders" var="orders"/>
+
+<fmt:message bundle="${loc}" key="local.order.orders" var="orders_loc" />
+<fmt:message bundle="${loc}" key="local.order" var="order" />
+<fmt:message bundle="${loc}" key="local.order.myorders" var="myorders"/>
 <fmt:message bundle="${loc}" key="local.order.cartadd" var="cartadd" />
 <fmt:message bundle="${loc}" key="local.order.makeorder" var="makeorder" />
-<fmt:message bundle="${loc}" key="local.order.destination" var="address" />
+<fmt:message bundle="${loc}" key="local.order.destination" var="destination" />
 <fmt:message bundle="${loc}" key="local.order.continue" var="order_page" />
 <fmt:message bundle="${loc}" key="local.order.orderValue" var="order_value" />
+<fmt:message bundle="${loc}" key="local.order.total" var="total" />
 <fmt:message bundle="${loc}" key="local.order.cart" var="cart" />
 <fmt:message bundle="${loc}" key="local.order.cartMessage" var="cart_message" />
 <fmt:message bundle="${loc}" key="local.order.purchase" var="purchase" />
 <fmt:message bundle="${loc}" key="local.order.delete" var="delete" />
+<fmt:message bundle="${loc}" key="local.order.sure_cancel_order" var="cancel_order" />
+<fmt:message bundle="${loc}" key="local.order.order_id" var="order_id" />
+<fmt:message bundle="${loc}" key="local.order.del_address" var="del_address" />
+<fmt:message bundle="${loc}" key="local.order.compl" var="compl" />
+<fmt:message bundle="${loc}" key="local.order.process" var="process" />
+<fmt:message bundle="${loc}" key="local.order.order_date" var="o_date" />
+<fmt:message bundle="${loc}" key="local.order.deliv_date" var="d_date" />
+<fmt:message bundle="${loc}" key="local.order.status" var="ord_status" />
 
+<fmt:message bundle="${loc}" key="local.product.products" var="products_loc" />
 <fmt:message bundle="${loc}" key="local.product.title" var="title" />
+<fmt:message bundle="${loc}" key="local.product.rubles" var="rubles" />
 <fmt:message bundle="${loc}" key="local.product.category" var="category" />
 <fmt:message bundle="${loc}" key="local.product.price" var="price" />
 <fmt:message bundle="${loc}" key="local.product.quantity" var="quantity" />
+<fmt:message bundle="${loc}" key="local.product.notavailable" var="n_available" />
+<fmt:message bundle="${loc}" key="local.product.description" var="description" />
+<fmt:message bundle="${loc}" key="local.product.image" var="image" />
+<fmt:message bundle="${loc}" key="local.product.amount" var="amount" />
+<fmt:message bundle="${loc}" key="local.product.delete" var="del_product"/>

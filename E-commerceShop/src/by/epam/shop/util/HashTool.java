@@ -5,30 +5,30 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public final class HashTool {
-	private HashTool() {
-	}
+    private HashTool() {
+    }
 
-	public static String hashLine(String line) throws UtilException {
-		StringBuffer hexString = null;
+    public static String hashLine(String line) throws UtilException{
+	StringBuffer hexString = null;
 
-		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			byte[] hash = digest.digest(line.getBytes("UTF-8"));
+	try {
+	    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	    byte[] hash = digest.digest(line.getBytes("UTF-8"));
 
-			hexString = new StringBuffer();
-			for (byte x : hash) {
-				String hex = Integer.toHexString(0xff & x);
+	    hexString = new StringBuffer();
+	    for (byte x : hash) {
+		String hex = Integer.toHexString(0xff & x);
 
-				if (hex.length() == 1) {
-					hexString.append('0');
-				}
-
-				hexString.append(hex);
-			}
-
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			throw new UtilException(e);
+		if (hex.length() == 1) {
+		    hexString.append('0');
 		}
-		return hexString.toString();
+
+		hexString.append(hex);
+	    }
+
+	} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+	    throw new UtilException(e);
 	}
+	return hexString.toString();
+    }
 }

@@ -11,29 +11,31 @@ import by.epam.shop.bean.Product;
 import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.exception.CommandException;
-import by.epam.shop.command.validation.UserValidation;
-import by.epam.shop.controller.PageList;
 import by.epam.shop.service.ProductService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
+import by.epam.shop.util.PageList;
 
-public class AdminProductPage implements Command{
+public class AdminProductPage implements Command {
     private final static Logger logger = Logger.getLogger(AdminProductPage.class);
-	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		if(!UserValidation.isUserLoged(request, response) || !UserValidation.isUserAdmin(request, response)) {
-			return PageList.PG_SIGNIN;
-		}
-		
-		try {
-			ProductService productService = ServiceFactory.getInstance().getProductService();
-			List<Product> productList = productService.getAllProducts();
-			request.setAttribute(AttributeList.ATTR_PRODUCTS, productList);
-		} catch (ServiceException e) {
-		    	logger.error(e);
-			throw new CommandException(e);
-		}
-		return PageList.PG_ADMIN_PRODUCT;
+
+    /*Get all products and put them into request as attribute
+     * @param javax.servlet.http.HttpServletRequest
+     * @param javax.servlet.http.HttpServletResponse
+     * @throws by.epam.shop.command.exception.CommandException
+     * @return String page, which will be passed to client
+     * */
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+	try {
+	    ProductService productService = ServiceFactory.getInstance().getProductService();
+	    List<Product> productList = productService.getAllProducts();
+	    request.setAttribute(AttributeList.ATTR_PRODUCTS, productList);
+	} catch (ServiceException e) {
+	    logger.error(e);
+	    throw new CommandException("Exception during AdminProductPage command",e);
 	}
+	return PageList.PG_ADMIN_PRODUCT;
+    }
 
 }

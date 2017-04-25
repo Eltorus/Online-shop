@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public final class ConnectionPool {
     private BlockingQueue<Connection> givenAwayConQueue;
@@ -21,12 +23,10 @@ public final class ConnectionPool {
     private ConnectionPool() {
 	DBResourceManager resourceManager = DBResourceManager.getInstance();
 	this.url = resourceManager.getValue(DBParameter.DB_URL);
-	System.out.println(url);
 	this.password = resourceManager.getValue(DBParameter.DB_PASSWORD);
 	this.login = resourceManager.getValue(DBParameter.DB_LOGIN);
 	try {
 	    this.poolSize = Integer.parseInt(resourceManager.getValue(DBParameter.DB_POOLSIZE));
-	    System.out.println(poolSize);
 	} catch (NumberFormatException e) {
 	    poolSize = 10;
 	}
@@ -40,7 +40,6 @@ public final class ConnectionPool {
 
 	    for (int i = 0; i < poolSize; i++) {
 		Connection connection = DriverManager.getConnection(url, login, password);
-		System.out.println("Creating some conenction");
 		connectionQueue.add(connection);
 	    }
 	} catch (SQLException e) {
@@ -62,12 +61,16 @@ public final class ConnectionPool {
     public static ConnectionPool getInstance() throws ConnectionPoolException {
 	ConnectionPool localInstance = instance;
 	if (localInstance == null) {
-	    synchronized (ConnectionPool.class) {
+	    Lock l = new ReentrantLock();
+	    l.lock();
+	    {
 		localInstance = instance;
 		if (localInstance == null) {
+	    System.out.println("I got pool");
 		    instance = localInstance = new ConnectionPool();
 		}
 	    }
+	    l.unlock();
 	}
 	return localInstance;
     }
@@ -99,8 +102,6 @@ public final class ConnectionPool {
 
 	    givenAwayConQueue.remove(con);
 	    connectionQueue.add(con);
-	    System.out.println("givenAwayConQueue size: " + givenAwayConQueue.size());
-	    System.out.println("connectionQueue size: " + connectionQueue.size());
 	} catch (SQLException e) {
 	    throw new ConnectionPoolException(e);
 	}

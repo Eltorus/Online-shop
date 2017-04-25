@@ -7,7 +7,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" href="css/shop.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<title>Authorization</title>
+	<%@ include file="/WEB-INF/elements/local.jspf"%>
+	<title>${authorization}</title>
 </head>
 <body>
 	<c:if test="${not empty sessionScope.user}">
@@ -24,11 +25,12 @@
 						<input type="email" id="inputEmail" class="form-control input-sm chat-input" placeholder="${email}" name="email" required autofocus> <br />
 						<input type="password" id="inputPassword" class="form-control input-sm chat-input" placeholder="${password}" name="password" required> <br />
 						<div class="wrapper">
-							<span class="group-btn"> <input type="submit" class="btn btn-primary btn-md" value="${signin}">
+							<span class="group-btn"> 
+							<input type="submit" class="btn btn-primary btn-md" value="${signin}">
 							</span>
 						</div>
 					</form>
-					<a href="signup">Register</a>
+					<a href="signup">${signup}</a>
 				</div>
 			</div>
 		</div>

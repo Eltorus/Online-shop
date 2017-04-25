@@ -10,33 +10,42 @@ import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
-import by.epam.shop.command.validation.UserValidation;
-import by.epam.shop.controller.PageList;
 import by.epam.shop.service.OrderService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
+import by.epam.shop.util.NumberOperationTool;
+import by.epam.shop.util.PageList;
 
-public class OrderEditPage implements Command{
-    	private final static Logger logger = Logger.getLogger(OrderEditPage.class);
-	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		if(!UserValidation.isUserLoged(request, response) || !UserValidation.isUserAdmin(request, response)) {
-			return PageList.PG_SIGNIN;
-		}
-		
-		try {
-			Order order = new Order();
-			order.setId(Integer.parseInt(request.getParameter(ParameterList.CMD_ORDER_ID)));
-			
-			OrderService orderService = ServiceFactory.getInstance().getOrderService();
-			Order result = orderService.getOrder(order);
-			request.setAttribute(AttributeList.ATTR_ORDER, result);
+public class OrderEditPage implements Command {
+    private final static Logger logger = Logger.getLogger(OrderEditPage.class);
 
-			return PageList.PG_ORDER_INFO;
-		} catch (ServiceException e) {
-		    	logger.error(e);
-			throw new CommandException(e);
-		}
+    /* Get requested Order object, and set into request as an attribute  
+     * @param javax.servlet.http.HttpServletRequest
+     * @param javax.servlet.http.HttpServletResponse
+     * @throws by.epam.shop.command.exception.CommandException
+     * @return String page, which will be passed to client
+     * */
+    @Override
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+	int id = NumberOperationTool.getIntFromString(request.getParameter(ParameterList.ORDER_ID));
+	if (id == 0) {
+	    return PageList.PG_ADMIN_ORDER_R;
 	}
-	
+
+	Order order = new Order();
+	order.setId(id);
+
+	try {
+
+	    OrderService orderService = ServiceFactory.getInstance().getOrderService();
+	    Order result = orderService.getOrder(order);
+	    request.setAttribute(AttributeList.ATTR_ORDER, result);
+
+	    return PageList.PG_ORDER_INFO;
+	} catch (ServiceException e) {
+	    logger.error(e);
+	    throw new CommandException("Exception during OrderEditPage command",e);
+	}
+    }
+
 }

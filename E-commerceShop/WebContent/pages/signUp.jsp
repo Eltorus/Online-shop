@@ -5,10 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/shop.css">
-<title>Sign Up</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/shop.css">
+	<%@ include file="/WEB-INF/elements/local.jspf"%>
+	<title>${signup}</title>
 </head>
 <body>
 <%@ include file="/WEB-INF/elements/header.jspf" %>
@@ -27,50 +28,52 @@
             <div class="control-group">
               <label class="control-label" >${name}</label>
               <div class="controls">
-                <input id="name" name="name" class="form-control" type="text" placeholder="${name}" class="input-large" required>
+                <input id="name" name="name" title="Letters and numbers only, max 50 symbols" class="form-control"  pattern=".{1,50}" type="text" placeholder="${name}" class="input-large" required>
               </div>
             </div>
 
             <div class="control-group">
               <label class="control-label" >${surname}</label>
               <div class="controls">
-                <input id="surname" name="surname" class="form-control" type="text" placeholder="${surname}" class="input-large" required>
+                <input id="surname" name="surname" pattern=".{1,50}" title="Letters and numbers only, max 50 symbols" class="form-control" type="text" placeholder="${surname}" class="input-large" required>
               </div>
             </div>
             
             <div class="control-group">
               <label class="control-label" for="Email">${email}</label>
               <div class="controls">
-                <input id="Email" name="email" class="form-control" type="email" pattern="^(.[^@\s]+)@(.[^@\s]+)\.([a-z]+)$" placeholder="${email}" class="input-large" required>
+                <input id="Email" name="email" max="45" class="form-control" type="email" title="Example: aa@aa.aa" pattern="^(.[^@\s]+)@(.[^@\s]+)\.([a-z]+)$" placeholder="${email}" class="input-large" required>
               </div>
             </div>
             
             <div class="control-group">
               <label class="control-label" for="userid">${phonenumber}</label>
               <div class="controls">
-                <input id="phone" name="phone" class="form-control" type="tel" placeholder="${phonenumber}" class="input-large" required>
+                <input id="phone" name="phone"  pattern=".{13,}" max="20" class="form-control" type="tel" placeholder="${phonenumber}" class="input-large" required>
               </div>
             </div>
             
             <div class="control-group">
               <label class="control-label" for="password">${password}</label>
               <div class="controls">
-                <input id="password" name="password" class="form-control" min="1" max="5" type="password" placeholder="********" class="input-large" required>
+                <input id="password" class="form-control" name="password"  title="Must be at least 5 symbols" pattern=".{5,}" type="password" placeholder="********" class="input-large" required>
               </div>
             </div>
             
             <div class="control-group">
               <label class="control-label" for="reenterpassword">${confpassword}</label>
               <div class="controls">
-                <input id="password_confirm" class="form-control" min="1" max="5" name="password_confirm" type="password" placeholder="********" class="input-large" required>
+                <input id="confirm_password" class="form-control" name="password_confirm" pattern=".{5,}"  title="Must be at least 5 symbols" type="password" placeholder="********" class="input-large" required>
               </div>
             </div>
             <br>
-            
+            <div class="control-group">
+            	<span id="message"></span>
+            </div>
             <div class="control-group">
               <label class="control-label" for="confirmsignup"></label>
               <div class="controls">
-                <button id="confirmsignup" name="confirmsignup" type="submit" class="btn btn-success">${signup}</button>
+                <button id="signup_button" name="confirmsignup" type="submit" class="btn btn-success" disabled>${signup}</button>
               </div>
             </div>
             </fieldset>

@@ -1,24 +1,45 @@
 package by.epam.shop.util;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class DateFormatter {
-	private DateFormatter() {}
+    private DateFormatter() {
+    }
 
-	public static Timestamp getTimeStamp(String s) throws UtilException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-		Timestamp ts = null;
-		
-		try {
-			Date date = sdf.parse(s);
-			ts = new Timestamp(date.getTime());
-		} catch (ParseException e) {
-			throw new UtilException(e);
-		}
-		
-		return ts;
+    public static String convertDateToString(Date date) {
+	if (date == null) {
+	    return null;
 	}
+
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	return sdf.format(date);
+    }
+
+    public static Date convertStringToDate(String line) throws UtilException {
+	if(line == null || line.trim().isEmpty()) {
+	    return null;
+	}
+
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	try {
+	    return sdf.parse(line);
+	} catch (ParseException e) {
+	    throw new UtilException(e);
+	}
+    }
+
+    public static Date getDateRusFormat(String line) throws UtilException {
+	if(!StringOperationTool.isStringValid(line)) {
+	    return null;
+	}
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+	try {
+	    return sdf.parse(line);
+	} catch (ParseException e) {
+	    throw new UtilException(e);
+	}
+    }
 }

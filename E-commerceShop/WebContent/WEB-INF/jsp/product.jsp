@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/shop.css">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<title>Product</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="css/shop.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<title>Product</title>
 </head>
 <body>
 	<%@ include file="/WEB-INF/elements/header.jspf"%>
@@ -17,38 +17,32 @@
 	</c:if>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-3 col-lg-3 col-md-5">
+			<div class="col-md-4">
 				<div class="thumbnail">
-					<div class="product-pict">
+					<div class="product-pict text-center">
 						<img src="${requestScope.product.imgPath}" alt="${requestScope.product.imgPath}">
-					</div>
-					<div class="caption">
-						<h4 class="pull-right">
-							<fmt:formatNumber pattern="#0.00" value="${requestScope.product.price}" />
-						</h4>
-						<h4>
-							<a href="#">${requestScope.product.title}</a>
-						</h4>
-						<p>
-							<a href="#">${requestScope.product.category}</a>
-							<c:if test="${product.amount==0}">
-								<span class="label label-default pr-badge">Not Available</span>
-							</c:if>
-						</p>
 					</div>
 				</div>
 			</div>
-			<form action="Controller" method="post">
-				<input type="hidden" name="command" value="add_to_cart" /> <input type="hidden" name="product_id" value="${requestScope.product.id}" />
-				<c:choose>
-					<c:when test="${product.amount==0}">
-						<button type="submit" class="btn btn-primary btn-md" disabled>${cartadd}</button>
-					</c:when>
-					<c:otherwise>
-						<button type="submit" class="btn btn-primary btn-md">${cartadd}</button>
-					</c:otherwise>
-				</c:choose>
-			</form>
+			<div class="caption">
+				<h4>${requestScope.product.title}</h4>
+				<h4>
+					<fmt:formatNumber pattern="#0.00" value="${requestScope.product.price}" />
+					${rubles}
+				</h4>
+				<p>${requestScope.product.category}</p>
+				<form action="Controller" method="post">
+					<input type="hidden" name="command" value="add_to_cart" /> <input type="hidden" name="product_id" value="${requestScope.product.id}" />
+					<c:choose>
+						<c:when test="${product.amount==0}">
+							<button type="submit" class="btn btn-primary btn-md" disabled>${cartadd}</button>
+						</c:when>
+						<c:otherwise>
+							<button type="submit" class="btn btn-primary btn-md">${cartadd}</button>
+						</c:otherwise>
+					</c:choose>
+				</form>
+			</div>
 		</div>
 	</div>
 	<div class="container">

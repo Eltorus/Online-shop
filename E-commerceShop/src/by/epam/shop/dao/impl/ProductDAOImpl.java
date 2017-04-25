@@ -15,8 +15,13 @@ import by.epam.shop.dao.connectionpool.ConnectionPool;
 import by.epam.shop.dao.connectionpool.ConnectionPoolException;
 import by.epam.shop.dao.exception.DAOException;
 
+/*implements by.epam.shop.dao.OrderDAO*/
 public class ProductDAOImpl implements ProductDAO {
 
+    /* Add product to database
+     * @param by.epam.shop.bean.Product
+     * @throws by.epam.shop.dao.exception.DAOException
+     * */
     @Override
     public void addProduct(Product product) throws DAOException {
 	Connection con = null;
@@ -26,19 +31,25 @@ public class ProductDAOImpl implements ProductDAO {
 	    pool = ConnectionPool.getInstance();
 	    con = pool.takeConnection();
 	    ps = con.prepareStatement(QueryList.AddProductQuery);
+	    
 	    fillUpProductQuery(product, ps);
+	    
 	    ps.executeUpdate();
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException(e);
+	    throw new DAOException("Exception during addProduct procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in addProduct procedure during getting back connection",e);
 	    }
 	}
     }
 
+    /* Set "delete field" of product as "deleted" in database
+     * @param by.epam.shop.bean.Product
+     * @throws by.epam.shop.dao.exception.DAOException
+     * */
     @Override
     public void deleteProduct(Product product) throws DAOException {
 	Connection con = null;
@@ -54,16 +65,20 @@ public class ProductDAOImpl implements ProductDAO {
 	    ps.executeUpdate();
 
 	} catch (ConnectionPoolException | SQLException e) {
-	    throw new DAOException(e);
+	    throw new DAOException("Exception during deleteProduct procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in deleteProduct procedure during getting back connection",e);
 	    }
 	}
     }
 
+    /* Gets all products from database
+     * @throws by.epam.shop.dao.exception.DAOException
+     * @return List<by.epam.shop.bean.Product>
+     * */
     @Override
     public List<Product> getAllProducts() throws DAOException {
 	List<Product> products = null;
@@ -72,71 +87,63 @@ public class ProductDAOImpl implements ProductDAO {
 	Statement st = null;
 	ResultSet rs = null;
 	ConnectionPool pool = null;
+	
 	try {
 	    pool = ConnectionPool.getInstance();
 	    con = pool.takeConnection();
-	    products = new ArrayList<Product>();
 	    st = con.createStatement();
 	    rs = st.executeQuery(QueryList.GetAllProductsQuery);
+	    products = new ArrayList<Product>();
+	    
 	    while (rs.next()) {
 		product = fillUpProduct(rs);
 		products.add(product);
 	    }
+	    
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException(e);
+	    throw new DAOException("Exception during getAllProducts procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(st, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in getAllProducts procedure during getting back connection",e);
 	    }
 	}
 	return products;
     }
 
+    /* Gets product from database with id
+     * @throws by.epam.shop.dao.exception.DAOException
+     * @return by.epam.shop.bean.Product
+     * */
     @Override
-    public List<Product> getProduct(Product product) throws DAOException {
+    public Product getProduct(Product product) throws DAOException {
 	Connection con = null;
 	PreparedStatement ps = null;
-	List<Product> result = new ArrayList<>();
+	Product result = null;
 	ResultSet rs = null;
 	ConnectionPool pool = null;
 	try {
 	    pool = ConnectionPool.getInstance();
 	    con = pool.takeConnection();
 
-	    ps = precompileGetProductStatement(con, product);
+	    ps = con.prepareStatement(QueryList.GetProductQuery + QueryList.GetProductWithIdQuery);
+	    ps.setInt(1, product.getId());
+	    
 	    rs = ps.executeQuery();
 	    while (rs.next()) {
-		Product pr = fillUpProduct(rs);
-		result.add(pr);
+		result = fillUpProduct(rs);
 	    }
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException(e);
+	    throw new DAOException("Exception during getProduct procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in getProduct procedure during getting back connection",e);
 	    }
 	}
 	return result;
-    }
-
-    private PreparedStatement precompileGetProductStatement(Connection con, Product product) throws SQLException {
-	PreparedStatement ps = null;
-	if (product.getId() != 0) {
-	    ps = con.prepareStatement(QueryList.GetProductQuery + QueryList.GetProductWithIdQuery);
-	    ps.setInt(1, product.getId());
-	}
-	//// дописать
-	if (product.getTitle() != null && !product.getTitle().isEmpty()) {
-	    /*
-	     * ps = con.prepareStatement(QueryList.GetProductQuery + "");
-	     * ps.setInt(1, product.getId());
-	     */
-	}
-	return ps;
     }
 
     private Product fillUpProduct(ResultSet rs) throws SQLException {
@@ -163,6 +170,10 @@ public class ProductDAOImpl implements ProductDAO {
 	ps.setString(6, product.getImgPath());
     }
 
+    /* Update product in database
+     * @param by.epam.shop.bean.Product
+     * @throws by.epam.shop.dao.exception.DAOException
+     * */
     @Override
     public void updateProduct(Product product) throws DAOException {
 	Connection con = null;
@@ -183,16 +194,20 @@ public class ProductDAOImpl implements ProductDAO {
 
 	    ps.executeUpdate();
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException(e);
+	    throw new DAOException("Exception during updateProduct procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in updateProduct procedure during getting back connection",e);
 	    }
 	}
     }
 
+    /* Get total product amount from database
+     * @throws by.epam.shop.dao.exception.DAOException
+     * @return integer amount
+     * */
     @Override
     public int getTotalProductAmount() throws DAOException {
 	Connection con = null;
@@ -210,17 +225,23 @@ public class ProductDAOImpl implements ProductDAO {
 		amount = rs.getInt(1);
 	    }
 	} catch (ConnectionPoolException | SQLException e) {
-	    throw new DAOException(e);
+	    throw new DAOException("Exception during getTotalProductAmount procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(st, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in getTotalProductAmount procedure during getting back connection",e);
 	    }
 	}
 	return amount;
     }
 
+    /* Get part of total amount products from database
+     * @param int offset - index of first product to get
+     * @param int limit - amount of products to get 
+     * @throws by.epam.shop.dao.exception.DAOException
+     * @return List<by.epam.shop.bean.Product>
+     * */
     @Override
     public List<Product> getProducts(int offset, int limit) throws DAOException {
 	Connection con = null;
@@ -235,19 +256,18 @@ public class ProductDAOImpl implements ProductDAO {
 	    ps.setInt(1, offset);
 	    ps.setInt(2, limit);
 	    ResultSet rs = ps.executeQuery();
-	    
 	    while(rs.next()) {
 		Product product = fillUpProduct(rs);
 		productList.add(product);
 	    }
 	    
 	} catch (ConnectionPoolException | SQLException e) {
-	    throw new DAOException(e);
+	    throw new DAOException("Exception during getProducts procedure",e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException(e);
+		throw new DAOException("Exception in getProducts procedure during getting back connection",e);
 	    }
 	}
 	

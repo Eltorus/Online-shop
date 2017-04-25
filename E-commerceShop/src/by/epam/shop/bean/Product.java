@@ -1,6 +1,8 @@
 package by.epam.shop.bean;
 
-public class Product {
+public class Product implements java.io.Serializable {
+    private static final long serialVersionUID = -5718487246202293608L;
+    
     private int id;
     private String title;
     private String category;
@@ -119,6 +121,29 @@ public class Product {
 	if (amount != other.amount) {
 	    return false;
 	}
+	if (imgPath == null) {
+	    if (other.imgPath != null) {
+		return false;
+	    }
+	}
+	if (!imgPath.equals(other.imgPath)) {
+	    return false;
+	}
 	return true;
+    }
+    
+    @Override
+    public int hashCode() {
+	int result = 31 * id + (title != null ? title.hashCode() : 0) + (category != null ? category.hashCode() : 0)
+		+ categoryID + Double.valueOf(price).hashCode() + (description != null ? description.hashCode() : 0)
+		+ amount + (imgPath != null ? imgPath.hashCode() : 0);
+	return result;
+    }
+    
+    @Override
+    public String toString() {
+	return getClass().getName() + "@" + "id: " + id + ", title: " + title + ", category: " + category + 
+		", categoryID: " + categoryID + ", price: " + price + ", description: " + description + 
+		", amount: " + amount + ", imgPath: " + imgPath;
     }
 }
