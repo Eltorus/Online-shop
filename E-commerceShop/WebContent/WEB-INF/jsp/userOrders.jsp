@@ -35,7 +35,7 @@
 							<c:forEach items="${requestScope.orderList}" var="order">
 								<tr>
 									<td>${order.id}</td>
-									<td><c:forEach items="${order.cart.productList}" var="cartLine" varStatus="i">${title}: ${cartLine.product.title}<br />${price}: ${cartLine.product.price} <br />${quantity}: ${cartLine.quantity}<br />
+									<td><c:forEach items="${order.cart.productList}" var="cartLine" varStatus="i">${title}: ${cartLine.product.title}<br />${price}: <fmt:formatNumber pattern="#0.00" value="${cartLine.product.price}" /><br />${quantity}: ${cartLine.quantity}<br />
 											<br />
 										</c:forEach></td>
 									<td><fmt:formatDate value="${order.orderDate}" pattern="dd.MM.yyyy HH:mm" /></td>

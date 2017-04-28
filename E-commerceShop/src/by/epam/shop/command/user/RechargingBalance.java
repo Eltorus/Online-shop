@@ -42,7 +42,7 @@ public class RechargingBalance implements Command {
 
 	UserService userService = ServiceFactory.getInstance().getUserService();
 	try {
-	    User result = userService.updateUser(user);;
+	    User result = userService.updateUser(user);
 	    session.setAttribute(AttributeList.ATTR_USER, result);
 	} catch (ServiceException e) {
 	    logger.error(e);

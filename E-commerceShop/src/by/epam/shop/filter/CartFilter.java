@@ -13,21 +13,29 @@ import javax.servlet.http.HttpSession;
 import by.epam.shop.bean.Cart;
 import by.epam.shop.command.AttributeList;
 
-public class CartFilter implements Filter{
+public class CartFilter implements Filter {
 
-	@Override
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest request = (HttpServletRequest) req;
-		HttpSession session =  request.getSession();
-		
-		Cart cart = (Cart) session.getAttribute(AttributeList.ATTR_CART);
-		
-		if(cart == null) {
-			cart = new Cart();
-			session.setAttribute(AttributeList.ATTR_CART, cart);
-		}
-		
-		chain.doFilter(req, res);
+    /*
+     * Check if Cart object is in session, and adds if there is no cart
+     * 
+     * @param javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain;
+     * 
+     * @throws java.io.IOException, javax.servlet.ServletException
+     */
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+	    throws IOException, ServletException {
+	HttpServletRequest request = (HttpServletRequest) req;
+	HttpSession session = request.getSession();
+
+	Cart cart = (Cart) session.getAttribute(AttributeList.ATTR_CART);
+
+	if (cart == null) {
+	    cart = new Cart();
+	    session.setAttribute(AttributeList.ATTR_CART, cart);
 	}
-	
+
+	chain.doFilter(req, res);
+    }
+
 }

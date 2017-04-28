@@ -70,7 +70,7 @@
 								<tr>
 									<td><c:out value="${i.index+1}" /></td>
 									<td>${cartLine.product.title}</td>
-									<td>${cartLine.product.price} ${rubles}</td>
+									<td><fmt:formatNumber pattern="#0.00" value="${cartLine.product.price}"/> ${rubles}</td>
 									<td>${cartLine.quantity}</td>
 								</tr>
 							</c:forEach>

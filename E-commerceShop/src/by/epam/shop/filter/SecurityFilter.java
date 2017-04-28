@@ -17,6 +17,14 @@ import by.epam.shop.util.PageList;
 
 public class SecurityFilter implements Filter {
 
+    /*
+     * Check if user has access level to requested command
+     * 
+     * @param javax.servlet.ServletRequest, javax.servlet.ServletResponse,
+     * javax.servlet.FilterChain;
+     * 
+     * @throws java.io.IOException, javax.servlet.ServletException
+     */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 	    throws IOException, ServletException {
@@ -25,7 +33,7 @@ public class SecurityFilter implements Filter {
 
 	User user = (User) request.getSession().getAttribute(AttributeList.ATTR_USER);
 	String command = request.getParameter(CommandList.CMD);
-	
+
 	String page = null;
 	if (command != null) {
 	    if (isUserCommand(command)) {
@@ -34,16 +42,16 @@ public class SecurityFilter implements Filter {
 		}
 	    } else if (isAdminCommand(command)) {
 		if (!isUserAdmin(user)) {
-		    page =  PageList.PG_SIGNIN;
+		    page = PageList.PG_SIGNIN;
 		}
 	    } else if (command.equals(CommandList.CMD_SIGNIN) || command.equals(CommandList.CMD_SIGNUP)) {
 		if (isUserLoged(user)) {
-		    page =  PageList.PG_INDEX;
+		    page = PageList.PG_INDEX;
 		}
 	    }
 	}
-	
-	if(page!=null) {
+
+	if (page != null) {
 	    response.sendRedirect(request.getContextPath() + page);
 	} else {
 	    chain.doFilter(req, res);
@@ -67,6 +75,9 @@ public class SecurityFilter implements Filter {
 
     private boolean isUserLoged(User user) {
 	if (user == null) {
+	    return false;
+	}
+	if (user.getEmail() == null || user.getPasswordHash() == null) {
 	    return false;
 	}
 	return true;

@@ -47,9 +47,11 @@ public class OrderPage implements Command {
 		    OrderService orderService = ServiceFactory.getInstance().getOrderService();
 		    Order order = orderService.createOrder(cart, user);
 
+		    session.setAttribute(AttributeList.ATTR_USER, user);
 		    session.setAttribute(AttributeList.ATTR_ORDER, order);
 		}
 	    } else {
+		session.setAttribute(AttributeList.ATTR_USER, user);
 		return PageList.PG_CART+MessageGenerator.generateError(1406);
 	    }
 	} catch (ServiceException e) {

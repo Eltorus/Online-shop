@@ -10,22 +10,30 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-public class CharsetFilter implements Filter{
-	private ServletContext context;
-	private String encoding;
-	
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		request.setCharacterEncoding(encoding);
-		response.setCharacterEncoding(encoding);
-		context.log("Charset was set");
-		chain.doFilter(request, response);
-	}
-	
-	public void init(FilterConfig fConfig) throws ServletException{
-		context = fConfig.getServletContext();
-		encoding = fConfig.getInitParameter("charsetEncoding");
-	}
+public class CharsetFilter implements Filter {
+    private ServletContext context;
+    private String encoding;
+
+    /*
+     * Set character encoding, that was set in web.xml
+     * 
+     * @param javax.servlet.ServletRequest, javax.servlet.ServletResponse,
+     * javax.servlet.FilterChain;
+     * 
+     * @throws java.io.IOException, javax.servlet.ServletException
+     */
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	    throws IOException, ServletException {
+	request.setCharacterEncoding(encoding);
+	response.setCharacterEncoding(encoding);
+	context.log("Charset was set");
+	chain.doFilter(request, response);
+    }
+
+    public void init(FilterConfig fConfig) throws ServletException {
+	context = fConfig.getServletContext();
+	encoding = fConfig.getInitParameter("charsetEncoding");
+    }
 
 }

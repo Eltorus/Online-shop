@@ -42,26 +42,24 @@ public class OrderUpdating implements Command {
 	    if (id == 0) {
 		return PageList.PG_ADMIN_ORDER_R;
 	    }
+
+	    String address = request.getParameter(ParameterList.ORDER_ADDRESS);
+	    if (address == null || address.isEmpty() || address.trim().isEmpty() || address.length() > 100) {
+		throw new CommandException("Inapropriate address format");
+	    }
 	    
-	    Date deliveryDate = null;
+	    Date deliveryDate = DateFormatter.getDateRusFormat(request.getParameter(ParameterList.ORDER_DELIVERY_DATE));
+
 	    String complitedString = request.getParameter(ParameterList.ORDER_IS_COMPLITED);
 	    boolean complited = false;
 	    
 	    if (complitedString != null && complitedString.equals(ParameterList.ORDER_COMPLITED)) {
 		complited = true;
-		
-		deliveryDate = DateFormatter.getDateRusFormat(request.getParameter(ParameterList.ORDER_DELIVERY_DATE));
 		if (deliveryDate == null) {
-		    throw new CommandException("Inapropriate date format");
+		    deliveryDate = new Date();
 		}
 	    }
-	    
-	    String address = request.getParameter(ParameterList.ORDER_ADDRESS);
-	    if (address == null || address.isEmpty() || address.trim().isEmpty() || address.length() > 100) {
-		throw new CommandException("Inapropriate address format");
-	    }
 
-	    
 	    Order order = new Order();
 	    order.setId(id);
 	    order.setAddress(address);

@@ -55,17 +55,6 @@
 					<div class="col-md-3">${sessionScope.user.discountCoefficient * 100}%</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
-					<div class="col-md-3 col-xs-6 tital">${ban_status}:</div>
-					<div class="col-md-3">
-						<c:choose>
-							<c:when test="${sessionScope.user.banned == true}">
-								${banned}
-							</c:when>
-							<c:otherwise>
-								${n_banned}
-							</c:otherwise>
-						</c:choose>
-					</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
 					<div class="col-md-3 col-xs-6 tital">${balance}:</div>

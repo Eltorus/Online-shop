@@ -8,6 +8,13 @@ public final class HashTool {
     private HashTool() {
     }
 
+    /*
+     * Compute hash (SHA-256) of String object
+     * 
+     * @param String
+     * 
+     * @return String 
+     */
     public static String hashLine(String line) throws UtilException{
 	StringBuffer hexString = null;
 

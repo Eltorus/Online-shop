@@ -11,16 +11,24 @@ import javax.servlet.http.HttpServletResponse;
 
 public class NoCacheFilter implements Filter {
 
-	@Override
-	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-			throws IOException, ServletException {
-		HttpServletResponse response = (HttpServletResponse) res;
+    /*
+     * Set no cache headers to prevent caching
+     * 
+     * @param javax.servlet.ServletRequest, javax.servlet.ServletResponse,
+     * javax.servlet.FilterChain;
+     * 
+     * @throws java.io.IOException, javax.servlet.ServletException
+     */
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+	    throws IOException, ServletException {
+	HttpServletResponse response = (HttpServletResponse) res;
 
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Pragma", "no-cache");
-		response.setDateHeader("Expires", 0);
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+	response.setHeader("Pragma", "no-cache");
+	response.setDateHeader("Expires", 0);
 
-		chain.doFilter(req, response);
-	}
+	chain.doFilter(req, response);
+    }
 
 }

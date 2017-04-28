@@ -83,7 +83,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>NoCacheFilter</filter-name>
-		<url-pattern>/Controller</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter>
 		<filter-name>CartFilter</filter-name>
@@ -91,7 +91,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>CartFilter</filter-name>
-		<url-pattern>/Controller</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter>
 		<filter-name>SecurityFilter</filter-name>
@@ -99,7 +99,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>SecurityFilter</filter-name>
-		<url-pattern>/Controller</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<listener>
 		<listener-class>by.epam.shop.listener.InitServletListener</listener-class>
@@ -130,8 +130,8 @@
 	</error-page>
 	<jsp-config>
 		<taglib>
-		<taglib-uri>/WEB-INF/tld/taglib.tld</taglib-uri>
-		<taglib-location>/WEB-INF/tld/taglib.tld</taglib-location>
+			<taglib-uri>/WEB-INF/tld/taglib.tld</taglib-uri>
+			<taglib-location>/WEB-INF/tld/taglib.tld</taglib-location>
 		</taglib>
 	</jsp-config>
 </web-app>

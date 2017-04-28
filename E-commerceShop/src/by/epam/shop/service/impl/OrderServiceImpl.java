@@ -105,7 +105,21 @@ public class OrderServiceImpl implements OrderService {
 
 	try {
 	    OrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
-	    orderDAO.updateOrder(order);
+	    
+	    Order orderForWrite = orderDAO.getOrder(order);
+	    if(orderForWrite != null) {
+		
+		if(order.getAddress()==null) {
+		    throw new ServiceException("Order address is null");
+		}
+		
+		orderForWrite.setAddress(order.getAddress());
+		orderForWrite.setDeliveryDate(order.getDeliveryDate());
+		orderForWrite.setOrderCompleted(order.isOrderCompleted());
+		
+		orderDAO.updateOrder(orderForWrite);
+	    }
+	    
 	} catch (DAOException e) {
 	    throw new ServiceException("Exception during updateOrder prodecure",e);
 	}

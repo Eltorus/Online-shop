@@ -8,6 +8,13 @@ public final class DateFormatter {
     private DateFormatter() {
     }
 
+    /*
+     * Convert Date object to String in yyyy-MM-dd HH:mm:ss format
+     * 
+     * @param java.util.Date
+     * 
+     * @return String 
+     */
     public static String convertDateToString(Date date) {
 	if (date == null) {
 	    return null;
@@ -17,6 +24,13 @@ public final class DateFormatter {
 	return sdf.format(date);
     }
 
+    /*
+     * Convert String object to Date in yyyy-MM-dd HH:mm:ss format
+     * 
+     * @param String
+     * 
+     * @return java.util.Date
+     */
     public static Date convertStringToDate(String line) throws UtilException {
 	if(line == null || line.trim().isEmpty()) {
 	    return null;
@@ -30,6 +44,13 @@ public final class DateFormatter {
 	}
     }
 
+    /*
+     * Convert String object to Date in dd.MM.yyyy format
+     * 
+     * @param String
+     * 
+     * @return java.util.Date
+     */
     public static Date getDateRusFormat(String line) throws UtilException {
 	if(!StringOperationTool.isStringValid(line)) {
 	    return null;

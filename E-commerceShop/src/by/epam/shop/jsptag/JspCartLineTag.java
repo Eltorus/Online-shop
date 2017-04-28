@@ -17,7 +17,14 @@ public class JspCartLineTag extends TagSupport {
     public void setValue(CartLine value) {
         this.value = value;
     }
-
+    
+    /*
+     * Output content of the cart on the jsp
+     * 
+     * @throws import javax.servlet.jsp.JspException;
+     * 
+     * @return int
+     */
     @Override
     public int doStartTag() throws JspException {
 	JspWriter out = pageContext.getOut();

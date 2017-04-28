@@ -10,7 +10,7 @@ import by.epam.shop.dao.connectionpool.ConnectionPoolException;
 
 public class InitServletListener implements ServletContextListener{
     private static final Logger log = Logger.getLogger(InitServletListener.class);
-    
+
     public void contextInitialized(ServletContextEvent sce) {
 	try {
 	    ConnectionPool pool = ConnectionPool.getInstance();
