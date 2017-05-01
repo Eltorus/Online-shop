@@ -7,10 +7,10 @@
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
+			<button type="button" class="navbar-toggle btn-link" data-toggle="collapse" data-target=".navbar-collapse">
+				<i class="glyphicon glyphicon-menu-hamburger"></i>
 			</button>
-			<a class="navbar-brand" href="<c:url value="/"/>">Online-shop</a>
+			<a class="navbar-brand" href="<c:url value="/"/>">Alpha Mall</a>
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
@@ -22,12 +22,15 @@
 			<ul class="nav navbar-nav navbar-right">
 				<c:choose>
 					<c:when test="${not empty sessionScope.user}">
-						<li class="dropdown"><a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"> <i class="glyphicon glyphicon-user"></i> ${profile}
-								<span class="caret"></span></a>
+						<li class="dropdown">
+							<a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#"> 
+							<i class="glyphicon glyphicon-user"></i> ${profile}
+							<span class="caret"></span></a>
 							<ul id="g-account-menu" class="dropdown-menu" role="menu">
 								<li><a href="<c:url value="profile"/>">${profile}</a></li>
 								<li><a href="Controller?command=user_orders">${myorders}</a></li>
-							</ul></li>
+							</ul>
+						</li>
 					</c:when>
 					<c:otherwise>
 						<li><button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#myModal">${signin}</button></li>
@@ -42,11 +45,9 @@
 					</ul></li>
 				<c:if test="${not empty sessionScope.user}">
 					<li>
-						<form action="Controller" method="post" action="?s=t">
-							<input type="hidden" name="command" value="log_out" />
-							<button type="submit" class="btn-link">
-								<i class="glyphicon glyphicon-lock"></i>${logout}</button>
-						</form>
+						<a href="Controller?command=log_out">
+							<i class="glyphicon glyphicon-lock"></i>${logout}
+						</a>
 					</li>
 				</c:if>
 			</ul>

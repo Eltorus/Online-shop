@@ -11,16 +11,16 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import by.epam.shop.bean.Cart;
-import by.epam.shop.bean.CartLine;
-import by.epam.shop.bean.Order;
-import by.epam.shop.bean.Product;
-import by.epam.shop.bean.User;
 import by.epam.shop.dao.OrderDAO;
 import by.epam.shop.dao.QueryList;
 import by.epam.shop.dao.connectionpool.ConnectionPool;
 import by.epam.shop.dao.connectionpool.ConnectionPoolException;
 import by.epam.shop.dao.exception.DAOException;
+import by.epam.shop.entity.Cart;
+import by.epam.shop.entity.bean.CartLine;
+import by.epam.shop.entity.bean.Order;
+import by.epam.shop.entity.bean.Product;
+import by.epam.shop.entity.bean.User;
 import by.epam.shop.util.DateFormatter;
 import by.epam.shop.util.UtilException;
 

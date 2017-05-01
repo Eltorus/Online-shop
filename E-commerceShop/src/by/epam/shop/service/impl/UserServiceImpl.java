@@ -2,10 +2,10 @@ package by.epam.shop.service.impl;
 
 import java.util.List;
 
-import by.epam.shop.bean.User;
 import by.epam.shop.dao.UserDAO;
 import by.epam.shop.dao.exception.DAOException;
 import by.epam.shop.dao.factory.DAOFactory;
+import by.epam.shop.entity.bean.User;
 import by.epam.shop.service.UserService;
 import by.epam.shop.service.exception.ServiceException;
 

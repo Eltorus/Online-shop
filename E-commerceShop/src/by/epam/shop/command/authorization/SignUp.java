@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import by.epam.shop.bean.User;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
+import by.epam.shop.entity.bean.User;
 import by.epam.shop.service.UserService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
@@ -67,18 +67,9 @@ public class SignUp implements Command {
 	if (name == null || name.trim().isEmpty() || name.length() > 50) {
 	    throw new CommandException("Inapropriate name format");
 	}
-	Pattern namePattern = Pattern.compile("^\\w+$");
-	Matcher nameMatcher = namePattern.matcher(name.trim());
-	if (!nameMatcher.find()) {
-	    throw new CommandException("Inapropriate name format");
-	}
 	
 	String surname = request.getParameter(ParameterList.USER_SURNAME);
 	if (surname == null || surname.trim().isEmpty() || surname.length() > 50) {
-	    throw new CommandException("Inapropriate surname format");
-	}
-	nameMatcher = namePattern.matcher(surname.trim());
-	if (!nameMatcher.find()) {
 	    throw new CommandException("Inapropriate surname format");
 	}
 	

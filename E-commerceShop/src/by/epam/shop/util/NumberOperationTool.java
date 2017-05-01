@@ -21,16 +21,15 @@ public class NumberOperationTool {
 	}
     }
     
-    public static double getDoubleFromString(String line) {
+    public static double getDoubleFromString(String line) throws UtilException {
 	if (line == null || line.isEmpty() || line.trim().isEmpty()) {
 	    return 0;
 	}
-
 	try {
 	    double number = Double.parseDouble(line);
 	    return number;
 	} catch (NumberFormatException e) {
-	    return 0;
+	    throw new UtilException("Cannot parse double");
 	}
     }
     

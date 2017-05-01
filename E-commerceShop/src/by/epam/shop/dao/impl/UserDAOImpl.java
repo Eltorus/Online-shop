@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import by.epam.shop.bean.User;
 import by.epam.shop.dao.QueryList;
 import by.epam.shop.dao.UserDAO;
 import by.epam.shop.dao.connectionpool.ConnectionPool;
 import by.epam.shop.dao.connectionpool.ConnectionPoolException;
 import by.epam.shop.dao.exception.DAOException;
+import by.epam.shop.entity.bean.User;
 
 /*implements by.epam.shop.dao.UserDAO*/
 public class UserDAOImpl implements UserDAO {

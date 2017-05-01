@@ -4,11 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import by.epam.shop.bean.Cart;
 import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
+import by.epam.shop.entity.Cart;
 import by.epam.shop.util.NumberOperationTool;
 import by.epam.shop.util.PageList;
 

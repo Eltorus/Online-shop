@@ -87,3 +87,4 @@
 <fmt:message bundle="${loc}" key="local.product.image" var="image" />
 <fmt:message bundle="${loc}" key="local.product.amount" var="amount" />
 <fmt:message bundle="${loc}" key="local.product.delete" var="del_product"/>
+<fmt:message bundle="${loc}" key="local.product.add" var="add_product"/>

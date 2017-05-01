@@ -2,8 +2,8 @@ package by.epam.shop.dao;
 
 import java.util.List;
 
-import by.epam.shop.bean.Product;
 import by.epam.shop.dao.exception.DAOException;
+import by.epam.shop.entity.bean.Product;
 
 public interface ProductDAO {
 	public void addProduct(Product product) throws DAOException;

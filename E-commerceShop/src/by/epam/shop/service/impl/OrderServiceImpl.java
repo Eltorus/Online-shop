@@ -2,14 +2,14 @@ package by.epam.shop.service.impl;
  
 import java.util.List;
 
-import by.epam.shop.bean.Cart;
-import by.epam.shop.bean.CartLine;
-import by.epam.shop.bean.Order;
-import by.epam.shop.bean.User;
 import by.epam.shop.dao.OrderDAO;
 import by.epam.shop.dao.UserDAO;
 import by.epam.shop.dao.exception.DAOException;
 import by.epam.shop.dao.factory.DAOFactory;
+import by.epam.shop.entity.Cart;
+import by.epam.shop.entity.bean.CartLine;
+import by.epam.shop.entity.bean.Order;
+import by.epam.shop.entity.bean.User;
 import by.epam.shop.service.OrderService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.util.NumberOperationTool;

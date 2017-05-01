@@ -28,28 +28,12 @@ CREATE TABLE IF NOT EXISTS `online_shop`.`clients` (
   `c_password` CHAR(64) NOT NULL,
   `c_phonenumber` VARCHAR(20) NOT NULL,
   `c_balance` DOUBLE NOT NULL DEFAULT 0,
-  `c_isbanned` TINYINT(1) NOT NULL DEFAULT 0,
+  `discount_coefficient` DOUBLE NOT NULL DEFAULT 0,
+  `c_banned` TINYINT(1) NOT NULL DEFAULT 0,
   `is_admin` TINYINT(1) NOT NULL DEFAULT 0,
-  `c_imgurl` VARCHAR(45) NULL,
+  `c_imgurl` VARCHAR(45) NOT NULL DEFAULT 'img/users/default_avatar.jpg',
   `c_deleted` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`c_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = UTF8;
-
-
--- -----------------------------------------------------
--- Table `online_shop`.`discounts`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `online_shop`.`discounts` (
-  `c_id` INT(11) NOT NULL,
-  `discount_coefficient` DOUBLE NOT NULL,
-  INDEX `fk_discounts_clients` (`c_id` ASC),
-  PRIMARY KEY (`c_id`),
-  CONSTRAINT `fk_discounts_clients`
-    FOREIGN KEY (`c_id`)
-    REFERENCES `online_shop`.`clients` (`c_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = UTF8;
 
@@ -76,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `online_shop`.`products` (
   `p_description` MEDIUMTEXT NOT NULL,
   `p_amount` INT(11) NOT NULL,
   `p_deleted` TINYINT(1) NOT NULL DEFAULT 0,
-  `p_imgurl` VARCHAR(100) NULL,
+  `p_imgurl` VARCHAR(100) NOT NULL DEFAULT 'img/products/img_unavailable.jpg',
   PRIMARY KEY (`p_id`),
   INDEX `fk_category_idx` (`category_id` ASC),
   CONSTRAINT `fk_category`
@@ -94,8 +78,8 @@ DEFAULT CHARACTER SET = UTF8;
 CREATE TABLE IF NOT EXISTS `online_shop`.`orders` (
   `o_id` INT(11) NOT NULL AUTO_INCREMENT,
   `c_id` INT(11) NOT NULL,
-  `o_order_date` TIMESTAMP NULL,
-  `o_delivery_date` TIMESTAMP NULL,
+  `o_order_date` DateTime  NULL,
+  `o_delivery_date` DateTime  NULL,
   `o_address` VARCHAR(100) NOT NULL,
   `o_bill` DOUBLE NOT NULL,
   `o_discount` DOUBLE NOT NULL,
@@ -156,13 +140,15 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `online_shop`;
-INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'Cleaner', 1, 5.95, 'Detergent ', 20);
-INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'Remote GT', 2, 5.00, 'TV Remote', 35);
-INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'PunkShirt', 3, 10.00, 'T-Shirt', 50);
+INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'Coffee Table', 1, 5.95, 'White coffee Table', 20);
+INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'IHelper', 2, 5.00, 'Smart house hub', 35);
+INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'Alpha Swing', 3, 10.00, 'T-Shirt', 50);
 INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'Dr. Martens x', 4, 65.45, 'Leather boots', 20);
-INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'SoftSkin', 1, 7.20, 'Towel', 60);
+INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'RetroPlain', 1, 7.20, 'Ikea chair', 60);
 INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'MyWatch', 2, 35.20, 'Electronic watch', 45);
+INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'UFit', 2, 101.20, 'Fitness bracelet', 45);
 INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'Converse t-Edition', 4, 82.20, 'Men shoes', 0);
+INSERT INTO `online_shop`.`products` (`p_id`, `p_title`, `category_id`, `p_price`, `p_description`, `p_amount`) VALUES (DEFAULT, 'TabletR', 2, 110.20, 'Tablet for buisnes', 10);
 
 COMMIT;
 
@@ -171,25 +157,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `online_shop`;
-INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_balance`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Jim', 'Moore', 'jmoor@gmail.com', 'f6e0a1e2ac41945a9aa7ff8a8aaa0cebc12a3bcc981a929ad5cf810a090e11ae', '23457', 200, 0, 0);
-INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_balance`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Mike', 'Door', 'miked@gmail.com', '9b871512327c09ce91dd649b3f96a63b7408ef267c8cc5710114e629730cb61f', '25254', 200, 0, 1);
-INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Dave', 'Wright', 'dwr@tut.by', '556d7dc3a115356350f1f9910b1af1ab0e312d4b3e4fc788d2da63668f36d017', '58754', 1, 0);
-INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Joe', 'Bing', 'fr@ya.ru', '3538a1ef2e113da64249eea7bd068b585ec7ce5df73b2d1e319d8c9bf47eb314', '24587', 0, 0);
-INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_isbanned`, `is_admin`) VALUES (DEFAULT, 'Bill', 'Flint', 'bf@gmail.com', '2926a2731f4b312c08982cacf8061eb14bf65c1a87cc5d70e864e079c6220731', '97644', 0, 0);
+INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_balance`, `c_banned`, `is_admin`) VALUES (DEFAULT, 'Jim', 'Moore', 'jmoor@gmail.com', 'f6e0a1e2ac41945a9aa7ff8a8aaa0cebc12a3bcc981a929ad5cf810a090e11ae', '+375 (29) 312-31-31', 0, 0, 0);
+INSERT INTO `online_shop`.`clients` (`c_id`, `c_name`, `c_surname`, `c_email`, `c_password`, `c_phonenumber`, `c_balance`, `c_banned`, `is_admin`) VALUES (DEFAULT, 'Mike', 'Door', 'miked@gmail.com', '9b871512327c09ce91dd649b3f96a63b7408ef267c8cc5710114e629730cb61f', '+375 (25) 246-85-76', 200, 0, 1);
 
 COMMIT;
 
 
--- -----------------------------------------------------
--- Data for table `online_shop`.`discounts`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `online_shop`;
-INSERT INTO `online_shop`.`discounts` (`c_id`, `discount_coefficient`) VALUES (2, 0.1);
-INSERT INTO `online_shop`.`discounts` (`c_id`, `discount_coefficient`) VALUES (4, 0.2);
-INSERT INTO `online_shop`.`discounts` (`c_id`, `discount_coefficient`) VALUES (5, 0.05);
-INSERT INTO `online_shop`.`discounts` (`c_id`, `discount_coefficient`) VALUES (1, 0.01);
-
-COMMIT;
 
 

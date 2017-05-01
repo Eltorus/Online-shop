@@ -5,14 +5,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/shop.css">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<%@ include file="/WEB-INF/elements/local.jspf"%>
-<title>${order}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="Bootply" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'> <!-- Include font first -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/shop.css">
+	<%@ include file="/WEB-INF/elements/local.jspf"%>
+	<title>${order}</title>
 </head>
 <body>
-	<c:if test="${empty sessionScope.order.cart}">
+	<c:if test="${empty sessionScope.cart.productList}">
 		<c:redirect url="cart" />
 	</c:if>
 	<%@ include file="/WEB-INF/elements/header.jspf"%>
@@ -23,7 +26,6 @@
 				<tr>
 					<th>№</th>
 					<th>${title}</th>
-					<th>${category}</th>
 					<th>${price}</th>
 					<th>${quantity}</th>
 				</tr>

@@ -10,9 +10,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import by.epam.shop.bean.User;
 import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.CommandList;
+import by.epam.shop.entity.bean.User;
 import by.epam.shop.util.PageList;
 
 public class SecurityFilter implements Filter {

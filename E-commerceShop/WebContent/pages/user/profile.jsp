@@ -4,10 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/shop.css">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<%@ include file="/WEB-INF/elements/local.jspf"%>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="Bootply" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'> <!-- Include font first -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/shop.css">
+	<%@ include file="/WEB-INF/elements/local.jspf"%>
 <title>${profile}</title>
 </head>
 <body>
@@ -34,37 +37,39 @@
 						<a href="#" data-toggle="modal" data-target="#delete-user-modal">${delprofile}</a>
 					</div>
 					<div class="clearfix"></div>
-					<hr style="margin: 5px 0 5px 0;">
 					<div class="col-md-3 col-xs-6 tital">${name}:</div>
 					<div class="col-md-3 col-xs-6">${sessionScope.user.name}</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
 					<div class="col-md-3 col-xs-6 tital">${surname}:</div>
-					<div class="col-md-3">${sessionScope.user.surname}</div>
+					<div class="col-md-3 col-xs-6">${sessionScope.user.surname}</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
 					<div class="col-md-3 col-xs-6 tital">${email}:</div>
-					<div class="col-md-3">${sessionScope.user.email}</div>
+					<div class="col-md-3 col-xs-6">${sessionScope.user.email}</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
 					<div class="col-md-3 col-xs-6 tital">${phonenumber}:</div>
-					<div class="col-md-3">${sessionScope.user.phonenumber}</div>
+					<div class="col-md-3 col-xs-6">${sessionScope.user.phonenumber}</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
 					<div class="col-md-3 col-xs-6 tital">${discount}:</div>
-					<div class="col-md-3">${sessionScope.user.discountCoefficient * 100}%</div>
+					<div class="col-md-3 col-xs-6">${sessionScope.user.discountCoefficient * 100}%</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
 					<div class="col-md-3 col-xs-6 tital">${balance}:</div>
-					<div class="col-md-3"><c:out value="${sessionScope.user.balance} ${rubles}"/></div>
+					<div class="col-md-3 col-xs-6">
+						<fmt:formatNumber pattern="#0.00" value="${sessionScope.user.balance}" />
+						${rubles}
+					</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
+					<div class="control-group col-sm-6">
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#user-balance">${rebalance}</button>
+					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#user-balance">${rebalance}</button>
 			</div>
 		</div>
 		<div class="modal fade bs-modal-sm" id="img-upload-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

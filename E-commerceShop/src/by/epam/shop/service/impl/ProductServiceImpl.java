@@ -2,10 +2,10 @@ package by.epam.shop.service.impl;
 
 import java.util.List;
 
-import by.epam.shop.bean.Product;
 import by.epam.shop.dao.ProductDAO;
 import by.epam.shop.dao.exception.DAOException;
 import by.epam.shop.dao.factory.DAOFactory;
+import by.epam.shop.entity.bean.Product;
 import by.epam.shop.service.ProductService;
 import by.epam.shop.service.exception.ServiceException;
 
@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void changeProduct(Product product) throws ServiceException {
 	if (!isProductValid(product)) {
-	    throw new ServiceException("Object is not valid");
+	    throw new ServiceException("Product is not valid");
 	}
 
 	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void addProduct(Product product) throws ServiceException {
 	if (!isProductValid(product)) {
-	    throw new ServiceException("Object is not valid");
+	    throw new ServiceException("Product is not valid");
 	}
 
 	ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
@@ -116,10 +116,13 @@ public class ProductServiceImpl implements ProductService {
 	if (product.getPrice() == 0) {
 	    return false;
 	}
-	if (product.getCategoryID() == 0) {
+	if (product.getCategoryID() <= 0 || product.getCategoryID()>4) {
 	    return false;
 	}
-	if(product.getImgPath() == null || product.getImgPath().isEmpty()) {
+	if(product.getDescription()==null || product.getDescription().trim().isEmpty()) {
+	    return false;
+	}
+	if(product.getImgPath()==null || product.getImgPath().trim().isEmpty()) {
 	    return false;
 	}
 

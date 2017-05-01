@@ -2,7 +2,7 @@ package by.epam.shop.service;
 
 import java.util.List;
 
-import by.epam.shop.bean.Product;
+import by.epam.shop.entity.bean.Product;
 import by.epam.shop.service.exception.ServiceException;
 
 public interface ProductService {

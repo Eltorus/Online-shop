@@ -4,14 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="generator" content="Bootply" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="css/shop.css">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/adminstyle.css">
-<%@ include file="/WEB-INF/elements/local.jspf"%>
-<title>${administration}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="generator" content="Bootply" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'> <!-- Include font first -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/shop.css">
+	<link rel="stylesheet" href="css/adminstyle.css">
+	<%@ include file="/WEB-INF/elements/local.jspf"%>
+	<title>${administration}</title>
 </head>
 <body>
 	<c:if test="${sessionScope.user.admin != true}">

@@ -1,6 +1,7 @@
 package by.epam.shop.command.admin.product;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +10,10 @@ import javax.servlet.http.Part;
 
 import org.apache.log4j.Logger;
 
-import by.epam.shop.bean.Product;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
+import by.epam.shop.entity.bean.Product;
 import by.epam.shop.service.ProductService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
@@ -35,13 +36,18 @@ public class ProductUpdating implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 	try {
-	    Product product = fillUpProduct(request, response);
+	    Product productForWrite = fillUpProduct(request, response);
+	    
 	    ProductService productService = ServiceFactory.getInstance().getProductService();
-
-	    if (product.getId() == 0) {
-		productService.addProduct(product);
+	    Product product = null;
+	    if(productForWrite.getId() !=0) {
+		product = productService.getProductWithId(productForWrite);
+	    }
+	    
+	    if (product == null) {
+		productService.addProduct(productForWrite);
 	    } else {
-		productService.changeProduct(product);
+		productService.changeProduct(productForWrite);
 	    }
 
 	} catch (ServiceException | UtilException | IOException | ServletException e) {
@@ -62,7 +68,7 @@ public class ProductUpdating implements Command {
 	int categoryID = NumberOperationTool.getIntFromString(request.getParameter(ParameterList.PRODUCT_CATEGORY));
 	product.setCategoryID(categoryID);
 	
-	double price = NumberOperationTool.getDoubleFromString(ParameterList.PRODUCT_PRICE);
+	double price = NumberOperationTool.getDoubleFromString(request.getParameter(ParameterList.PRODUCT_PRICE));
 	product.setPrice(price);
 	
 	product.setDescription(request.getParameter(ParameterList.PRODUCT_DESCRIPTION));
@@ -72,8 +78,7 @@ public class ProductUpdating implements Command {
 
 	Part part = request.getPart(ParameterList.PRODUCT_IMG);
 	 if(part.getSize() != 0)  {
-	    String fileName = product.getTitle() + "-" + product.getCategoryID() + "-" + product.getTitle().hashCode()
-		    + ".jpg";
+	    String fileName = product.getTitle() + "-" + product.getId() + new Date().getTime() + ".jpg";
 	    
 	    String appPath = request.getServletContext().getRealPath("");
 	    ImageUpload.uploadFile(part, appPath+relPath, fileName);

@@ -66,7 +66,6 @@ public final class ConnectionPool {
 	    {
 		localInstance = instance;
 		if (localInstance == null) {
-	    System.out.println("I got pool");
 		    instance = localInstance = new ConnectionPool();
 		}
 	    }

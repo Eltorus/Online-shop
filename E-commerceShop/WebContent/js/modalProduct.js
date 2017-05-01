@@ -17,11 +17,13 @@ $("#pTable").on('click', '#updateProduct', function() {
 });
 
 $("#addProduct").click(function() {
+	$("#productInfo #product_id").val("");
 	$("#productInfo #title").val("");
     $("#productInfo #category").val("");
     $("#productInfo #price").val("");
     $("#productInfo #description").val("");
     $("#productInfo #amount").val(""); 
+    $("#productInfo #product_img").val("");
 });
 
 $("#pTable").on('click', '#deleteProduct', function() {

@@ -11,11 +11,11 @@ import javax.servlet.http.Part;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
-import by.epam.shop.bean.User;
 import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
+import by.epam.shop.entity.bean.User;
 import by.epam.shop.service.UserService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;

@@ -6,8 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import by.epam.shop.bean.Product;
-import by.epam.shop.bean.User;
 import by.epam.shop.dao.ProductDAO;
 import by.epam.shop.dao.UserDAO;
 import by.epam.shop.dao.connectionpool.ConnectionPool;
@@ -15,6 +13,8 @@ import by.epam.shop.dao.connectionpool.ConnectionPoolException;
 import by.epam.shop.dao.exception.DAOException;
 import by.epam.shop.dao.impl.ProductDAOImpl;
 import by.epam.shop.dao.impl.UserDAOImpl;
+import by.epam.shop.entity.bean.Product;
+import by.epam.shop.entity.bean.User;
 import by.epam.shop.util.HashTool;
 import by.epam.shop.util.UtilException;
 

@@ -2,16 +2,17 @@ package by.epam.shop.command.order;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import by.epam.shop.bean.Cart;
-import by.epam.shop.bean.CartLine;
-import by.epam.shop.bean.Product;
 import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
+import by.epam.shop.entity.Cart;
+import by.epam.shop.entity.bean.CartLine;
+import by.epam.shop.entity.bean.Product;
 import by.epam.shop.service.ProductService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
@@ -43,8 +44,14 @@ public class AddingToCart implements Command {
 
 	Product requestProduct = new Product();
 	requestProduct.setId(id);
-
-	Cart cart = (Cart) request.getSession().getAttribute(AttributeList.ATTR_CART);
+	
+	HttpSession session = request.getSession();
+	
+	Cart cart = (Cart) session.getAttribute(AttributeList.ATTR_CART);
+	if(cart == null){
+	    cart = new Cart();
+	}
+	
 	try {
 	    ProductService productService = ServiceFactory.getInstance().getProductService();
 
@@ -67,7 +74,7 @@ public class AddingToCart implements Command {
 
 	    cart.addToProductList(cartLine);
 
-	    request.getSession().setAttribute(AttributeList.ATTR_CART, cart);
+	    session.setAttribute(AttributeList.ATTR_CART, cart);
 	} catch (ServiceException e) {
 	    logger.error(e);
 	    throw new CommandException("Exception during AddingToCart command",e);

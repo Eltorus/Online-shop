@@ -8,12 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import by.epam.shop.bean.Product;
 import by.epam.shop.dao.ProductDAO;
 import by.epam.shop.dao.QueryList;
 import by.epam.shop.dao.connectionpool.ConnectionPool;
 import by.epam.shop.dao.connectionpool.ConnectionPoolException;
 import by.epam.shop.dao.exception.DAOException;
+import by.epam.shop.entity.bean.Product;
 
 /*implements by.epam.shop.dao.OrderDAO*/
 public class ProductDAOImpl implements ProductDAO {

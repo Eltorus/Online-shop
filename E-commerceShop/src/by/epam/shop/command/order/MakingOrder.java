@@ -8,13 +8,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import by.epam.shop.bean.Cart;
-import by.epam.shop.bean.Order;
-import by.epam.shop.bean.User;
 import by.epam.shop.command.AttributeList;
 import by.epam.shop.command.Command;
 import by.epam.shop.command.ParameterList;
 import by.epam.shop.command.exception.CommandException;
+import by.epam.shop.entity.Cart;
+import by.epam.shop.entity.bean.Order;
+import by.epam.shop.entity.bean.User;
 import by.epam.shop.service.OrderService;
 import by.epam.shop.service.UserService;
 import by.epam.shop.service.exception.ServiceException;
@@ -75,6 +75,6 @@ public class MakingOrder implements Command {
 	    logger.error(e);
 	    throw new CommandException("Exception during MakingOrder command",e);
 	}
-	return PageList.PG_CART;
+	return PageList.PG_ORDER;
     }
 }

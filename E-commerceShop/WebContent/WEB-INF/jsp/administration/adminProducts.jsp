@@ -7,8 +7,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="generator" content="Bootply" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" href="css/shop.css">
+	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'> <!-- Include font first -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/shop.css">
 	<link rel="stylesheet" href="css/adminstyle.css">
 	<%@ include file="/WEB-INF/elements/local.jspf"%>
 <title>${administration}</title>
@@ -24,7 +25,7 @@
 			<li role="presentation" class="active"><a href="Controller?command=admin_product_page">${products_loc}</a></li>
 			<li role="presentation"><a href="Controller?command=admin_user_page">${users_loc}</a></li>
 		</ul>
-		<button type="button" id="addProduct" class="btn btn-primary btn-md" data-toggle="modal" data-target="#productInfo">Add product</button>
+		<button type="button" id="addProduct" class="btn btn-primary btn-md" data-toggle="modal" data-target="#productInfo">${add_product}</button>
 		<div class="table-responsive">
 			<table class="table table-sm table-hover" id="pTable">
 				<thead>
@@ -76,11 +77,11 @@
 						<fieldset>
 							<div class="control-group">
 								<label class="control-label">${title}: </label> 
-								<input required name="product_title" value="" id="title" type="text" class="form-control" class="input-medium" required>
+								<input name="product_title" value="" id="title" type="text" class="form-control" class="input-medium" required>
 							</div>
 							<div class="control-group">
-								<label class="control-label">${category}:</label> 
-								<select class="form-control" id="category" name="category">
+								<label class="control-label">${category}:</label>
+								<select class="form-control" id="category" name="category" required>
 									<option value="1">Home Stuff</option>
 									<option value="2">Electronics</option>
 									<option value="3">Clothes</option>
@@ -88,7 +89,8 @@
 								</select>
 							</div>
 							<div class="control-group">
-								<label class="control-label">${price}: </label> <input required name="price" value="" id="price" type="text" class="form-control"
+								<label class="control-label">${price}: </label> 
+								<input name="price" value="" id="price" type="text" class="form-control"
 									class="input-medium" required>
 							</div>
 							<div class="control-group">
@@ -96,17 +98,19 @@
 								<textarea class="form-control" rows="5" id="description" name="description" required></textarea>
 							</div>
 							<div class="control-group">
-								<label class="control-label">${amount}: </label> <input name="amount" value="" id="amount" type="number" class="form-control input-medium"
-									required>
+								<label class="control-label">${amount}: </label> 
+								<input name="amount" value="" id="amount" type="number" class="form-control input-medium" required>
 							</div>
 							<div class="control-group">
-								<input type="hidden" name="command" value="upload_product_img" /> <input type="hidden" id="product_img" name="product_img_path" value="" />
+								<input type="hidden" name="command" value="upload_product_img" />
+								<input type="hidden" id="product_img" name="product_img_path" value="" />
 								<label class="btn btn-default" for="my-file-selector"> 
 									<input id="my-file-selector" type="file" name="pr-img" size="60"
 										   style="display: none;" accept="image/*" 
 										   onchange="$('#upload-file-info').html($(this).val());"> 
 									${upload}
-								</label> <span class='label label-info' id="upload-file-info"></span>
+								</label> 
+								<span class='label label-info' id="upload-file-info"></span>
 							</div>
 						</fieldset>
 						<div class="modal-footer">
