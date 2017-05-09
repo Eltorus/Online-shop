@@ -49,7 +49,6 @@ public class UpdatingUserBanStatus implements Command {
 	} catch (ServiceException e) {
 	    logger.error(e);
 	    throw new CommandException("Exception during UpdatingUserBanStatus command",e);
-
 	}
 	return PageList.PG_ADMIN_USER_R;
     }

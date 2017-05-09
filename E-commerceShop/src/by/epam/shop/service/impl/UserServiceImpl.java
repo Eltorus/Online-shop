@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	User output = null;
-	if (user.getEmail() == null || user.getEmail().isEmpty() || user.getPasswordHash() == null
-		|| user.getPasswordHash().isEmpty()) {
+	if (user.getEmail() == null || user.getEmail().isEmpty() 
+	    || user.getPasswordHash() == null || user.getPasswordHash().isEmpty()) {
 	    throw new ServiceException("Fields are empty");
 	}
 	try {
@@ -57,11 +57,11 @@ public class UserServiceImpl implements UserService {
 	if (user == null) {
 	    throw new ServiceException("Object is null");
 	}
-
-	User result = null;
 	if (!isUserPropValid(user)) {
 	    throw new ServiceException("Fields are empty");
 	}
+
+	User result = null;
 	try {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 	    result = userDAO.getUserWithEmail(user);
@@ -69,29 +69,12 @@ public class UserServiceImpl implements UserService {
 	    if (result == null) {
 		userDAO.addUser(user);
 	    }
-	    return result == null;
+	    
 	} catch (DAOException e) {
 	    throw new ServiceException("Exception during addUser prodecure", e);
 	}
-    }
-
-    private boolean isUserPropValid(User user) {
-	if (user.getEmail() == null || user.getEmail().isEmpty()) {
-	    return false;
-	}
-	if (user.getPasswordHash() == null || user.getPasswordHash().isEmpty()) {
-	    return false;
-	}
-	if (user.getName() == null || user.getName().isEmpty()) {
-	    return false;
-	}
-	if (user.getSurname() == null || user.getSurname().isEmpty()) {
-	    return false;
-	}
-	if (user.getPhonenumber() == null || user.getPhonenumber().isEmpty()) {
-	    return false;
-	}
-	return true;
+	
+	return result == null;
     }
 
     /*
@@ -104,15 +87,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() throws ServiceException {
 	List<User> userList = null;
+	
 	try {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 	    userList = userDAO.getAllUsers();
-	    if (userList.isEmpty()) {
-		return null;
-	    }
 	} catch (DAOException e) {
 	    throw new ServiceException("Exception during getAllUsers prodecure", e);
 	}
+	
 	return userList;
     }
 
@@ -128,6 +110,7 @@ public class UserServiceImpl implements UserService {
 	if (user == null) {
 	    throw new ServiceException("Object is null");
 	}
+	
 	try {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 	    userDAO.deleteUser(user);
@@ -150,6 +133,7 @@ public class UserServiceImpl implements UserService {
 	if (user == null) {
 	    throw new ServiceException("Object is null");
 	}
+	
 	User output = null;
 	try {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
@@ -162,6 +146,7 @@ public class UserServiceImpl implements UserService {
 	} catch (DAOException e) {
 	    throw new ServiceException("Exception during updateUser prodecure", e);
 	}
+	
 	return output;
     }
 
@@ -178,6 +163,7 @@ public class UserServiceImpl implements UserService {
 	if (user == null || user.getId() == 0) {
 	    throw new ServiceException("Object is null");
 	}
+	
 	User userForWrite = getUserWithId(user);
 	try {
 	    userForWrite.setBanned(user.isBanned());
@@ -202,6 +188,7 @@ public class UserServiceImpl implements UserService {
 	if (user == null || user.getId() == 0) {
 	    throw new ServiceException("Object is null");
 	}
+	
 	try {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 	    User userForWrite = userDAO.getUserWithId(user);
@@ -227,6 +214,7 @@ public class UserServiceImpl implements UserService {
 	if (user == null || user.getId() == 0) {
 	    throw new ServiceException("Object is null");
 	}
+	
 	User result = null;
 	try {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
@@ -234,6 +222,26 @@ public class UserServiceImpl implements UserService {
 	} catch (DAOException e) {
 	    throw new ServiceException("Exception during getUserWithId prodecure", e);
 	}
+	
 	return result;
+    }
+    
+    private boolean isUserPropValid(User user) {
+	if (user.getEmail() == null || user.getEmail().isEmpty()) {
+	    return false;
+	}
+	if (user.getPasswordHash() == null || user.getPasswordHash().isEmpty()) {
+	    return false;
+	}
+	if (user.getName() == null || user.getName().isEmpty()) {
+	    return false;
+	}
+	if (user.getSurname() == null || user.getSurname().isEmpty()) {
+	    return false;
+	}
+	if (user.getPhonenumber() == null || user.getPhonenumber().isEmpty()) {
+	    return false;
+	}
+	return true;
     }
 }

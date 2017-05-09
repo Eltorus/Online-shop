@@ -1,6 +1,6 @@
 package by.epam.shop.command;
 
-public final class AttributeList {
+public class AttributeList {
 
     private AttributeList() {}
 

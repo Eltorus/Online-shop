@@ -1,8 +1,7 @@
 package by.epam.shop.command;
 
-public final class ParameterList {
-    private ParameterList() {
-    }
+public class ParameterList {
+    private ParameterList() {}
 
     public static final String LOCAL = "local";
     

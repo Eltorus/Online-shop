@@ -53,12 +53,6 @@
 					<div class="col-md-3 col-xs-6">${sessionScope.user.phonenumber}</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>
-					<div class="col-md-3 col-xs-6 tital">${discount}:</div>
-					<div class="col-md-3 col-xs-6">${sessionScope.user.discountCoefficient * 100}%</div>
-					<div class="clearfix"></div>
-					<div class="bot-border"></div>
-					<div class="clearfix"></div>
-					<div class="bot-border"></div>
 					<div class="col-md-3 col-xs-6 tital">${balance}:</div>
 					<div class="col-md-3 col-xs-6">
 						<fmt:formatNumber pattern="#0.00" value="${sessionScope.user.balance}" />

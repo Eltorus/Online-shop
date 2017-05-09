@@ -16,12 +16,16 @@ import by.epam.shop.entity.bean.User;
 
 /*implements by.epam.shop.dao.UserDAO*/
 public class UserDAOImpl implements UserDAO {
-    
-    /* Get user from database with id
+
+    /*
+     * Get user from database with id
+     * 
      * @param by.epam.shop.bean.User
+     * 
      * @throws by.epam.shop.dao.exception.DAOException
+     * 
      * @return by.epam.shop.bean.User
-     * */
+     */
     @Override
     public User getUserWithId(User user) throws DAOException {
 	ConnectionPool pool = null;
@@ -35,28 +39,32 @@ public class UserDAOImpl implements UserDAO {
 
 	    ps = con.prepareStatement(QueryList.GetUserQuery + QueryList.UserIdQuery_P);
 	    ps.setInt(1, user.getId());
-	    
+
 	    rs = ps.executeQuery();
 	    while (rs.next()) {
 		result = fillUpUser(rs);
 	    }
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException("Exception during getUserWithId procedure",e);
+	    throw new DAOException("Exception during getUserWithId procedure", e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in getUserWithId procedure during getting back connection",e);
+		throw new DAOException("Exception in getUserWithId procedure during getting back connection", e);
 	    }
 	}
 	return result;
     }
 
-    /* Get user from database with email and password 
+    /*
+     * Get user from database with email and password
+     * 
      * @param by.epam.shop.bean.User
+     * 
      * @throws by.epam.shop.dao.exception.DAOException
+     * 
      * @return by.epam.shop.bean.User
-     * */
+     */
     @Override
     public User getUserWithLoginInf(User user) throws DAOException {
 	ConnectionPool pool = null;
@@ -77,21 +85,24 @@ public class UserDAOImpl implements UserDAO {
 		result = fillUpUser(rs);
 	    }
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException("Exception during getUserWithLoginInf procedure",e);
+	    throw new DAOException("Exception during getUserWithLoginInf procedure", e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in getUserWithLoginInf procedure during getting back connection",e);
+		throw new DAOException("Exception in getUserWithLoginInf procedure during getting back connection", e);
 	    }
 	}
 	return result;
     }
-    
-    /* Add user to database
+
+    /*
+     * Add user to database
+     * 
      * @param by.epam.shop.bean.User
+     * 
      * @throws by.epam.shop.dao.exception.DAOException
-     * */
+     */
     @Override
     public void addUser(User user) throws DAOException {
 	ConnectionPool pool = null;
@@ -110,20 +121,23 @@ public class UserDAOImpl implements UserDAO {
 
 	    ps.executeUpdate();
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException("Exception during addUser procedure",e);
+	    throw new DAOException("Exception during addUser procedure", e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in addUser procedure during getting back connection",e);
+		throw new DAOException("Exception in addUser procedure during getting back connection", e);
 	    }
 	}
     }
 
-    /* Set "delete field" of user as "deleted" in database
+    /*
+     * Set "delete field" of user as "deleted" in database
+     * 
      * @param by.epam.shop.bean.User
+     * 
      * @throws by.epam.shop.dao.exception.DAOException
-     * */
+     */
     @Override
     public void deleteUser(User user) throws DAOException {
 	Connection con = null;
@@ -138,20 +152,23 @@ public class UserDAOImpl implements UserDAO {
 	    ps.setString(2, user.getPasswordHash());
 	    ps.executeUpdate();
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException("Exception during deleteUser procedure",e);
+	    throw new DAOException("Exception during deleteUser procedure", e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in deleteUser procedure during getting back connection",e);
+		throw new DAOException("Exception in deleteUser procedure during getting back connection", e);
 	    }
 	}
     }
 
-    /* Update user in database
+    /*
+     * Update user in database
+     * 
      * @param by.epam.shop.bean.User
+     * 
      * @throws by.epam.shop.dao.exception.DAOException
-     * */
+     */
     @Override
     public void updateUser(User user) throws DAOException {
 	ConnectionPool pool = null;
@@ -164,31 +181,23 @@ public class UserDAOImpl implements UserDAO {
 	    updateUserInformation(ps, con, user);
 
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException("Exception during updateUser procedure",e);
+	    throw new DAOException("Exception during updateUser procedure", e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in updateUser procedure during getting back connection",e);
+		throw new DAOException("Exception in updateUser procedure during getting back connection", e);
 	    }
 	}
     }
 
-    private void updateUserInformation(PreparedStatement ps, Connection con, User user) throws SQLException {
-	ps = con.prepareStatement(QueryList.UpdateUserQuery_P+ QueryList.UserLoginInfQuery_P);
-	ps.setDouble(1, user.getBalance());
-	ps.setString(2, user.getImgPath());
-	ps.setBoolean(3, user.isBanned());
-	ps.setDouble(4, user.getDiscountCoefficient());
-	ps.setString(5, user.getEmail());
-	ps.setString(6, user.getPasswordHash());
-	ps.executeUpdate();
-    }
-    
-    /* Gets all users from database
+    /*
+     * Gets all users from database
+     * 
      * @throws by.epam.shop.dao.exception.DAOException
+     * 
      * @return List<by.epam.shop.bean.User>
-     * */
+     */
     @Override
     public List<User> getAllUsers() throws DAOException {
 	ConnectionPool pool = null;
@@ -207,15 +216,67 @@ public class UserDAOImpl implements UserDAO {
 		userList.add(user);
 	    }
 	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException("Exception during getAllUsers procedure",e);
+	    throw new DAOException("Exception during getAllUsers procedure", e);
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in getAllUsers procedure during getting back connection",e);
+		throw new DAOException("Exception in getAllUsers procedure during getting back connection", e);
 	    }
 	}
 	return userList;
+    }
+
+    /*
+     * Get user from database with email
+     * 
+     * @param by.epam.shop.bean.User
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     * 
+     * @return by.epam.shop.bean.User
+     */
+    @Override
+    public User getUserWithEmail(User user) throws DAOException {
+	ConnectionPool pool = null;
+	Connection con = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	User result = null;
+	try {
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+
+	    ps = con.prepareStatement(QueryList.GetUserQuery + QueryList.UserEmailQuery_P);
+	    ps.setString(1, user.getEmail());
+
+	    rs = ps.executeQuery();
+	    while (rs.next()) {
+		result = fillUpUser(rs);
+	    }
+	} catch (SQLException | ConnectionPoolException e) {
+	    throw new DAOException("Exception during getUserWithEmail procedure", e);
+	} finally {
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException("Exception in getUserWithEmail procedure during getting back connection", e);
+	    }
+	}
+	return result;
+    }
+
+    private void updateUserInformation(PreparedStatement ps, Connection con, User user) throws SQLException {
+	ps = con.prepareStatement(QueryList.UpdateUserQuery_P + QueryList.UserLoginInfQuery_P);
+	
+	ps.setDouble(1, user.getBalance());
+	ps.setString(2, user.getImgPath());
+	ps.setBoolean(3, user.isBanned());
+	ps.setDouble(4, user.getDiscountCoefficient());
+	ps.setString(5, user.getEmail());
+	ps.setString(6, user.getPasswordHash());
+	
+	ps.executeUpdate();
     }
 
     private User fillUpUser(ResultSet rs) throws SQLException {
@@ -232,41 +293,6 @@ public class UserDAOImpl implements UserDAO {
 	result.setDiscountCoefficient(rs.getDouble(9));
 	result.setBalance(rs.getDouble(10));
 	result.setImgPath(rs.getString(11));
-	return result;
-    }
-
-    /* Get user from database with email
-     * @param by.epam.shop.bean.User
-     * @throws by.epam.shop.dao.exception.DAOException
-     * @return by.epam.shop.bean.User
-     * */
-    @Override
-    public User getUserWithEmail(User user) throws DAOException {
-	ConnectionPool pool = null;
-	Connection con = null;
-	PreparedStatement ps = null;
-	ResultSet rs = null;
-	User result = null;
-	try {
-	    pool = ConnectionPool.getInstance();
-	    con = pool.takeConnection();
-
-	    ps = con.prepareStatement(QueryList.GetUserQuery + QueryList.UserEmailQuery_P);
-	    ps.setString(1, user.getEmail());
-	    
-	    rs = ps.executeQuery();
-	    while (rs.next()) {
-		result = fillUpUser(rs);
-	    }
-	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException("Exception during getUserWithEmail procedure",e);
-	} finally {
-	    try {
-		pool.getBackConnection(ps, con);
-	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in getUserWithEmail procedure during getting back connection",e);
-	    }
-	}
 	return result;
     }
 }

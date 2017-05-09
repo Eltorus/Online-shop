@@ -36,7 +36,6 @@ public class OrderEditPage implements Command {
 	order.setId(id);
 
 	try {
-
 	    OrderService orderService = ServiceFactory.getInstance().getOrderService();
 	    Order result = orderService.getOrder(order);
 	    request.setAttribute(AttributeList.ATTR_ORDER, result);

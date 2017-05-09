@@ -38,26 +38,6 @@ public class OrderServiceImpl implements OrderService {
 	return order;
     }
 
-    private void countOrderBill(Cart cart, User user, Order order) {
-	double bill = 0;
-
-	for(CartLine cartLine : cart.getProductList()) {
-	    bill += cartLine.getProduct().getPrice() * cartLine.getQuantity();
-	}
-	order.setBill(bill);
-	
-	double discount = user.getDiscountCoefficient();
-	order.setDiscount(discount);
-	
-	double total = bill;
-	if (discount >= 0) {
-	    total = bill - (bill * discount);
-	    
-	}
-	order.setTotal(NumberOperationTool.getRoundedDouble(total));
-	
-    }
-
     /* Pass order to DAO layer for adding
      * @param by.epam.shop.bean.Order
      * @throws by.epam.shop.service.exception.ServiceException
@@ -201,6 +181,25 @@ public class OrderServiceImpl implements OrderService {
 	    throw new ServiceException("Exception during getUserOrders prodecure",e);
 	}
 	return orderList;
+    }
+    
+    private void countOrderBill(Cart cart, User user, Order order) {
+	double bill = 0;
+
+	for(CartLine cartLine : cart.getProductList()) {
+	    bill += cartLine.getProduct().getPrice() * cartLine.getQuantity();
+	}
+	order.setBill(bill);
+	
+	double discount = user.getDiscountCoefficient();
+	order.setDiscount(discount);
+	
+	double total = bill;
+	if (discount >= 0) {
+	    total = bill - (bill * discount);
+	}
+	
+	order.setTotal(NumberOperationTool.getRoundedDouble(total));
     }
 
 }

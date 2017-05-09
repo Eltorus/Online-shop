@@ -20,13 +20,9 @@
 	<%@ include file="/WEB-INF/elements/local.jspf"%>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
-				<div class="thumbnail">
-					<div class="product-pict text-center">
+					<div class="product-frame">
 						<img src="${requestScope.product.imgPath}" alt="${requestScope.product.imgPath}">
 					</div>
-				</div>
-			</div>
 			<div class="text-center">
 				<div class="caption">
 					<h4>${requestScope.product.title}</h4>

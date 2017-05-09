@@ -37,7 +37,6 @@ public class OrderUpdating implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 	try {
-
 	    int id = NumberOperationTool.getIntFromString(request.getParameter(ParameterList.ORDER_ID));
 	    if (id == 0) {
 		return PageList.PG_ADMIN_ORDER_R;

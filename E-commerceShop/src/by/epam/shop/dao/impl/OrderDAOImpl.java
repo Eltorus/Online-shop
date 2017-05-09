@@ -55,15 +55,206 @@ public class OrderDAOImpl implements OrderDAO {
 		logger.error(e);
 		con.rollback(svpt);
 	    } catch (SQLException e1) {
-		throw new DAOException("Exception during addOrder procedure",e);
+		throw new DAOException("Exception during addOrder procedure", e);
 	    }
 	} finally {
 	    try {
 		pool.getBackConnection(ps, con);
 	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in addOrder procedure during getting back connection",e);
+		throw new DAOException("Exception in addOrder procedure during getting back connection", e);
 	    }
 	}
+    }
+
+    /*
+     * Update order in database
+     * 
+     * @param by.epam.shop.bean.Order
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     */
+    @Override
+    public void updateOrder(Order order) throws DAOException {
+	Connection con = null;
+	PreparedStatement ps = null;
+	ConnectionPool pool = null;
+	try {
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+	    ps = con.prepareStatement(QueryList.UpdateOrderQuery);
+
+	    ps.setString(1, DateFormatter.convertDateToString(order.getDeliveryDate()));
+	    ps.setString(2, order.getAddress());
+	    ps.setBoolean(3, order.isOrderCompleted());
+	    ps.setInt(4, order.getId());
+
+	    ps.executeUpdate();
+	} catch (SQLException | ConnectionPoolException e) {
+	    throw new DAOException("Exception during updateOrder procedure", e);
+	} finally {
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException("Exception in addOrder procedure during getting back connection", e);
+	    }
+	}
+
+    }
+
+    /*
+     * Get order from database with id
+     * 
+     * @param by.epam.shop.bean.Order
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     * 
+     * @return by.epam.shop.bean.Order
+     */
+    @Override
+    public Order getOrder(Order order) throws DAOException {
+	Connection con = null;
+	PreparedStatement ps = null;
+	Order result = null;
+	ConnectionPool pool = null;
+	try {
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+	    result = compileGetOrderQuery(con, ps, order);
+	} catch (SQLException | ConnectionPoolException | UtilException e) {
+	    throw new DAOException("Exception during getOrder procedure", e);
+	} finally {
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException("Exception in getOrder procedure during getting back connection", e);
+	    }
+	}
+
+	return result;
+    }
+
+    /*
+     * Get all orders from database
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     * 
+     * @return List<by.epam.shop.bean.Order>
+     */
+    @Override
+    public List<Order> getAllOrders() throws DAOException {
+	Connection con = null;
+	Statement st = null;
+	ResultSet rs = null;
+	List<Order> orderList = new ArrayList<>();
+	ConnectionPool pool = null;
+	try {
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+	    st = con.createStatement();
+	    rs = st.executeQuery(QueryList.GetAllOrdersQuery);
+
+	    while (rs.next()) {
+		Order order = fillUpOrder(rs);
+		orderList.add(order);
+	    }
+	} catch (SQLException | ConnectionPoolException | UtilException e) {
+	    throw new DAOException("Exception during getAllOrders procedure", e);
+	} finally {
+	    try {
+		pool.getBackConnection(st, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException("Exception in getAllOrders procedure during getting back connection", e);
+	    }
+	}
+	return orderList;
+    }
+
+    /*
+     * Set "delete field" of order as "deleted"
+     * 
+     * @param by.epam.shop.bean.Order
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     */
+    @Override
+    public void deleteOrder(Order order) throws DAOException {
+	Connection con = null;
+	PreparedStatement ps = null;
+	Savepoint svpt = null;
+	ConnectionPool pool = null;
+	try {
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+	    con.setAutoCommit(false);
+	    svpt = con.setSavepoint("Delete Order");
+	    deleteOrderExecuteQuery(con, ps, order);
+
+	    con.commit();
+	} catch (SQLException | ConnectionPoolException e) {
+	    try {
+		logger.error(e);
+		con.rollback(svpt);
+	    } catch (SQLException e1) {
+		throw new DAOException("Exception during deleteOrder procedure", e);
+	    }
+	} finally {
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException("Exception in deleteOrder procedure during getting back connection", e);
+	    }
+	}
+
+    }
+
+    /*
+     * Get orders which were made by user from database
+     * 
+     * @param by.epam.shop.bean.Order
+     * 
+     * @throws by.epam.shop.dao.exception.DAOException
+     * 
+     * @return List<by.epam.shop.bean.Order>
+     */
+    @Override
+    public List<Order> getOrders(Order order) throws DAOException {
+	Connection con = null;
+	PreparedStatement ps = null;
+	List<Order> orderList = null;
+	ConnectionPool pool = null;
+	try {
+	    pool = ConnectionPool.getInstance();
+	    con = pool.takeConnection();
+
+	    orderList = excuteGetOrdersQuery(con, ps, order);
+	} catch (SQLException | ConnectionPoolException | UtilException e) {
+	    throw new DAOException("Exception during getOrders procedure", e);
+	} finally {
+	    try {
+		pool.getBackConnection(ps, con);
+	    } catch (ConnectionPoolException e) {
+		throw new DAOException("Exception in getOrders procedure during getting back connection", e);
+	    }
+	}
+
+	return orderList;
+    }
+
+    private List<Order> excuteGetOrdersQuery(Connection con, PreparedStatement ps, Order order)
+	    throws SQLException, UtilException {
+	List<Order> orderList = new ArrayList<>();
+
+	ps = con.prepareStatement(QueryList.GetOrderQuery_P + QueryList.GetOrderWhereConditionUserId_P);
+	ps.setInt(1, order.getUser().getId());
+
+	ResultSet rs = ps.executeQuery();
+	while (rs.next()) {
+	    Order result = fillUpOrder(rs);
+	    result.setCart(getProductsToOrder(con, ps, result));
+	    orderList.add(result);
+	}
+
+	return orderList;
     }
 
     private void compileAddOrderQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
@@ -120,73 +311,6 @@ public class OrderDAOImpl implements OrderDAO {
 
     }
 
-    /*
-     * Update order in database
-     * 
-     * @param by.epam.shop.bean.Order
-     * 
-     * @throws by.epam.shop.dao.exception.DAOException
-     */
-    @Override
-    public void updateOrder(Order order) throws DAOException {
-	Connection con = null;
-	PreparedStatement ps = null;
-	ConnectionPool pool = null;
-	try {
-	    pool = ConnectionPool.getInstance();
-	    con = pool.takeConnection();
-	    ps = con.prepareStatement(QueryList.UpdateOrderQuery);
-
-	    ps.setString(1, DateFormatter.convertDateToString(order.getDeliveryDate()));
-	    ps.setString(2, order.getAddress());
-	    ps.setBoolean(3, order.isOrderCompleted());
-	    ps.setInt(4, order.getId());
-
-	    ps.executeUpdate();
-	} catch (SQLException | ConnectionPoolException e) {
-	    throw new DAOException("Exception during updateOrder procedure",e);
-	} finally {
-	    try {
-		pool.getBackConnection(ps, con);
-	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in addOrder procedure during getting back connection",e);
-	    }
-	}
-
-    }
-
-    /*
-     * Get order from database with id
-     * 
-     * @param by.epam.shop.bean.Order
-     * 
-     * @throws by.epam.shop.dao.exception.DAOException
-     * 
-     * @return by.epam.shop.bean.Order
-     */
-    @Override
-    public Order getOrder(Order order) throws DAOException {
-	Connection con = null;
-	PreparedStatement ps = null;
-	Order result = null;
-	ConnectionPool pool = null;
-	try {
-	    pool = ConnectionPool.getInstance();
-	    con = pool.takeConnection();
-	    result = compileGetOrderQuery(con, ps, order);
-	} catch (SQLException | ConnectionPoolException | UtilException e) {
-	    throw new DAOException("Exception during getOrder procedure",e);
-	} finally {
-	    try {
-		pool.getBackConnection(ps, con);
-	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in getOrder procedure during getting back connection",e);
-	    }
-	}
-
-	return result;
-    }
-
     private Order compileGetOrderQuery(Connection con, PreparedStatement ps, Order order)
 	    throws DAOException, SQLException, UtilException {
 	Order result = null;
@@ -223,80 +347,6 @@ public class OrderDAOImpl implements OrderDAO {
 	    cart.addToProductList(cl);
 	}
 	return cart;
-    }
-
-    /*
-     * Get all orders from database
-     * 
-     * @throws by.epam.shop.dao.exception.DAOException
-     * 
-     * @return List<by.epam.shop.bean.Order>
-     */
-    @Override
-    public List<Order> getAllOrders() throws DAOException {
-	Connection con = null;
-	Statement st = null;
-	ResultSet rs = null;
-	List<Order> orderList = new ArrayList<>();
-	ConnectionPool pool = null;
-	try {
-	    pool = ConnectionPool.getInstance();
-	    con = pool.takeConnection();
-	    st = con.createStatement();
-	    rs = st.executeQuery(QueryList.GetAllOrdersQuery);
-
-	    while (rs.next()) {
-		Order order = fillUpOrder(rs);
-		orderList.add(order);
-	    }
-	} catch (SQLException | ConnectionPoolException | UtilException e) {
-	    throw new DAOException("Exception during getAllOrders procedure",e);
-	} finally {
-	    try {
-		pool.getBackConnection(st, con);
-	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in getAllOrders procedure during getting back connection",e);
-	    }
-	}
-	return orderList;
-    }
-
-    /*
-     * Set "delete field" of order as "deleted"
-     * 
-     * @param by.epam.shop.bean.Order
-     * 
-     * @throws by.epam.shop.dao.exception.DAOException
-     */
-    @Override
-    public void deleteOrder(Order order) throws DAOException {
-	Connection con = null;
-	PreparedStatement ps = null;
-	Savepoint svpt = null;
-	ConnectionPool pool = null;
-	try {
-	    pool = ConnectionPool.getInstance();
-	    con = pool.takeConnection();
-	    con.setAutoCommit(false);
-	    svpt = con.setSavepoint("Delete Order");
-	    deleteOrderExecuteQuery(con, ps, order);
-
-	    con.commit();
-	} catch (SQLException | ConnectionPoolException e) {
-	    try {
-		logger.error(e);
-		con.rollback(svpt);
-	    } catch (SQLException e1) {
-		throw new DAOException("Exception during deleteOrder procedure",e);
-	    }
-	} finally {
-	    try {
-		pool.getBackConnection(ps, con);
-	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in deleteOrder procedure during getting back connection",e);
-	    }
-	}
-
     }
 
     private void deleteOrderExecuteQuery(Connection con, PreparedStatement ps, Order order) throws SQLException {
@@ -349,55 +399,4 @@ public class OrderDAOImpl implements OrderDAO {
 
 	return order;
     }
-
-    /*
-     * Get orders which were made by user from database
-     * 
-     * @param by.epam.shop.bean.Order
-     * 
-     * @throws by.epam.shop.dao.exception.DAOException
-     * 
-     * @return List<by.epam.shop.bean.Order>
-     */
-    @Override
-    public List<Order> getOrders(Order order) throws DAOException {
-	Connection con = null;
-	PreparedStatement ps = null;
-	List<Order> orderList = null;
-	ConnectionPool pool = null;
-	try {
-	    pool = ConnectionPool.getInstance();
-	    con = pool.takeConnection();
-
-	    orderList = excuteGetOrdersQuery(con, ps, order);
-	} catch (SQLException | ConnectionPoolException | UtilException e) {
-	    throw new DAOException("Exception during getOrders procedure",e);
-	} finally {
-	    try {
-		pool.getBackConnection(ps, con);
-	    } catch (ConnectionPoolException e) {
-		throw new DAOException("Exception in getOrders procedure during getting back connection",e);
-	    }
-	}
-
-	return orderList;
-    }
-
-    private List<Order> excuteGetOrdersQuery(Connection con, PreparedStatement ps, Order order)
-	    throws SQLException, UtilException {
-	List<Order> orderList = new ArrayList<>();
-
-	ps = con.prepareStatement(QueryList.GetOrderQuery_P + QueryList.GetOrderWhereConditionUserId_P);
-	ps.setInt(1, order.getUser().getId());
-
-	ResultSet rs = ps.executeQuery();
-	while (rs.next()) {
-	    Order result = fillUpOrder(rs);
-	    result.setCart(getProductsToOrder(con, ps, result));
-	    orderList.add(result);
-	}
-
-	return orderList;
-    }
-
 }

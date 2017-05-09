@@ -74,6 +74,7 @@ public class QueryList {
     public static final String DeleteProductQuery = "UPDATE `online_shop`.`products` "
     						  + "SET `p_deleted`=true "
     						  + "WHERE `p_id`=?";
+        
     
     //Orders
 

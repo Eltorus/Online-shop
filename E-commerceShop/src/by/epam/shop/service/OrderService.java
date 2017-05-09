@@ -8,11 +8,11 @@ import by.epam.shop.entity.bean.User;
 import by.epam.shop.service.exception.ServiceException;
 
 public interface OrderService {
-	public void addOrder(Order order) throws ServiceException;
-	public void deleteOrder(Order order) throws ServiceException;
-	public Order createOrder(Cart cart, User user) throws ServiceException;
-	public void updateOrder(Order order) throws ServiceException;
-	public Order getOrder(Order order) throws ServiceException;
-	public List<Order> getUserOrders(User user) throws ServiceException;
-	public List<Order> getAllOrders() throws ServiceException;
+	void addOrder(Order order) throws ServiceException;
+	void deleteOrder(Order order) throws ServiceException;
+	Order createOrder(Cart cart, User user) throws ServiceException;
+	void updateOrder(Order order) throws ServiceException;
+	Order getOrder(Order order) throws ServiceException;
+	List<Order> getUserOrders(User user) throws ServiceException;
+	List<Order> getAllOrders() throws ServiceException;
 }

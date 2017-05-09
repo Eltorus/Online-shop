@@ -83,6 +83,18 @@ img.product {
 	overflow: hidden;
 }
 
+.product-frame {
+	float:left;	
+	width: 38vw;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.product-frame img{
+	max-height: 100%;
+	max-width: 100%;
+}
+
 .product-pict a {
 	display: block;
 	height: 100%;
@@ -95,6 +107,7 @@ img.product {
 .thumbnail img {
 	max-height: 100%;
 	max-width: 100%;
+	height: inherit!important;
 }
 
 .caption {
@@ -122,4 +135,29 @@ img.product {
 
 .navbar-btn {
 	margin-left: 15px;
+}
+
+@media (max-width: 767px) {
+	.navbar-brand {
+	    margin: 8px 0 8px 15px;
+	}
+	
+	.product-frame{
+		float: inherit;
+	    width: inherit;
+	    overflow: hidden;
+	    display: inline-block;
+	}
+}
+
+@media (max-width: 992px) {
+	.navbar-collapse {
+		width: 110%;
+	}
+}
+
+@media (max-width: 892px) {
+	.navbar-collapse {
+		width: 102%;
+	}
 }
