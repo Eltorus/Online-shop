@@ -4,9 +4,9 @@ public class NumberOperationTool {
     private NumberOperationTool() {
     }
 
-    public static double getRoundedDouble(double d) {
+    /*public static double getRoundedDouble(double d) {
 	return Math.round(d * 100.0) / 100.0;
-    }
+    }*/
 
     public static int getIntFromString(String line) {
 	if (line == null || line.trim().isEmpty()) {

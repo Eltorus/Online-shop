@@ -1,5 +1,7 @@
 package by.epam.shop.service.impl;
  
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import by.epam.shop.dao.OrderDAO;
@@ -12,7 +14,7 @@ import by.epam.shop.entity.bean.Order;
 import by.epam.shop.entity.bean.User;
 import by.epam.shop.service.OrderService;
 import by.epam.shop.service.exception.ServiceException;
-import by.epam.shop.util.NumberOperationTool;
+
 /*
  * Class OrderServiceImpl implements OrderService interface OrderService 
  */
@@ -184,22 +186,25 @@ public class OrderServiceImpl implements OrderService {
     }
     
     private void countOrderBill(Cart cart, User user, Order order) {
-	double bill = 0;
-
+	BigDecimal bill = new BigDecimal(0);
+	BigDecimal cartLineBill = null;
+		 
 	for(CartLine cartLine : cart.getProductList()) {
-	    bill += cartLine.getProduct().getPrice() * cartLine.getQuantity();
+	    cartLineBill = BigDecimal.valueOf(cartLine.getProduct().getPrice());
+	    cartLineBill = cartLineBill.multiply(new BigDecimal(cartLine.getQuantity()));
+	    bill = bill.add(cartLineBill);
 	}
-	order.setBill(bill);
+	order.setBill(bill.doubleValue());
 	
-	double discount = user.getDiscountCoefficient();
-	order.setDiscount(discount);
+	order.setDiscount(user.getDiscountCoefficient());
 	
-	double total = bill;
-	if (discount >= 0) {
-	    total = bill - (bill * discount);
+	BigDecimal total = bill;
+	if (user.getDiscountCoefficient() >= 0) {
+	    BigDecimal discount = bill.multiply(BigDecimal.valueOf(user.getDiscountCoefficient()));
+	    total = bill.subtract(discount);
 	}
 	
-	order.setTotal(NumberOperationTool.getRoundedDouble(total));
+	order.setTotal(total.setScale(2, RoundingMode.HALF_UP).doubleValue());
     }
 
 }

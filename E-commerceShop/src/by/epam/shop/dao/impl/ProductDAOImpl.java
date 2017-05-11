@@ -274,7 +274,6 @@ public class ProductDAOImpl implements ProductDAO {
 	return productList;
     }
 
-
     private Product fillUpProduct(ResultSet rs) throws SQLException {
 	Product product = new Product();
 

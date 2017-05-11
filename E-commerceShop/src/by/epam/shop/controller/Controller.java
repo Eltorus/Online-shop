@@ -37,9 +37,6 @@ public class Controller extends HttpServlet {
 
     private String doProcess(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	request.setCharacterEncoding("utf-8");
-	response.setContentType("text/html");
-	
 	CommandProvider provider = CommandProvider.getInstance();
 	Command command = null;
 	String cmdName = request.getParameter(CommandList.CMD);
