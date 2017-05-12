@@ -30,7 +30,7 @@ import by.epam.shop.command.user.UploadUserAvatar;
 import by.epam.shop.command.user.UserOrderList;
 
 public class CommandProvider {
-    private static CommandProvider instance;
+    private volatile static CommandProvider instance;
     private static final Map<String, Command> commands = new HashMap<String, Command>();
 
     private CommandProvider() {

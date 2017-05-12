@@ -46,7 +46,7 @@
 							<td>${product.id}</td>
 							<td>${product.title}</td>
 							<td>${product.category}</td>
-							<td>${product.price}</td>
+							<td><fmt:setLocale value="en_US" /><fmt:formatNumber type="number" pattern="#0.00" groupingUsed = "false"  value="${product.price}"/><fmt:setLocale value="${sessionScope.local}" /></td>
 							<td>${product.description}</td>
 							<td>${product.amount}</td>
 							<td>${product.imgPath}</td>

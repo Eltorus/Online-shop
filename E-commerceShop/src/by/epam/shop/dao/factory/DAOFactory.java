@@ -8,7 +8,7 @@ import by.epam.shop.dao.impl.ProductDAOImpl;
 import by.epam.shop.dao.impl.UserDAOImpl;
 
 public class DAOFactory {
-    private static DAOFactory instance;
+    private volatile static DAOFactory instance;
 
     private DAOFactory() {
     }

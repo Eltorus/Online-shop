@@ -55,8 +55,10 @@
 					<div class="bot-border"></div>
 					<div class="col-md-3 col-xs-6 tital">${balance}:</div>
 					<div class="col-md-3 col-xs-6">
-						<fmt:formatNumber pattern="#0.00" value="${sessionScope.user.balance}" />
-						${rubles}
+					<fmt:setLocale value="en_US" />
+						<fmt:formatNumber type="number" pattern="#0.00" groupingUsed = "false"  value="${sessionScope.user.balance}"/>
+					<fmt:setLocale value="${sessionScope.local}" />
+					${rubles}
 					</div>
 					<div class="clearfix"></div>
 					<div class="bot-border"></div>

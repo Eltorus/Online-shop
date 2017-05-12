@@ -8,7 +8,7 @@ import by.epam.shop.service.impl.ProductServiceImpl;
 import by.epam.shop.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
-    private static ServiceFactory instance;
+    private volatile static ServiceFactory instance;
 
     private ServiceFactory() {
     }
