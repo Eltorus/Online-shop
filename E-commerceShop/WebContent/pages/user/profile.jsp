@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/shop.css">
 	<%@ include file="/WEB-INF/elements/local.jspf"%>
-<title>${profile}</title>
+	<title>${profile}</title>
 </head>
 <body>
 	<%@ include file="/WEB-INF/elements/header.jspf"%>

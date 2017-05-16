@@ -32,8 +32,11 @@
 				<img class="slide-image" src="img/car-3.jpg" alt="">
 			</div>
 		</div>
-		<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span>
-		</a> <a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span>
+		<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+		</a> 
+		<a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> 
+			<span class="glyphicon glyphicon-chevron-right"></span>
 		</a>
 	</div>
 	<script src="js/jquery-3.1.1.min.js"></script>

@@ -23,7 +23,7 @@ public class JspCartLineTag extends TagSupport {
      * 
      * @throws import javax.servlet.jsp.JspException;
      * 
-     * @return int
+     * @return integer
      */
     @Override
     public int doStartTag() throws JspException {

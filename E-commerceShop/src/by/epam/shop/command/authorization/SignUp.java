@@ -22,6 +22,8 @@ import by.epam.shop.util.StringOperationTool;
 import by.epam.shop.util.UtilException;
 
 public class SignUp implements Command {
+    public static String NUMBER_REGEX = "^\\+375\\s?(\\(?\\d{2}\\)?\\s?\\d{3}-?\\d{2}-?\\d{2})$";
+    public static String EMAIL_REGEX = "^(.[^@\\s]+)@(.[^@\\s]+)\\.([a-z]+)$";
     private final static Logger logger = Logger.getLogger(SignUp.class);
 
     /*
@@ -77,7 +79,8 @@ public class SignUp implements Command {
 	if (!StringOperationTool.isStringValid(email) || email.trim().length() > 45 || email.trim().length() < 8) {
 	    throw new CommandException("Inapropriate email format");
 	}
-	Pattern emailPattern = Pattern.compile("^(.[^@\\s]+)@(.[^@\\s]+)\\.([a-z]+)$");
+	
+	Pattern emailPattern = Pattern.compile(EMAIL_REGEX);
 	Matcher emailMatcher = emailPattern.matcher(email.trim());
 	if (!emailMatcher.find()) {
 	    throw new CommandException("Inapropriate email format");
@@ -88,7 +91,8 @@ public class SignUp implements Command {
 		|| phonenumber.length() < 13) {
 	    throw new CommandException("Inapropriate phonenumber format");
 	}
-	Pattern phonePattern = Pattern.compile("^\\+375\\s?(\\(?\\d{2}\\)?\\s?\\d{3}-?\\d{2}-?\\d{2})$");
+	
+	Pattern phonePattern = Pattern.compile(NUMBER_REGEX);
 	Matcher phonematcher = phonePattern.matcher(phonenumber.trim());
 	if (!phonematcher.find()) {
 	    throw new CommandException("Inapropriate phonenumber format");
@@ -100,7 +104,6 @@ public class SignUp implements Command {
 	}
 
 	User user = new User();
-
 	user.setName(name.trim());
 	user.setSurname(surname.trim());
 	user.setPhonenumber(phonenumber.trim());

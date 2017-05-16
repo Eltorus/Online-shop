@@ -39,7 +39,8 @@
 											<input type="hidden" name="command" value="delete_from_cart" /> 
 											<input type="hidden" name="product_index" value="${i.index}" />
 											<button type="submit" class="btn btn-default btn-md">${delete}</button>
-										</form></td>
+										</form>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -13,7 +13,9 @@ public class QueryList {
                                 	    + "FROM `online_shop`.`clients` ";
 
     public static final String UserLoginInfQuery_P = "WHERE `c_email`=? && `c_password`=? && `c_deleted`=false;";
+    
     public static final String UserIdQuery_P = "WHERE `c_id`=? && `c_deleted`=false;";
+    
     public static final String UserEmailQuery_P = "WHERE `c_email`=?;";
 
     public static final String UpdateUserQuery_P = "UPDATE `online_shop`.`clients` "
