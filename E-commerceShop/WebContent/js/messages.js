@@ -6,7 +6,7 @@ msgMap.set(1404, "Inapropriate address format");
 msgMap.set(1405, "Inaproppriate value: credit must be greater than 0 and less than 1000");
 msgMap.set(1406, "Wrong operation: banned users not allowed to make orders");
 msgMap.set(1201, "You successfully registered!");
-msgMap.set(1202,"Your order is accepted! Thank you for buying!");
+msgMap.set(1202, "Your order is accepted! Thank you for buying!");
 
 function outputMessage(message) {
     if (message) {

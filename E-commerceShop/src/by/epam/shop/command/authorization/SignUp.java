@@ -17,6 +17,7 @@ import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
 import by.epam.shop.util.HashTool;
 import by.epam.shop.util.MessageGenerator;
+import by.epam.shop.util.MessageList;
 import by.epam.shop.util.PageList;
 import by.epam.shop.util.StringOperationTool;
 import by.epam.shop.util.UtilException;
@@ -46,9 +47,9 @@ public class SignUp implements Command {
 	    boolean successfulRegister = userService.addUser(user);
 
 	    if (successfulRegister) {
-		return PageList.PG_SIGNIN + MessageGenerator.generateSuccess(1201);
+		return PageList.PG_SIGNIN + MessageGenerator.generateSuccess(MessageList.SUCCESS_REG);
 	    } else {
-		return PageList.PG_SIGNIN + MessageGenerator.generateError(1402);
+		return PageList.PG_SIGNIN + MessageGenerator.generateError(MessageList.ERR_USED_EMAIL);
 	    }
 	} catch (ServiceException | UtilException e) {
 	    logger.error(e);

@@ -20,6 +20,7 @@ import by.epam.shop.service.UserService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
 import by.epam.shop.util.MessageGenerator;
+import by.epam.shop.util.MessageList;
 import by.epam.shop.util.PageList;
 
 public class MakingOrder implements Command {
@@ -41,7 +42,7 @@ public class MakingOrder implements Command {
 
 	String address = request.getParameter(ParameterList.ORDER_ADDRESS);
 	if (address == null || address.trim().isEmpty() || address.length() > 100) {
-	    return PageList.PG_CART + MessageGenerator.generateError(1404);
+	    return PageList.PG_CART + MessageGenerator.generateError(MessageList.ERR_WRONG_ADDRESS);
 	}
 
 	HttpSession session = request.getSession();
@@ -54,7 +55,7 @@ public class MakingOrder implements Command {
 		user = userService.getUserWithId(user);
 
 		if (user.getBalance() < order.getTotal()) {
-		    return PageList.PG_CART + MessageGenerator.generateError(1403);
+		    return PageList.PG_CART + MessageGenerator.generateError(MessageList.ERR_LOW_BALANCE);
 		}
 
 		order.setUser(user);
@@ -69,7 +70,7 @@ public class MakingOrder implements Command {
 		session.setAttribute(AttributeList.ATTR_CART, new Cart());
 		session.setAttribute(AttributeList.ATTR_USER, user);
 		return PageList.PG_CART
-			+ MessageGenerator.generateSuccess(1202);
+			+ MessageGenerator.generateSuccess(MessageList.SUCCESS_ORDER);
 	    }
 	} catch (ServiceException e) {
 	    logger.error(e);

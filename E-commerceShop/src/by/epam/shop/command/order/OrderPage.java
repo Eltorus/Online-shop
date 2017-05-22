@@ -17,6 +17,7 @@ import by.epam.shop.service.UserService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
 import by.epam.shop.util.MessageGenerator;
+import by.epam.shop.util.MessageList;
 import by.epam.shop.util.PageList;
 
 public class OrderPage implements Command {
@@ -52,7 +53,7 @@ public class OrderPage implements Command {
 		}
 	    } else {
 		session.setAttribute(AttributeList.ATTR_USER, user);
-		return PageList.PG_CART+MessageGenerator.generateError(1406);
+		return PageList.PG_CART+MessageGenerator.generateError(MessageList.ERR_BANED_USER);
 	    }
 	} catch (ServiceException e) {
 	    logger.error(e);

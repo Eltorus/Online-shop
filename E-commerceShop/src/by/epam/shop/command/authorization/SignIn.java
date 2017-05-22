@@ -17,6 +17,7 @@ import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
 import by.epam.shop.util.HashTool;
 import by.epam.shop.util.MessageGenerator;
+import by.epam.shop.util.MessageList;
 import by.epam.shop.util.PageList;
 import by.epam.shop.util.UtilException;
 
@@ -37,7 +38,7 @@ public class SignIn implements Command {
 	String page = null;
 	try {
 	    if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
-		return PageList.PG_SIGNIN + MessageGenerator.generateError(1401);
+		return PageList.PG_SIGNIN + MessageGenerator.generateError(MessageList.ERR_WRONG_LOG_PSWRD);
 	    }
 	    User user = new User();
 	    user.setEmail(email);
@@ -55,7 +56,7 @@ public class SignIn implements Command {
 		
 		page = PageList.PG_SIGNIN;
 	    } else {
-		page = PageList.PG_SIGNIN + MessageGenerator.generateError(1401);
+		page = PageList.PG_SIGNIN + MessageGenerator.generateError(MessageList.ERR_WRONG_LOG_PSWRD);
 	    }
 	} catch (ServiceException | UtilException e) {
 	    logger.error(e);

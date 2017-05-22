@@ -15,6 +15,7 @@ import by.epam.shop.service.UserService;
 import by.epam.shop.service.exception.ServiceException;
 import by.epam.shop.service.factory.ServiceFactory;
 import by.epam.shop.util.MessageGenerator;
+import by.epam.shop.util.MessageList;
 import by.epam.shop.util.NumberOperationTool;
 import by.epam.shop.util.PageList;
 import by.epam.shop.util.UtilException;
@@ -42,7 +43,7 @@ public class RechargingBalance implements Command {
 	try {
 	    double credit = NumberOperationTool.getDoubleFromString(request.getParameter(ParameterList.USER_CREDIT));
 	    if (credit <= 0 || credit > 1000) {
-		return PageList.PG_PROFILE + MessageGenerator.generateError(1405);
+		return PageList.PG_PROFILE + MessageGenerator.generateError(MessageList.ERR_WRONG_CREDIT_VAL);
 	    }
 
 	    credit += user.getBalance();
