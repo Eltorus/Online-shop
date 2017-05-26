@@ -1,13 +1,17 @@
 package by.epam.shop.dao.connectionpool;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 
 public final class ConnectionPool {
     private BlockingQueue<Connection> givenAwayConQueue;
@@ -74,11 +78,31 @@ public final class ConnectionPool {
 	return localInstance;
     }
 
-    public void clearConnectionQueue() throws ConnectionPoolException {
+    public void destroyPool() throws ConnectionPoolException {
 	try {
 	    closeConnectionQueue(givenAwayConQueue);
 	    closeConnectionQueue(connectionQueue);
 	} catch (SQLException e) {
+	    throw new ConnectionPoolException(e);
+	}
+
+	Enumeration<Driver> drivers = DriverManager.getDrivers();
+
+	Driver driver = null;
+
+	while (drivers.hasMoreElements()) {
+	    try {
+		driver = drivers.nextElement();
+		DriverManager.deregisterDriver(driver);
+
+	    } catch (SQLException e) {
+		throw new ConnectionPoolException(e);
+	    }
+	}
+
+	try {
+	    AbandonedConnectionCleanupThread.shutdown();
+	} catch (InterruptedException e) {
 	    throw new ConnectionPoolException(e);
 	}
     }

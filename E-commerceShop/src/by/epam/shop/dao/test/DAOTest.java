@@ -99,6 +99,6 @@ public class DAOTest {
     @After
     public void destroy() throws ConnectionPoolException {
 	ConnectionPool pool = ConnectionPool.getInstance();
-	pool.clearConnectionQueue();
+	pool.destroyPool();
     }
 }

@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import by.epam.shop.dao.connectionpool.ConnectionPool;
 import by.epam.shop.dao.connectionpool.ConnectionPoolException;
 
-public class InitServletListener implements ServletContextListener{
+public class InitServletListener implements ServletContextListener {
     private static final Logger log = Logger.getLogger(InitServletListener.class);
 
     public void contextInitialized(ServletContextEvent sce) {
@@ -19,11 +19,11 @@ public class InitServletListener implements ServletContextListener{
 	    log.error(e);
 	}
     }
-    
+
     public void contextDestroyed(ServletContextEvent sce) {
 	try {
 	    ConnectionPool pool = ConnectionPool.getInstance();
-	    pool.clearConnectionQueue();
+	    pool.destroyPool();
 	} catch (ConnectionPoolException e) {
 	    log.error(e);
 	}
