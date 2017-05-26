@@ -31,9 +31,15 @@ public class CharsetFilter implements Filter {
 	chain.doFilter(request, response);
     }
 
+    @Override
     public void init(FilterConfig fConfig) throws ServletException {
 	context = fConfig.getServletContext();
 	encoding = fConfig.getInitParameter("charsetEncoding");
+    }
+
+    @Override
+    public void destroy() {
+	encoding = null;
     }
 
 }
