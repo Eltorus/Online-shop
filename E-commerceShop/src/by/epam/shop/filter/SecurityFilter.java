@@ -1,6 +1,8 @@
 package by.epam.shop.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,6 +19,8 @@ import by.epam.shop.entity.bean.User;
 import by.epam.shop.util.PageList;
 
 public class SecurityFilter implements Filter {
+    private List<String> userCommands = null;
+    private List<String> adminCommands = null;
 
     /*
      * Check if user has access level to requested command
@@ -60,18 +64,21 @@ public class SecurityFilter implements Filter {
     }
 
     private boolean isUserCommand(String command) {
-	return command.equals(CommandList.CMD_MAKE_ORDER) || command.equals(CommandList.CMD_USER_ORDER_CANCEL)
-		|| command.equals(CommandList.CMD_ORDER_PG) || command.equals(CommandList.CMD_USER_DELETE_PROFILE)
-		|| command.equals(CommandList.CMD_TOPBALANCE) || command.equals(CommandList.CMD_USER_AVATAR_UPLOAD)
-		|| command.equals(CommandList.CMD_USER_ORDERS) || command.equals(CommandList.CMD_LOGOUT);
+	for(String userCommand: userCommands) {
+	    if(command.equals(userCommand)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean isAdminCommand(String command) {
-	return command.equals(CommandList.CMD_ADMIN_ORDER_PG) || command.equals(CommandList.CMD_ADMIN_PRODUCT_PG)
-		|| command.equals(CommandList.CMD_ADMIN_USER_PG) || command.equals(CommandList.CMD_ORDER_CHANGE)
-		|| command.equals(CommandList.CMD_ORDER_INFORM) || command.equals(CommandList.CMD_PRODUCT_DELETE)
-		|| command.equals(CommandList.CMD_PRODUCT_UPDATE) || command.equals(CommandList.CMD_USER_UPDATE_BAN)
-		|| command.equals(CommandList.CMD_USER_UPDATE_DISCOUNT);
+	for(String adminCommand: adminCommands) {
+	    if(command.equals(adminCommand)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean isUserLoged(User user) {
@@ -97,6 +104,27 @@ public class SecurityFilter implements Filter {
     
     @Override
     public void init(FilterConfig fConfig) throws ServletException {
+	userCommands = new ArrayList<String>();
+	userCommands.add(CommandList.CMD_MAKE_ORDER);
+	userCommands.add(CommandList.CMD_USER_ORDER_CANCEL);
+	userCommands.add(CommandList.CMD_ORDER_PG);
+	userCommands.add(CommandList.CMD_USER_DELETE_PROFILE);
+	userCommands.add(CommandList.CMD_TOPBALANCE);
+	userCommands.add(CommandList.CMD_USER_AVATAR_UPLOAD);
+	userCommands.add(CommandList.CMD_USER_ORDERS);
+	userCommands.add(CommandList.CMD_LOGOUT);
+	
+	adminCommands = new ArrayList<String>();
+	adminCommands.add(CommandList.CMD_ADMIN_ORDER_PG);
+	adminCommands.add(CommandList.CMD_ADMIN_PRODUCT_PG);
+	adminCommands.add(CommandList.CMD_ADMIN_USER_PG);
+	adminCommands.add(CommandList.CMD_ORDER_CHANGE);
+	adminCommands.add(CommandList.CMD_ORDER_INFORM);
+	adminCommands.add(CommandList.CMD_PRODUCT_DELETE);
+	adminCommands.add(CommandList.CMD_PRODUCT_UPDATE); 
+	adminCommands.add(CommandList.CMD_USER_UPDATE_BAN);
+	adminCommands.add(CommandList.CMD_USER_UPDATE_DISCOUNT);
+	
     }
 
 }

@@ -1,3 +1,3 @@
-Final project: Online store
+Final project: Online Store
 
-Made by Pavel Zhuk, 11_16_Java_EPAM
+Author: Pavel Zhuk, 11_16_Java_EPAM
