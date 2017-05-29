@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 	try {
 	    orderDAO.addOrder(order);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during addOrder prodecure",e);
+	    throw new ServiceException("Exception during addOrder procedure",e);
 	}
     }
     
@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 	    OrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
 	    orderDAO.deleteOrder(order);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during deleteOrder prodecure",e);
+	    throw new ServiceException("Exception during deleteOrder procedure",e);
 	}
     }
 
@@ -103,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
 	    }
 	    
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during updateOrder prodecure",e);
+	    throw new ServiceException("Exception during updateOrder procedure",e);
 	}
 
     }
@@ -132,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
 	    result.setUser(userDAO.getUserWithId(user));
 
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during getOrder prodecure",e);
+	    throw new ServiceException("Exception during getOrder procedure",e);
 	}
 	return result;
     }
@@ -152,7 +152,7 @@ public class OrderServiceImpl implements OrderService {
 		orderList = null;
 	    }
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during getAllOrders prodecure",e);
+	    throw new ServiceException("Exception during getAllOrders procedure",e);
 	}
 	return orderList;
     }
@@ -180,7 +180,7 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	    }
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during getUserOrders prodecure",e);
+	    throw new ServiceException("Exception during getUserOrders procedure",e);
 	}
 	return orderList;
     }

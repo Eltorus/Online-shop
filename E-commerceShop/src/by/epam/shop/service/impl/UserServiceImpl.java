@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 	    output = userDAO.getUserWithLoginInf(user);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during signIn prodecure", e);
+	    throw new ServiceException("Exception during signIn procedure", e);
 	}
 	return output;
     }
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 	    }
 	    
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during addUser prodecure", e);
+	    throw new ServiceException("Exception during addUser procedure", e);
 	}
 	
 	return result == null;
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 	    userList = userDAO.getAllUsers();
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during getAllUsers prodecure", e);
+	    throw new ServiceException("Exception during getAllUsers procedure", e);
 	}
 	
 	return userList;
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 	    userDAO.deleteUser(user);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during deleteUser prodecure", e);
+	    throw new ServiceException("Exception during deleteUser procedure", e);
 	}
     }
 
@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
 
 	    output = userDAO.getUserWithLoginInf(user);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during updateUser prodecure", e);
+	    throw new ServiceException("Exception during updateUser procedure", e);
 	}
 	
 	return output;
@@ -171,7 +171,7 @@ public class UserServiceImpl implements UserService {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 	    userDAO.updateUser(userForWrite);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during updateUserBanStatus prodecure", e);
+	    throw new ServiceException("Exception during updateUserBanStatus procedure", e);
 	}
     }
 
@@ -196,7 +196,7 @@ public class UserServiceImpl implements UserService {
 
 	    userDAO.updateUser(userForWrite);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during updateUserDiscount prodecure", e);
+	    throw new ServiceException("Exception during updateUserDiscount procedure", e);
 	}
     }
 
@@ -220,7 +220,7 @@ public class UserServiceImpl implements UserService {
 	    UserDAO userDAO = DAOFactory.getInstance().getUserDAO();
 	    result = userDAO.getUserWithId(user);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during getUserWithId prodecure", e);
+	    throw new ServiceException("Exception during getUserWithId procedure", e);
 	}
 	
 	return result;

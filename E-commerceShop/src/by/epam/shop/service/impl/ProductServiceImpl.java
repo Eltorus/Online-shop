@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 		return null;
 	    }
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during getAllProducts prodecure", e);
+	    throw new ServiceException("Exception during getAllProducts procedure", e);
 	}
 	return products;
     }
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 	try {
 	    result = productDAO.getProduct(product);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during getProductWithId prodecure", e);
+	    throw new ServiceException("Exception during getProductWithId procedure", e);
 	}
 	return result;
     }
@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
 	try {
 	    productDAO.updateProduct(product);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during changeProduct prodecure", e);
+	    throw new ServiceException("Exception during changeProduct procedure", e);
 	}
 
     }
@@ -101,7 +101,7 @@ public class ProductServiceImpl implements ProductService {
 	try {
 	    productDAO.addProduct(product);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during addProduct prodecure", e);
+	    throw new ServiceException("Exception during addProduct procedure", e);
 	}
     }
 
@@ -123,7 +123,7 @@ public class ProductServiceImpl implements ProductService {
 	    ProductDAO productDAO = DAOFactory.getInstance().getProductDAO();
 	    productDAO.deleteProduct(product);
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during deleteProduct prodecure", e);
+	    throw new ServiceException("Exception during deleteProduct procedure", e);
 	}
     }
 
@@ -142,7 +142,7 @@ public class ProductServiceImpl implements ProductService {
 	try {
 	    amount = productDAO.getTotalProductAmount();
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during getTotalProductAmount prodecure", e);
+	    throw new ServiceException("Exception during getTotalProductAmount procedure", e);
 	}
 	return amount;
     }
@@ -174,7 +174,7 @@ public class ProductServiceImpl implements ProductService {
 	    }
 
 	} catch (DAOException e) {
-	    throw new ServiceException("Exception during getProducts prodecure", e);
+	    throw new ServiceException("Exception during getProducts procedure", e);
 	}
 
 	return productList;
