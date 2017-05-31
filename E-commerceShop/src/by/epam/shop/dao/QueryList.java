@@ -94,7 +94,7 @@ public class QueryList {
     public static final String GetOrderQuery_P = "SELECT `o_id`, `c_id`, `o_order_date`,`o_delivery_date`, `o_address`,`o_bill`,`o_discount`,`o_total`,`o_ispaid`,`o_iscompleted` "
 	    				       + "FROM `online_shop`.`orders` ";
     
-    public static final String WhereConditionOrderId_P = "WHERE `o_id`=?;";
+    public static final String WhereConditionOrderId_P = "WHERE `o_id`=? && `o_deleted`=false;";
     
     public static final String GetOrderWhereConditionUserId_P = "WHERE `c_id`=? && `o_iscompleted`=false && `o_deleted`=false; ";
 
